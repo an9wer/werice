@@ -1,0 +1,3 @@
+[alias]
+    lg = log --oneline --graph --color --all --decorate
+	sb = show-branch --more=12
