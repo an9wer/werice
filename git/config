@@ -1,3 +1,5 @@
+[format]
+    pretty = format:%C(yellow)%h %Cblue%>(12)%ad %Cgreen%<(7)%aN%Cred%d %Creset%s
 [alias]
     lg = log --oneline --graph --color --all --decorate
 	sb = show-branch --more=12
