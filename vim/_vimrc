@@ -1,0 +1,219 @@
+set nocompatible
+source $VIMRUNTIME/vimrc_example.vim
+"source $VIMRUNTIME/mswin.vim
+"behave mswin
+
+filetype off                " required
+
+set rtp+=D:/Vim/vimfiles/bundle/vundle.vim/
+call vundle#begin('D:/Vim/vimfiles/bundle/')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" my plugin
+" ----------------------------------------------------------------------------
+
+" colorscheme
+Plugin 'tomasr/molokai'
+"Plugin 'altercation/vim-colors-solarized'
+
+" vim-markdown
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+
+" Plugin 'davidhalter/jedi-vim'
+" Plugin 'nvie/vim-flake8'
+" Plugin 'python-mode/python-mode'
+"
+Plugin 'scrooloose/nerdtree'
+Plugin 'majutsushi/tagbar'
+Plugin 'ctrlpvim/ctrlp.vim'
+"
+Plugin 'Raimondi/delimitMate'
+Plugin 'yonchu/accelerated-smooth-scroll'
+" Plugin 'easymotion/vim-easymotion'
+Plugin 'terryma/vim-multiple-cursors'
+"
+" Plugin 'craigemery/vim-autotag'
+" Plugin 'Valloric/YouCompleteMe'
+"
+Plugin 'mbbill/undotree'
+" ============================================================================
+
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+
+set diffexpr=MyDiff()
+function MyDiff()
+  let opt = '-a --binary '
+  if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+  if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+  let arg1 = v:fname_in
+  if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+  let arg2 = v:fname_new
+  if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+  let arg3 = v:fname_out
+  if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+  let eq = ''
+  if $VIMRUNTIME =~ ' '
+    if &sh =~ '\<cmd'
+      let cmd = '""' . $VIMRUNTIME . '\diff"'
+      let eq = '"'
+    else
+      let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+    endif
+  else
+    let cmd = $VIMRUNTIME . '\diff'
+  endif
+  silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
+endfunction
+
+" my config
+
+" scheme
+colorscheme molokai
+
+
+set shiftwidth=4
+set tabstop=4
+set expandtab
+set noautoindent
+
+set number
+
+set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+set fileencoding=utf-8
+set encoding=utf-8
+set nobomb
+source $VIMRUNTIME/delmenu.vim
+source $VIMRUNTIME/menu.vim
+language messages zh_CN.utf-8
+
+" undofile
+set noundofile
+
+" font
+set guifont=Consolas:h15
+
+" window size
+
+set lines=25 columns=110
+
+" vim-markdown
+let g:vim_markdown_folding_disabled = 1
+
+
+" 80列红线
+if exists('+colorcolumn')
+  set colorcolumn=80
+else
+    au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+endif
+
+" 改变 80 列线的颜色
+" :highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
+"
+" ============================================================================
+
+
+" keymap
+" ----------------------------------------------------------------------------
+:let mapleader = ","
+inoremap <silent> <Esc> <C-O>:stopinsert<CR>
+" inoremap ( ()<ESC>i
+" inoremap ) <ESC>f)a
+" inoremap [ []<ESC>i
+" inoremap ] <ESC>f]a
+" inoremap { {}<ESC>i
+" inoremap } <ESC>f}a
+"
+" ============================================================================
+
+
+" NERDTree config
+" ----------------------------------------------------------------------------
+" autocmd vimenter * NERDTree
+map <F2> :NERDTreeToggle<CR>
+"
+" ============================================================================
+
+
+" jedi-vim config   (:h jedi)
+" ----------------------------------------------------------------------------
+" 将自动补全按键定义为 <C-N>
+" let g:jedi#completions_command = "<C-N>"
+" 手动开启补全
+" let g:jedi#popup_on_dot = 0
+" 关闭补全时自动选择第一项
+" let g:jedi#popup_select_first = 0
+" 关闭自动补全 import
+" let g:jedi#smart_auto_mappings = 0
+" 一直保留补全时的提示窗口
+" let g:jedi#auto_close_doc = 0
+" 关闭当前函数的参数提示小窗口
+" let g:jedi#show_call_signatures = 0
+"
+" ============================================================================
+
+
+" easymotion config (:h easymotion)
+" ----------------------------------------------------------------------------
+" None
+"
+" ============================================================================
+
+
+" YouCompleteMe config      (:h youcompleteme)
+" ----------------------------------------------------------------------------
+" old version
+if !empty(glob("~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"))
+    let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"
+endif
+" new version
+if !empty(glob("~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"))
+    let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
+endif
+
+" 将跳转映射到 <leader>g 
+nnoremap <leader>g :YcmCompleter GoTo<CR>
+" 关闭补全时的提示窗口 (preview window)
+set completeopt-=preview
+let g:ycm_add_preview_to_completeopt = 0
+"
+" ============================================================================
+
+
+" Tagbar config     (:h tagbar)
+" ----------------------------------------------------------------------------
+" 按 <F8> 开启 tagbar
+nmap <F8> :TagbarToggle<CR>
+" 打开 tagbar 的同时光标自动跳转到 tagbar 窗口
+let g:tagbar_autofocus = 1
+" 修改 tagbar 中的图标显示
+let g:tagbar_iconchars = ['▸', '▾']
+"
+" ============================================================================
+
+
+" delimitMate config      (:h delimitMate)
+" ----------------------------------------------------------------------------
+"  None 
+"
+" ============================================================================
+
+
+" vim-multiple-cursors  (:h multiple-cursors)
+" ----------------------------------------------------------------------------
+"  None
+"
+" ============================================================================
+
+" undotree      (:h undotree-contents)
+" ----------------------------------------------------------------------------
+nnoremap <F1> :UndotreeToggle<cr>
+" 打开 undotree 的同时光标自动跳转到 undotree 窗口
+let g:undotree_SetFocusWhenToggle = 1
+"
+" ============================================================================
