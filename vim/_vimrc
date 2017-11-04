@@ -91,14 +91,17 @@ source $VIMRUNTIME/delmenu.vim
 source $VIMRUNTIME/menu.vim
 language messages zh_CN.utf-8
 
-" undofile
+" undo file
 set noundofile
+
+" backup file
+" need to crate a directory named with `vimbackup`
+set backupdir=D:/Vim/vimbackup
 
 " font
 set guifont=Consolas:h15
 
 " window size
-
 set lines=25 columns=110
 
 " vim-markdown
