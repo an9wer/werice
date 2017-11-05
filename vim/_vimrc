@@ -14,17 +14,10 @@ Plugin 'VundleVim/Vundle.vim'
 " my plugin
 " ----------------------------------------------------------------------------
 
-" colorscheme
+" Scheme
 Plugin 'tomasr/molokai'
-"Plugin 'altercation/vim-colors-solarized'
+" Plugin 'altercation/vim-colors-solarized'
 
-" vim-markdown
-Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
-
-" Plugin 'davidhalter/jedi-vim'
-" Plugin 'nvie/vim-flake8'
-" Plugin 'python-mode/python-mode'
 "
 Plugin 'scrooloose/nerdtree'
 Plugin 'majutsushi/tagbar'
@@ -35,11 +28,16 @@ Plugin 'yonchu/accelerated-smooth-scroll'
 " Plugin 'easymotion/vim-easymotion'
 Plugin 'terryma/vim-multiple-cursors'
 "
-" Plugin 'craigemery/vim-autotag'
+Plugin 'craigemery/vim-autotag'
 " Plugin 'Valloric/YouCompleteMe'
 "
 Plugin 'mbbill/undotree'
 " ============================================================================
+
+
+" vim-markdown
+" Plugin 'godlygeek/tabular'
+" Plugin 'plasticboy/vim-markdown'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -70,7 +68,9 @@ function MyDiff()
   silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
 endfunction
 
+
 " my config
+" ----------------------------------------------------------------------------
 
 " scheme
 colorscheme molokai
@@ -83,13 +83,21 @@ set noautoindent
 
 set number
 
-set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+" set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+set fileencodings=ucs-bom,utf-8,latin1
 set fileencoding=utf-8
 set encoding=utf-8
 set nobomb
 source $VIMRUNTIME/delmenu.vim
 source $VIMRUNTIME/menu.vim
 language messages zh_CN.utf-8
+
+" inoremap ( ()<ESC>i
+" inoremap ) <ESC>f)a
+" inoremap [ []<ESC>i
+" inoremap ] <ESC>f]a
+" inoremap { {}<ESC>i
+" inoremap } <ESC>f}a
 
 " undo file
 set noundofile
@@ -102,11 +110,7 @@ set backupdir=D:/Vim/vimbackup
 set guifont=Consolas:h15
 
 " window size
-set lines=25 columns=110
-
-" vim-markdown
-let g:vim_markdown_folding_disabled = 1
-
+set lines=45 columns=125
 
 " 80列红线
 if exists('+colorcolumn')
@@ -121,16 +125,9 @@ endif
 " ============================================================================
 
 
-" keymap
+" vim-markdown
 " ----------------------------------------------------------------------------
-:let mapleader = ","
-inoremap <silent> <Esc> <C-O>:stopinsert<CR>
-" inoremap ( ()<ESC>i
-" inoremap ) <ESC>f)a
-" inoremap [ []<ESC>i
-" inoremap ] <ESC>f]a
-" inoremap { {}<ESC>i
-" inoremap } <ESC>f}a
+let g:vim_markdown_folding_disabled = 1
 "
 " ============================================================================
 
@@ -140,51 +137,22 @@ inoremap <silent> <Esc> <C-O>:stopinsert<CR>
 " autocmd vimenter * NERDTree
 map <F2> :NERDTreeToggle<CR>
 "
+" ignore some file and directory
+let NERDTreeIgnore=['\.pyc$[[file]]', 'venv[[dir]]']
+"
+" show hidden file
+let NERDTreeShowHidden=1
 " ============================================================================
 
 
-" jedi-vim config   (:h jedi)
+" ctrlp config (:h ctrlp)
 " ----------------------------------------------------------------------------
-" 将自动补全按键定义为 <C-N>
-" let g:jedi#completions_command = "<C-N>"
-" 手动开启补全
-" let g:jedi#popup_on_dot = 0
-" 关闭补全时自动选择第一项
-" let g:jedi#popup_select_first = 0
-" 关闭自动补全 import
-" let g:jedi#smart_auto_mappings = 0
-" 一直保留补全时的提示窗口
-" let g:jedi#auto_close_doc = 0
-" 关闭当前函数的参数提示小窗口
-" let g:jedi#show_call_signatures = 0
-"
-" ============================================================================
-
-
-" easymotion config (:h easymotion)
-" ----------------------------------------------------------------------------
-" None
-"
-" ============================================================================
-
-
-" YouCompleteMe config      (:h youcompleteme)
-" ----------------------------------------------------------------------------
-" old version
-if !empty(glob("~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"))
-    let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"
-endif
-" new version
-if !empty(glob("~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"))
-    let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
-endif
-
-" 将跳转映射到 <leader>g 
-nnoremap <leader>g :YcmCompleter GoTo<CR>
-" 关闭补全时的提示窗口 (preview window)
-set completeopt-=preview
-let g:ycm_add_preview_to_completeopt = 0
-"
+" let g:ctrlp_max_history = 20
+" let g:ctrlp_mruf_max = 250
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
+let g:ctrlp_custom_ignore = {
+  \ 'dir': 'venv',
+  \ }
 " ============================================================================
 
 
@@ -220,3 +188,6 @@ nnoremap <F1> :UndotreeToggle<cr>
 let g:undotree_SetFocusWhenToggle = 1
 "
 " ============================================================================
+
+
+
