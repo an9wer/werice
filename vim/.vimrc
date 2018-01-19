@@ -32,13 +32,25 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'majutsushi/tagbar'
 Plugin 'ctrlpvim/ctrlp.vim'
 "
+" automatic closing of quotes, parenthesis, bracket, etc.
 Plugin 'Raimondi/delimitMate'
+" Plugin 'jiangmiao/auto-pairs'
+"
 Plugin 'yonchu/accelerated-smooth-scroll'
 " Plugin 'easymotion/vim-easymotion'
 Plugin 'terryma/vim-multiple-cursors'
 "
+" automatically update tags files
 Plugin 'craigemery/vim-autotag'
+"
+" auto complete code
 Plugin 'Valloric/YouCompleteMe'
+"
+" repeat motion
+Plugin 'vim-scripts/repmo.vim'
+"
+" change surroundings
+Plugin 'tpope/vim-surround'
 "
 Plugin 'mbbill/undotree'
 " ============================================================================
@@ -123,7 +135,7 @@ endif
 
 " keymap
 " ----------------------------------------------------------------------------
-:let mapleader = ","
+" :let mapleader = ","
 "
 " Prevent cursor from moving back one character on insert mode exit
 inoremap <silent> <Esc> <C-O>:stopinsert<CR>
@@ -194,7 +206,8 @@ if !empty(glob("~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_
 endif
 
 " 将跳转映射到 <leader>g 
-nnoremap <leader>g :YcmCompleter GoTo<CR>
+" nnoremap <leader>g :YcmCompleter GoTo<CR>
+"
 " 关闭补全时的提示窗口 (preview window)
 set completeopt-=preview
 let g:ycm_add_preview_to_completeopt = 0
@@ -215,6 +228,13 @@ let g:tagbar_iconchars = ['▸', '▾']
 
 
 " delimitMate config      (:h delimitMate)
+" ----------------------------------------------------------------------------
+"  None 
+"
+" ============================================================================
+
+
+" vim-surround          (:h surround)
 " ----------------------------------------------------------------------------
 "  None 
 "
