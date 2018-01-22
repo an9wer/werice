@@ -31,27 +31,30 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'majutsushi/tagbar'
 Plugin 'ctrlpvim/ctrlp.vim'
-"
+
 " automatic closing of quotes, parenthesis, bracket, etc.
 Plugin 'Raimondi/delimitMate'
-" Plugin 'jiangmiao/auto-pairs'
-"
+
 Plugin 'yonchu/accelerated-smooth-scroll'
-" Plugin 'easymotion/vim-easymotion'
+
 Plugin 'terryma/vim-multiple-cursors'
-"
+
 " automatically update tags files
 Plugin 'craigemery/vim-autotag'
-"
+
 " auto complete code
 Plugin 'Valloric/YouCompleteMe'
-"
+
 " repeat motion
-Plugin 'vim-scripts/repmo.vim'
-"
+Plugin 'Houl/repmo-vim'
+ 
+" extend start command *
+Plugin 'inkarkat/vim-ingo-library'
+Plugin 'inkarkat/vim-SearchHighlighting'
+
 " change surroundings
 Plugin 'tpope/vim-surround'
-"
+
 Plugin 'mbbill/undotree'
 " ============================================================================
 
@@ -122,7 +125,7 @@ set expandtab
 
 " 80列红线
 if exists('+colorcolumn')
-  set colorcolumn=80
+    set colorcolumn=80
 else
     au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 endif
@@ -137,7 +140,7 @@ endif
 " ----------------------------------------------------------------------------
 " :let mapleader = ","
 "
-" Prevent cursor from moving back one character on insert mode exit
+" prevent cursor from moving back one character on insert mode exit
 inoremap <silent> <Esc> <C-O>:stopinsert<CR>
 "
 " ============================================================================
@@ -249,6 +252,14 @@ let g:tagbar_iconchars = ['▸', '▾']
 "  None
 "
 " ============================================================================
+
+
+" vim-SearchHighlighting  (:h SearchHighlighting)
+" ----------------------------------------------------------------------------
+"  None
+"
+" ============================================================================
+
 
 " undotree      (:h undotree-contents)
 " ----------------------------------------------------------------------------
