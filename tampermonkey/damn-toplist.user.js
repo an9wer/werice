@@ -4,15 +4,17 @@
 // @version      0.1
 // @description  Hide baidu toplist.
 // @author       an9wer
-// @match        https://www.baidu.com/s?*
-// @grant        none
+// @match        *://www.baidu.com/*
+// @grant        https://gist.github.com/icodejs/3183154
 // ==/UserScript==
 
 (function() {
 
     // hide toplist after GET request
-    var toplist = document.querySelector("[tpl=right_toplist]");
-    toplist.style.display = "none";
+    var toplists = document.querySelectorAll("[tpl=right_toplist]");
+    for (var toplist of toplists) {
+        toplist.style.display = "none";
+    }
 
     // thx: https://gist.github.com/icodejs/3183154
     var open = window.XMLHttpRequest.prototype.open,
@@ -32,8 +34,10 @@
         this.onreadystatechange = onReadyStateChangeReplacement;
 
         // hide toplist after ajax request
-        var toplist = document.querySelector("[tpl=right_toplist]");
-        toplist.style.display = "none";
+        var toplists = document.querySelectorAll("[tpl=right_toplist]");
+        for (var toplist of toplists) {
+            toplist.style.display = "none";
+        }
 
         return send.apply(this, arguments);
     }
