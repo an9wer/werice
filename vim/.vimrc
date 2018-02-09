@@ -140,8 +140,11 @@ endif
 " ----------------------------------------------------------------------------
 " :let mapleader = ","
 "
-" prevent cursor from moving back one character on insert mode exit
-inoremap <silent> <Esc> <C-O>:stopinsert<CR>
+" prevent cursor from moving back one character on insert mode exit (deprecated)
+"
+" inoremap <silent> <Esc> <C-O>:stopinsert<CR>
+" or
+" :inoremap <silent> <Esc> <Esc>`^`
 "
 " ============================================================================
 
