@@ -118,9 +118,19 @@ let &guicursor = &guicursor . ",a:blinkon0"
 " my configure
 " ----------------------------------------------------------------------------
 set number
+
+" show existing tab with 4 spaces width
 set tabstop=4
+" when indenting with '>>', '<<', etc, use 4 spaces width
 set shiftwidth=4
+" use the appropriate number of spaces to insert a <Tab> in insert mode
 set expandtab
+
+augroup tabwidth
+    autocmd FileType sh :set tabstop=2
+    autocmd FileType sh :set shiftwidth=2
+    autocmd FileType sh :set expandtab
+augroup END
 
 
 " 80列红线
