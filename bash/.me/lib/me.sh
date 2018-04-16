@@ -1,5 +1,5 @@
 # create links to 'module' directory scripts in 'bashrc.d' directory
-addm() {
+_addm() {
   for module in $@; do
     if [[ -e ${ME_MODULE_DIR}/${module}.sh ]]; then
       ln -sf ${ME_MODULE_DIR}/${module}.sh ${ME_BASHRC_DIR}/${module}.sh
@@ -11,7 +11,7 @@ addm() {
 }
 
 # remove module links in 'bashrc.d' directory
-delm() {
+_delm() {
   for module in $@; do
     if [[ -L ${ME_BASHRC_DIR}/${module}.sh ]]; then
       rm -i ${ME_BASHRC_DIR}/${module}.sh
@@ -19,4 +19,15 @@ delm() {
       echo "${module} doesn't exist or can't be removed (not a symbolic file)."
     fi
   done
+}
+
+me() {
+  case $1 in
+    addm )  
+      _addm ${@:2}
+      ;;
+    delm ) 
+      _delm ${@:2}
+      ;;
+  esac
 }

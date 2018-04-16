@@ -3,7 +3,7 @@ ME_LIB_RCLONE_DIR=${ME_LIB_DIR}/rclone
 
 # installation (thx: https://rclone.org/install.sh)
 # -----------------------------------------------------------------------------
-_install_rclone() {
+me::install_rclone() {
   if [[ ! -d ${ME_LIB_RCLONE_DIR} ]]; then
     echo "start to install rclone..."
 
@@ -33,7 +33,7 @@ _install_rclone() {
   fi
 }
 
-_install_rclone
+me::install_rclone
 
 
 # usage function
