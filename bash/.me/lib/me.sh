@@ -1,5 +1,5 @@
 # create links to 'module' directory scripts in 'bashrc.d' directory
-_addm() {
+me::addm() {
   for module in $@; do
     if [[ -e ${ME_MODULE_DIR}/${module}.sh ]]; then
       ln -sf ${ME_MODULE_DIR}/${module}.sh ${ME_BASHRC_DIR}/${module}.sh
@@ -11,7 +11,7 @@ _addm() {
 }
 
 # remove module links in 'bashrc.d' directory
-_delm() {
+me::delm() {
   for module in $@; do
     if [[ -L ${ME_BASHRC_DIR}/${module}.sh ]]; then
       rm -i ${ME_BASHRC_DIR}/${module}.sh
@@ -21,13 +21,31 @@ _delm() {
   done
 }
 
+me::job() {
+  if [[ -e "${ME_JOB_DIR}/$1.sh" ]]; then
+    bash "${ME_JOB_DIR}/$1.sh"
+  else
+    echo "$1 doesn't exist"
+  fi
+}
+
+
 me() {
   case $1 in
-    addm )  
-      _addm ${@:2}
+    addm)  
+      me::addm ${@:2}
       ;;
-    delm ) 
-      _delm ${@:2}
+    delm) 
+      me::delm ${@:2}
+      ;;
+    job)
+      me::job ${@:2}
+      ;;
+    *)
+      echo "TODO: help"
       ;;
   esac
 }
+
+# need to export function 'me', then we can call it from subshell
+declare -fx me

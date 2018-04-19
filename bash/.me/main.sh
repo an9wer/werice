@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
-ME_DIR=$(dirname ${BASH_SOURCE[0]})
-ME_BIN_DIR=${ME_DIR}/bin
-ME_MAN_DIR=${ME_DIR}/man
-ME_LIB_DIR=${ME_DIR}/lib
-ME_MODULE_DIR=${ME_DIR}/module
-ME_BASHRC_DIR=${ME_DIR}/bashrc.d
+export ME_DIR=$(dirname ${BASH_SOURCE[0]})
+export ME_BIN_DIR=${ME_DIR}/bin
+export ME_MAN_DIR=${ME_DIR}/man
+export ME_LIB_DIR=${ME_DIR}/lib
+export ME_JOB_DIR=${ME_DIR}/job
+export ME_MODULE_DIR=${ME_DIR}/module
+export ME_BASHRC_DIR=${ME_DIR}/bashrc.d
 
 
 # environment variable
@@ -30,13 +31,25 @@ export PATH="${PATH}:${ME_BIN_DIR}"
 # -----------------------------------------------------------------------------
 alias vimv="vim ~/.vimrc"
 alias vimb="vim ~/.bashrc"
+alias vimt="vim ~/.tmux.conf"
 
 alias sourceb="source ~/.bashrc"
-alias csb="cd ${ME_BASHRC_DIR}"
+
+alias cdm="cd ${ME_DIR}"
 
 
+# load function 'me'
 source ${ME_LIB_DIR}/me.sh
 
+# add basic module
+# -----------------------------------------------------------------------------
+me addm ansi
+
+
+# funny cowsay
+if command -v fortune &> /dev/null && command -v cowsay &> /dev/null; then
+  fortune | cowsay
+fi
 
 # load custom bashrc
 # -----------------------------------------------------------------------------
