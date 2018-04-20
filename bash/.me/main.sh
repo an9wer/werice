@@ -37,6 +37,8 @@ alias sourceb="source ~/.bashrc"
 
 alias cdm="cd ${ME_DIR}"
 
+alias info="info --vi-keys"
+
 
 # load function 'me'
 source ${ME_LIB_DIR}/me.sh
