@@ -9,7 +9,7 @@ DS_LOCATION="$(pass show DarkSky/location)"   # [latitude],[longitude]
 DS_TIME="$(date -d '1 day' +%s)"
 DS_EXCLUDE='flags,alert,hourly,minutely,currently'
 DS_UNITS='si'
-DS_FORECAST_API="https://api.darksky.net/forecast/${DS_KEY}/${DS_LOCATION},${DS_TIME}?exclude=${DS_EXCLUDE}&units=${DS_UNITS}"
+DS_FORECAST_API="https://api.darksky.net/forecast/${DS_KEY}/${DS_LOCATION},${DS_TIME}?exclude=${DS_EXCLUDE}" #"&units=${DS_UNITS}"
 
 #TW_NEWLINE="%0a"
 TW_SID="$(pass show twilio/sid)"
@@ -28,6 +28,8 @@ declare -a data_keys=(
   'temperatureMaxTime'
   'windSpeed'
   'windBearing'
+  'sunriseTime'
+  'sunsetTime'
 )
 
 filter() {
@@ -63,6 +65,57 @@ parse() {
 shopt -s lastpipe
 curl ${DS_FORECAST_API} | JSON -l | filter | parse
 
+wind_bearing() {
+  if [ $1 == 0 ]; then
+    data[windBearing]=正北
+  elif [ $1 -gt 0 -a $1 -lt 90 ]; then
+    data[windBearing]=东北
+  elif [ $1 == 90 ]; then
+    data[windBearing]=正东
+  elif [ $1 -gt 90 -a $1 -lt 180 ]; then
+    data[windBearing]=东南
+  elif [ $1 == 180 ]; then
+    data[windBearing]=正南
+  elif [ $1 -gt 180 -a $1 -lt 270 ]; then
+    data[windBearing]=西南
+  elif [ $1 == 270 ]; then
+    data[windBearing]=正西
+  elif [ $1 -gt 270 -a $1 -lt 360]; then
+    data[windBearing]=西北
+  elif [ $1 == 360 ]; then
+    data[windBearing]=正北
+  else
+    data[windBearing]=
+  fi
+}
+
+# TODO: check data is not null
+if [[ -n "${data[summary]}" ]]; then
+  en_message="Tomorrow is ${data[summary]} "
+  en_message+="temperatureMax: ${data[temperatureMax]}°C. "
+  en_message+="temperatureMaxTime: $(date -d @${data[temperatureMaxTime]} +'%H:%M'). "
+  en_message+="temperatureMin: ${data[temperatureMin]}°C. "
+  en_message+="temperatureMinTime: $(date -d @${data[temperatureMinTime]} +'%H:%M'). "
+  en_message+="windSpeed: ${data[windSpeed]}km/h. "
+  en_message+="windBearing: ${data[windBearing]}°. "
+  en_message+="sunriseTime: $(date -d @${data[sunriseTime]} +'%H:%M'). "
+  en_message+="sunsetTime: $(date -d @${data[sunsetTime]} +'%H:%M'). "
+
+  zh_message="明日天气: ${data[summary]} "
+  zh_message+="最高气温 ${data[temperatureMax]}°C ，"
+  zh_message+="出现在 $(date -d @${data[temperatureMaxTime]} +'%H:%M')。"
+  zh_message+="最低气温 ${data[temperatureMin]}°C ，"
+  zh_message+="出现在 $(date -d @${data[temperatureMinTime]} +'%H:%M')。"
+  zh_message+="日出 $(date -d @${data[sunriseTime]} +'%H:%M')，"
+  zh_message+="日落 $(date -d @${data[sunsetTime]} +'%H:%M')。"
+  wind_bearing ${data[windBearing]}
+  if [[ -n ${data[windBearing]} ]]; then
+    zh_message+="${data[windBearing]}风，风速 ${data[windSpeed]}km/h。"
+  else
+    zh_message+="风速 ${data[windSpeed]}km/h。"
+  fi
+fi
+
 send_sms() {
   curl -X POST ${TW_API} \
     --data-urlencode "To=${TW_TO}" \
@@ -71,10 +124,8 @@ send_sms() {
     -u ${TW_SID}:${TW_TOKEN}
 }
 
-# TODO: check data is not null
-message="Tomorrow is ${data[summary]} The maximum temperature is \
-${data[temperatureMax]} degrees Celsius and the minimum is \
-${data[temperatureMin]}. The windspeed tomorrow is ${data[windSpeed]}km/h."
 
-printf "%s\n" "${message}"
-send_sms ${message}
+printf "%s\n" "${en_message}"
+printf "%s\n" "${zh_message}"
+send_sms ${en_message}
+send_sms ${zh_message}
