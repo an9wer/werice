@@ -23,7 +23,7 @@ me::delm() {
 
 me::job() {
   if [[ -e "${ME_JOB_DIR}/$1.sh" ]]; then
-    bash "${ME_JOB_DIR}/$1.sh"
+    bash "${ME_JOB_DIR}/$1.sh" ${@:2}
   else
     echo "$1 doesn't exist"
   fi

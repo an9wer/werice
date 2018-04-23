@@ -4,6 +4,10 @@ ME_LIB_AUTOSSH_DIR=${ME_LIB_DIR}/autossh
 # installation
 # -----------------------------------------------------------------------------
 me::install_autossh() {
+  if [[ -d ${ME_LIB_AUTOSSH_DIR} ]]; then
+    return
+  fi
+
   local temp_dir=$(mktemp -d -t autossh.XXX)
   wget "http://www.harding.motd.ca/autossh/autossh-1.4f.tgz" -P ${temp_dir}
   if (( $? == 0 )); then
