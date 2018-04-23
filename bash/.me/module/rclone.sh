@@ -22,14 +22,16 @@ me::install_rclone() {
     # download rclone zip file
     curl https://downloads.rclone.org/rclone-current-linux-${ME_MACHINE}.zip -o ${zip_file}
 
-    # extract rclone zip file and move it into 'lib' directory
-    unzip ${zip_file} -d ${unzip_dir} &> /dev/null
-    mv ${unzip_dir}/rclone-*-linux-${ME_MACHINE} ${ME_LIB_RCLONE_DIR}
+    if (( $? == 0 )); then
+      # extract rclone zip file and move it into 'lib' directory
+      unzip ${zip_file} -d ${unzip_dir} &> /dev/null
+      mv ${unzip_dir}/rclone-*-linux-${ME_MACHINE} ${ME_LIB_RCLONE_DIR}
 
-    chmod 755 ${ME_LIB_DIR}/rclone/rclone
-    ln -sf "${ME_LIB_RCLONE_DIR}/rclone" ${ME_BIN_DIR}/rclone
-    ln -sf ${ME_LIB_RCLONE_DIR}/rclone.1 ${ME_MAN_DIR}/man1/rclone.1
-    mandb &> /dev/null
+      chmod 755 ${ME_LIB_DIR}/rclone/rclone
+      ln -sf "${ME_LIB_RCLONE_DIR}/rclone" ${ME_BIN_DIR}/rclone
+      ln -sf ${ME_LIB_RCLONE_DIR}/rclone.1 ${ME_MAN_DIR}/man1/rclone.1
+      mandb &> /dev/null
+    fi
   fi
 }
 

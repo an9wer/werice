@@ -9,7 +9,7 @@ DS_LOCATION="$(pass show DarkSky/location)"   # [latitude],[longitude]
 DS_TIME="$(date -d '1 day' +%s)"
 DS_EXCLUDE='flags,alert,hourly,minutely,currently'
 DS_UNITS='si'
-DS_FORECAST_API="https://api.darksky.net/forecast/${DS_KEY}/${DS_LOCATION},${DS_TIME}?exclude=${DS_EXCLUDE}" #"&units=${DS_UNITS}"
+DS_FORECAST_API="https://api.darksky.net/forecast/${DS_KEY}/${DS_LOCATION},${DS_TIME}?exclude=${DS_EXCLUDE}&units=${DS_UNITS}"
 
 #TW_NEWLINE="%0a"
 TW_SID="$(pass show twilio/sid)"
@@ -127,5 +127,5 @@ send_sms() {
 
 printf "%s\n" "${en_message}"
 printf "%s\n" "${zh_message}"
-send_sms ${en_message}
-send_sms ${zh_message}
+#send_sms ${en_message}
+#send_sms ${zh_message}
