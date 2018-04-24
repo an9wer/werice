@@ -23,7 +23,9 @@ export HISTSIZE=1000
 export HISTFILESIZE=10000
 export HISTTIMEFORMAT="%Y/%m/%d %T  "
 
-export PATH="${PATH}:${ME_BIN_DIR}"
+if [[ ! "${PATH}" =~ "${ME_BIN_DIR}" ]]; then
+  export PATH="${PATH}:${ME_BIN_DIR}"
+fi
 #export MANPATH=":${ME_MAN_DIR}"
 
 
@@ -43,10 +45,10 @@ alias info="info --vi-keys"
 # load function 'me'
 source ${ME_LIB_DIR}/me.sh
 
+
 # add basic module
 # -----------------------------------------------------------------------------
 me addm ansi
-
 
 # funny cowsay
 if command -v fortune &> /dev/null && command -v cowsay &> /dev/null; then
