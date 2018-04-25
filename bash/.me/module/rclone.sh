@@ -21,7 +21,8 @@ me::install_rclone() {
   case $ME_MACHINE in
     x86_64|amd64) ME_MACHINE=amd64;;
     i?86|x86) ME_MACHINE=386;;
-    *) ansi:warn "cannnot install rclone"; return 1;;
+    arm*) ME_MACHINE=arm;;
+    *) ansi:warn "cannnot install rclone (check your machine)"; return 1;;
   esac
 
   # create temporary file
