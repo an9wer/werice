@@ -14,7 +14,7 @@ me::install_autossh() {
     return 0
   fi
 
-  ansi:prompt "start to install autossh..."
+  me prompt "start to install autossh..."
   local temp_dir=$(mktemp -d -t autossh.XXX)
   wget "http://www.harding.motd.ca/autossh/autossh-1.4f.tgz" -P ${temp_dir}
   if (( $? == 0 )); then
@@ -33,7 +33,6 @@ me::install_autossh() {
 
 me::uninstall_autossh() {
   rm -i ${ME_BIN_DIR}/autossh
-  rm -i ${ME_MAN_DIR}/man1/autossh.1
+  rm -i ${ME_MAN_DIR}/man1/autossh.1 && mandb $> /dev/null
   rm -rI ${ME_LIB_AUTOSSH_DIR}
-  mandb $> /dev/null
 }

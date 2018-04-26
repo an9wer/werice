@@ -11,7 +11,7 @@ me::install_JSON() {
     return 0
   fi
     
-  ansi:prompt "start to install JSON..."
+  me prompt "start to install JSON..."
   git clone "https://github.com/dominictarr/JSON.sh.git" ${ME_LIB_JSON_DIR}
   if (( $? == 0 )); then
     chmod 755 "${ME_LIB_JSON_DIR}/JSON.sh"

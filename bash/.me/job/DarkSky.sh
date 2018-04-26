@@ -90,9 +90,9 @@ generate_message() {
     en_message+=$(date -d "${day}" +%m-%d)
     en_message+=": ${data[summary]} "
     en_message+="temperatureMax: ${data[temperatureMax]}°C. "
-    en_message+="temperatureMaxTime: $(date -d @${data[temperatureMaxTime]} +'%H:%M'). "
+    #en_message+="temperatureMaxTime: $(date -d @${data[temperatureMaxTime]} +'%H:%M'). "
     en_message+="temperatureMin: ${data[temperatureMin]}°C. "
-    en_message+="temperatureMinTime: $(date -d @${data[temperatureMinTime]} +'%H:%M'). "
+    #en_message+="temperatureMinTime: $(date -d @${data[temperatureMinTime]} +'%H:%M'). "
     en_message+="windSpeed: ${data[windSpeed]}km/h. "
     en_message+="windBearing: ${data[windBearing]}°. "
     en_message+="sunriseTime: $(date -d @${data[sunriseTime]} +'%H:%M'). "
@@ -101,9 +101,9 @@ generate_message() {
     zh_message+=$(date -d "${day}" +%m-%d)
     zh_message+=" 天气: ${data[summary]} "
     zh_message+="最高气温 ${data[temperatureMax]}°C ，"
-    zh_message+="出现在 $(date -d @${data[temperatureMaxTime]} +'%H:%M')。"
+    #zh_message+="出现在 $(date -d @${data[temperatureMaxTime]} +'%H:%M')。"
     zh_message+="最低气温 ${data[temperatureMin]}°C ，"
-    zh_message+="出现在 $(date -d @${data[temperatureMinTime]} +'%H:%M')。"
+    #zh_message+="出现在 $(date -d @${data[temperatureMinTime]} +'%H:%M')。"
     zh_message+="日出 $(date -d @${data[sunriseTime]} +'%H:%M')，"
     zh_message+="日落 $(date -d @${data[sunsetTime]} +'%H:%M')。"
     wind_bearing ${data[windBearing]}
@@ -134,10 +134,8 @@ send_sms() {
 while getopts "d:l:" opt; do
   case ${opt} in
     d)  # days
-      #if ! [[ "^[0-9]e" =~ "^[0-9]$" ]]; then
-      #if ! [ ${OPTARG} -ge 1 -a ${OPTARG} -le 7 ]; then
       if ! (( ${OPTARG} >=1 && ${OPTARG} <= 7 )); then
-        echo "the argument of option 'days' must be from 1 to 7."
+        me warn "the argument of option 'days' must be from 1 to 7."
         exit 1
       fi
       for (( i=1; i<=${OPTARG}; i++ )); do

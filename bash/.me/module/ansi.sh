@@ -11,7 +11,7 @@ me::install_ansi() {
     return 0
   fi
 
-  echo "start to install ansi..."
+  me prompt "start to install ansi..."
   git clone "https://github.com/fidian/ansi.git" ${ME_LIB_ANSI_DIR}
   if (( $? == 0 )); then
     chmod 755 ${ME_LIB_ANSI_DIR}/ansi
@@ -27,6 +27,4 @@ me::uninstall_ansi() {
 
 # usage
 # -----------------------------------------------------------------------------
-alias ansi="ansi -n --bold"
-alias ansi:prompt="ansi --blue"
-alias ansi:warn="ansi --red"
+alias ansi="ansi -n"

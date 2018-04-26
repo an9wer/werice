@@ -14,7 +14,7 @@ me::install_rclone() {
     return 0
   fi
 
-  ansi:prompt "start to install rclone..."
+  me prompt "start to install rclone..."
 
   # detect the platform (only in linux)
   local ME_MACHINE=$(uname -m)
@@ -22,7 +22,7 @@ me::install_rclone() {
     x86_64|amd64) ME_MACHINE=amd64;;
     i?86|x86) ME_MACHINE=386;;
     arm*) ME_MACHINE=arm;;
-    *) ansi:warn "cannnot install rclone (check your machine)"; return 1;;
+    *) me warn "cannnot install rclone (check your machine)"; return 1;;
   esac
 
   # create temporary file
@@ -46,9 +46,8 @@ me::install_rclone() {
 
 me::uninstall_rclone() {
   rm -i ${ME_BIN_DIR}/rclone
-  rm -i ${ME_MAN_DIR}/man1/rclone.1
+  rm -i ${ME_MAN_DIR}/man1/rclone.1 && mandb &> /dev/null
   rm -rI ${ME_LIB_RCLONE_DIR}
-  mandb &> /dev/null
 }
 
 

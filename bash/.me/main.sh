@@ -28,6 +28,12 @@ if [[ ! "${PATH}" =~ "${ME_BIN_DIR}" ]]; then
 fi
 #export MANPATH=":${ME_MAN_DIR}"
 
+# prompting
+BOLD="\e[1m" RED="\e[91m" GREEN="\e[92m" BLUE="\e[34m" END="\e[0m"
+PS1="┌─  ${BOLD}${GREEN}\u@\h${END} at ${BOLD}${RED}\t${END} in ${BOLD}${BLUE}\w${END}\n└─▪ \$ "
+PS2="└─▪ > "
+unset BOLD BLUE RED END
+
 
 # aliases
 # -----------------------------------------------------------------------------
@@ -46,9 +52,9 @@ alias info="info --vi-keys"
 source ${ME_LIB_DIR}/me.sh
 
 
-# add basic module
+# basic module
 # -----------------------------------------------------------------------------
-me addm ansi
+
 
 # funny cowsay
 if command -v fortune &> /dev/null && command -v cowsay &> /dev/null; then
