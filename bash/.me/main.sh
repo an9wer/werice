@@ -11,11 +11,11 @@ export ME_BASHRC_DIR=${ME_DIR}/bashrc.d
 
 # environment variable
 # -----------------------------------------------------------------------------
-export FCEDIT=vi
+export EDITOR=vi
 export VISUAL=vi
 
 # fc builtin editor
-export EDITOR=vi
+export FCEDIT=vi
 
 # history
 export HISTFILE=~/.bash_history
@@ -34,7 +34,7 @@ fi
 BOLD="\[\e[1m\]" RED="\[\e[91m\]" GREEN="\[\e[92m\]" BLUE="\[\e[94m\]" YELLOW="\[\e[93m\]" END="\[\e[0m\]"
 PS1="${YELLOW}┌─  ${BOLD}${GREEN}\u@\h${END} at ${BOLD}${RED}\t${END} in ${BOLD}${BLUE}\w${END}\n${YELLOW}└─▪ \$${END} "
 PS2="${YELLOW}└─▪ > ${END}"
-unset BOLD BLUE RED END
+unset BOLD BLUE RED YELLOW END
 
 
 # aliases
