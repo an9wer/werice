@@ -70,24 +70,24 @@ wind_bearing() {
 }
 
 generate_message() {
-  day="$1 day"
-  DS_KEY="$(pass show DarkSky/key)"
-  DS_LOCATION="$(pass show DarkSky/location)"   # [latitude],[longitude]
+  day="${1} day"
   DS_TIME=$(date -d "${day}" +%s)
-  DS_EXCLUDE='flags,alert,hourly,minutely,currently'
-  DS_UNITS='si'
+
+  # need: DS_KEY, DS_LOCATION, DS_TIME, DS_EXCLUDE, DS_UNITS, DS_LANG
   DS_FORECAST_API="https://api.darksky.net/forecast/${DS_KEY}/${DS_LOCATION},${DS_TIME}"
   DS_FORECAST_API+="?exclude=${DS_EXCLUDE}&units=${DS_UNITS}"
+  [[ -n "${DS_LANG}" ]] && DS_FORECAST_API+="&lang=${DS_LANG}"
 
   # enable 'lastpipe' option: the shell runs the last command of a pipeline not
   # executed in the background in the current shell environment. (so we can modify
   # the current script variable in the function 'parse')
   shopt -s lastpipe
   curl -s ${DS_FORECAST_API} | JSON -l | filter | parse
+  shopt -u lastpipe
 
   # TODO: check data is not null
   if [[ -n "${data[summary]}" ]]; then
-    en_message+=$(date -d "${day}" +%m-%d)
+    en_message+=$(date -d @${data[time]} +%m-%d)
     en_message+=": ${data[summary]} "
     en_message+="temperatureMax: ${data[temperatureMax]}°C. "
     #en_message+="temperatureMaxTime: $(date -d @${data[temperatureMaxTime]} +'%H:%M'). "
@@ -116,11 +116,7 @@ generate_message() {
 }
 
 send_sms() {
-  #TW_NEWLINE="%0a"
-  TW_SID="$(pass show twilio/sid)"
-  TW_TOKEN="$(pass show twilio/token)"
-  TW_TO="$(pass show twilio/to)"
-  TW_FROM="$(pass show twilio/from)"
+  # need: TW_SID, TW_TOKEN, TW_TO, TW_FROM, TW_API
   TW_API="https://api.twilio.com/2010-04-01/Accounts/${TW_SID}/Messages.json"
 
   curl -X POST ${TW_API} \
@@ -131,25 +127,58 @@ send_sms() {
 }
 
 
-while getopts "d:l:" opt; do
+while getopts "cd:l:t:a:" opt; do
+  # read variable from config file
+  [[ -e /tmp/DarkSky.conf ]] && . /tmp/DarkSky.conf || . ${ME_JOB_DIR}/DarkSky.conf
+
   case ${opt} in
+    c)  # create temporary config file
+      TMP_CONF=/tmp/DarkSky.conf
+      cp -f ${ME_JOB_DIR}/DarkSky.conf ${TMP_CONF}
+
+      shopt -s lastpipe
+      # remove comments and then loop every line
+      for line in $(sed 's/#.*//' ${TMP_CONF}); do
+        echo ${line} | awk -F '=' '{print $1, $2}' | read -r key val
+        [[ -n "${val}" ]] && printf "%s (default %s): " "${key}" "${val}" || printf "%s: " ${key}
+        read input
+        if [ -n "${input}" -o -z "${val}" ]; then
+          sed -ri "s/(${key}=).*/\1\"${input}\"/" ${TMP_CONF}
+        fi
+      done
+      shopt -u lastpipe
+      me prompt "all is done :)"
+      exit 0
+      ;;
     d)  # days
-      if ! (( ${OPTARG} >=1 && ${OPTARG} <= 7 )); then
+      if ! (( ${OPTARG} >= 1 && ${OPTARG} <= 7 )); then
         me warn "the argument of option 'days' must be from 1 to 7."
         exit 1
       fi
-      for (( i=1; i<=${OPTARG}; i++ )); do
-        generate_message ${i}
-      done
+      days=${OPTARG}
       ;;
     l)  # location
+      # TODO: add restriction
+      DS_LOCATION=${OPTARG}   # [latitude],[longitude]
+      ;;
+    a)  # language
+      DS_LANG=${OPTARG}
+      ;;
+    t)  # sms to
+      TW_TO=${OPTARG}
       ;;
   esac
+
 done
 
-printf "%s\n" "${en_message}"
-printf "%s\n" "${zh_message}"
-send_sms ${en_message}
-send_sms ${zh_message}
+for (( i=1; i<=${days}; i++ )); do
+  generate_message ${i}
+done
 
-
+if [[ ${DS_LANG} == zh ]]; then
+  printf "%s\n" "${zh_message}"
+  send_sms ${zh_message}
+else
+  printf "%s\n" "${en_message}"
+  send_sms ${en_message}
+fi
