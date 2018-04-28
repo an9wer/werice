@@ -22,9 +22,8 @@ me() {
           # create links to 'module' directory scripts in 'bashrc.d' directory
           ln -sf ${ME_MODULE_DIR}/${module}.sh ${ME_BASHRC_DIR}/${module}.sh
           source ${ME_BASHRC_DIR}/${module}.sh
-          if type "me::install_${module}" &> /dev/null; then
-              eval "me::install_${module}"
-          fi
+
+          type "me::install_${module}" &> /dev/null && eval "me::install_${module}"
         else
           me warn "${module} doesn't exist in module directory."
         fi
@@ -34,9 +33,7 @@ me() {
     delm) 
       for module in $@; do
         if [[ -L ${ME_BASHRC_DIR}/${module}.sh ]]; then
-          if type "me::uninstall_${module}" &> /dev/null; then
-            eval "me::uninstall_${module}"
-          fi
+          type "me::uninstall_${module}" &> /dev/null && eval "me::uninstall_${module}"
           # remove module links in 'bashrc.d' directory
           rm -i ${ME_BASHRC_DIR}/${module}.sh
         else
@@ -46,13 +43,12 @@ me() {
       ;;
 
     job)
-      if [[ -e "${ME_JOB_DIR}/$1.sh" ]]; then
-        bash "${ME_JOB_DIR}/$1.sh" ${@:2}
+      if [[ -d "${ME_JOB_DIR}/$1" ]]; then
+        bash "${ME_JOB_DIR}/$1/main.sh" ${@:2}
       else
         me warn "The job '$1' doesn't exist"
       fi
       ;;
-
     *)
       echo "TODO: help"
       ;;

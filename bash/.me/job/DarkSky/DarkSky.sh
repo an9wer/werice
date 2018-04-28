@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-if ! command -v JSON &> /dev/null; then
-  me addm JSON
-fi
-
 declare -A data
 declare -a data_keys=(
   'summary'
@@ -127,20 +123,21 @@ send_sms() {
 }
 
 
-while getopts "cd:l:t:a:" opt; do
-  # read variable from config file
-  [[ -e /tmp/DarkSky.conf ]] && . /tmp/DarkSky.conf || . ${ME_JOB_DIR}/DarkSky.conf
+# read variable from config file
+[[ -e /tmp/DarkSky.conf ]] && . /tmp/DarkSky.conf || . ${ME_JOB_DARKSKY_DIR}/DarkSky.conf
 
+while getopts "cd:l:t:a:" opt; do
   case ${opt} in
     c)  # create temporary config file
       TMP_CONF=/tmp/DarkSky.conf
-      cp -f ${ME_JOB_DIR}/DarkSky.conf ${TMP_CONF}
+      cp -f ${ME_JOB_DARKSKY_DIR}/DarkSky.conf ${TMP_CONF}
 
       shopt -s lastpipe
       # remove comments and then loop every line
       for line in $(sed 's/#.*//' ${TMP_CONF}); do
         echo ${line} | awk -F '=' '{print $1, $2}' | read -r key val
         [[ -n "${val}" ]] && printf "%s (default %s): " "${key}" "${val}" || printf "%s: " ${key}
+
         read input
         if [ -n "${input}" -o -z "${val}" ]; then
           sed -ri "s/(${key}=).*/\1\"${input}\"/" ${TMP_CONF}
@@ -150,6 +147,7 @@ while getopts "cd:l:t:a:" opt; do
       me prompt "all is done :)"
       exit 0
       ;;
+
     d)  # days
       if ! (( ${OPTARG} >= 1 && ${OPTARG} <= 7 )); then
         me warn "the argument of option 'days' must be from 1 to 7."
@@ -157,13 +155,16 @@ while getopts "cd:l:t:a:" opt; do
       fi
       days=${OPTARG}
       ;;
+
     l)  # location
       # TODO: add restriction
       DS_LOCATION=${OPTARG}   # [latitude],[longitude]
       ;;
+
     a)  # language
       DS_LANG=${OPTARG}
       ;;
+
     t)  # sms to
       TW_TO=${OPTARG}
       ;;
@@ -176,9 +177,9 @@ for (( i=1; i<=${days}; i++ )); do
 done
 
 if [[ ${DS_LANG} == zh ]]; then
-  printf "%s\n" "${zh_message}"
+  printf "$(date): %s\n" "${zh_message}"
   send_sms ${zh_message}
 else
-  printf "%s\n" "${en_message}"
+  printf "$(date): %s\n" "${en_message}"
   send_sms ${en_message}
 fi
