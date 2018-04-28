@@ -3,7 +3,7 @@ ME_LIB_RCLONE_DIR=${ME_LIB_DIR}/rclone
 
 # installation (thx: https://rclone.org/install.sh)
 # -----------------------------------------------------------------------------
-me::install_rclone() {
+me_install_rclone() {
   if [[ -d ${ME_LIB_RCLONE_DIR} ]]; then
     if [[ ! -L ${ME_BIN_DIR}/rclone ]]; then
       ln -sf ${ME_LIB_RCLONE_DIR}/rclone ${ME_BIN_DIR}/rclone
@@ -44,7 +44,7 @@ me::install_rclone() {
   fi
 }
 
-me::uninstall_rclone() {
+me_uninstall_rclone() {
   rm -i ${ME_BIN_DIR}/rclone
   rm -i ${ME_MAN_DIR}/man1/rclone.1 && mandb &> /dev/null
   rm -rI ${ME_LIB_RCLONE_DIR}

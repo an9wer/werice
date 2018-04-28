@@ -3,7 +3,7 @@ ME_LIB_AUTOSSH_DIR=${ME_LIB_DIR}/autossh
 
 # installation
 # -----------------------------------------------------------------------------
-me::install_autossh() {
+me_install_autossh() {
   if [[ -d ${ME_LIB_AUTOSSH_DIR} ]]; then
     if [[ ! -L ${ME_BIN_DIR}/autossh ]]; then
       ln -sf ${ME_LIB_AUTOSSH_DIR}/autossh/bin/autossh ${ME_BIN_DIR}/autossh
@@ -31,7 +31,7 @@ me::install_autossh() {
   fi
 }
 
-me::uninstall_autossh() {
+me_uninstall_autossh() {
   rm -i ${ME_BIN_DIR}/autossh
   rm -i ${ME_MAN_DIR}/man1/autossh.1 && mandb $> /dev/null
   rm -rI ${ME_LIB_AUTOSSH_DIR}

@@ -23,7 +23,7 @@ me() {
           ln -sf ${ME_MODULE_DIR}/${module}.sh ${ME_BASHRC_DIR}/${module}.sh
           source ${ME_BASHRC_DIR}/${module}.sh
 
-          type "me::install_${module}" &> /dev/null && eval "me::install_${module}"
+          type "me_install_${module}" &> /dev/null && eval "me_install_${module}"
         else
           me warn "${module} doesn't exist in module directory."
         fi
@@ -33,7 +33,7 @@ me() {
     delm) 
       for module in $@; do
         if [[ -L ${ME_BASHRC_DIR}/${module}.sh ]]; then
-          type "me::uninstall_${module}" &> /dev/null && eval "me::uninstall_${module}"
+          type "me_uninstall_${module}" &> /dev/null && eval "me_uninstall_${module}"
           # remove module links in 'bashrc.d' directory
           rm -i ${ME_BASHRC_DIR}/${module}.sh
         else

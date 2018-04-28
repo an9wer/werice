@@ -3,7 +3,7 @@ ME_LIB_ANSI_DIR=${ME_LIB_DIR}/ansi
 
 # installation (thx: https://rclone.org/install.sh)
 # -----------------------------------------------------------------------------
-me::install_ansi() {
+me_install_ansi() {
   if [[ -d ${ME_LIB_ANSI_DIR} ]]; then
     if [[ ! -L ${ME_BIN_DIR}/ansi ]]; then
       ln -sf ${ME_LIB_ANSI_DIR}/ansi ${ME_BIN_DIR}/ansi
@@ -19,7 +19,7 @@ me::install_ansi() {
   fi
 }
 
-me::uninstall_ansi() {
+me_uninstall_ansi() {
   rm -i ${ME_BIN_DIR}/ansi
   rm -rI ${ME_LIB_ANSI_DIR}
 }

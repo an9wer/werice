@@ -178,8 +178,8 @@ done
 
 if [[ ${DS_LANG} == zh ]]; then
   printf "$(date): %s\n" "${zh_message}"
-  send_sms ${zh_message}
+  #send_sms ${zh_message}
 else
   printf "$(date): %s\n" "${en_message}"
-  send_sms ${en_message}
+  #send_sms ${en_message}
 fi

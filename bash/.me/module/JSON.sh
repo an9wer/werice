@@ -3,7 +3,7 @@ ME_LIB_JSON_DIR=${ME_LIB_DIR}/JSON
 
 # installation
 # -----------------------------------------------------------------------------
-me::install_JSON() {
+me_install_JSON() {
   if [[ -d $ME_LIB_JSON_DIR ]]; then
     if [[ ! -L ${ME_BIN_DIR}/JSON ]]; then
       ln -sf "${ME_LIB_JSON_DIR}/JSON.sh" "${ME_BIN_DIR}/JSON"
@@ -19,7 +19,7 @@ me::install_JSON() {
   fi
 }
 
-me::uninstall_JSON() {
+me_uninstall_JSON() {
   rm -i ${ME_BIN_DIR}/JSON
   rm -rI ${ME_LIB_JSON_DIR}
 }
