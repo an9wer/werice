@@ -115,71 +115,27 @@ send_sms() {
   # need: TW_SID, TW_TOKEN, TW_TO, TW_FROM, TW_API
   TW_API="https://api.twilio.com/2010-04-01/Accounts/${TW_SID}/Messages.json"
 
-  curl -X POST ${TW_API} \
+  curl -s -X POST ${TW_API} \
     --data-urlencode "To=${TW_TO}" \
     --data-urlencode "From=${TW_FROM}" \
     -d "Body=$*" \
-    -u ${TW_SID}:${TW_TOKEN}
+    -u ${TW_SID}:${TW_TOKEN} | printf "%s\n"
 }
 
 
 # read variable from config file
-[[ -e /tmp/DarkSky.conf ]] && . /tmp/DarkSky.conf || . ${ME_JOB_DARKSKY_DIR}/DarkSky.conf
+[[ -e "${ME_JOB_DARKSKY_CONF}" ]] && . ${ME_JOB_DARKSKY_CONF} || me warn "config flle doesn't exists"
 
-while getopts "cd:l:t:a:" opt; do
-  case ${opt} in
-    c)  # create temporary config file
-      TMP_CONF=/tmp/DarkSky.conf
-      cp -f ${ME_JOB_DARKSKY_DIR}/DarkSky.conf ${TMP_CONF}
-
-      shopt -s lastpipe
-      # remove comments and then loop every line
-      for line in $(sed 's/#.*//' ${TMP_CONF}); do
-        echo ${line} | awk -F '=' '{print $1, $2}' | read -r key val
-        [[ -n "${val}" ]] && printf "%s (default %s): " "${key}" "${val}" || printf "%s: " ${key}
-
-        read input
-        if [ -n "${input}" -o -z "${val}" ]; then
-          sed -ri "s/(${key}=).*/\1\"${input}\"/" ${TMP_CONF}
-        fi
-      done
-      shopt -u lastpipe
-      me prompt "all is done :)"
-      exit 0
-      ;;
-
-    d)  # days
-      if ! (( ${OPTARG} >= 1 && ${OPTARG} <= 7 )); then
-        me warn "the argument of option 'days' must be from 1 to 7."
-        exit 1
-      fi
-      days=${OPTARG}
-      ;;
-
-    l)  # location
-      # TODO: add restriction
-      DS_LOCATION=${OPTARG}   # [latitude],[longitude]
-      ;;
-
-    a)  # language
-      DS_LANG=${OPTARG}
-      ;;
-
-    t)  # sms to
-      TW_TO=${OPTARG}
-      ;;
-  esac
-
-done
-
+echo ${ME_JOB_DARKSKY_CONF}
+echo ${days}
 for (( i=1; i<=${days}; i++ )); do
   generate_message ${i}
 done
 
 if [[ ${DS_LANG} == zh ]]; then
-  printf "$(date): %s\n" "${zh_message}"
-  #send_sms ${zh_message}
+  printf "$(date)    %s\n" "${zh_message}"
+  send_sms ${zh_message}
 else
-  printf "$(date): %s\n" "${en_message}"
-  #send_sms ${en_message}
+  printf "$(date)    %s\n" "${en_message}"
+  send_sms ${en_message}
 fi
