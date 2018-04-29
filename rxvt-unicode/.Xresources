@@ -1,0 +1,33 @@
+URxvt.scrollBar: false
+
+URxvt.font: xft:DejaVu Sans Mono:size=12
+URxvt.boldFont: xft:DejaVu Sans Mono:size=12:weight=bold
+
+! background & foreground
+URxvt.background: #282a36
+URxvt.foreground: #ffffff
+
+! black dark/light
+URxvt.color0:  #282a36
+URxvt.color8:  #000000
+! red dark/light
+URxvt.color1:  #ff6e67
+URxvt.color9:  #ff5555
+! green dark/light
+URxvt.color2:  #5af78e
+URxvt.color10: #50fa7b
+! yellow dark/light
+URxvt.color3:  #f4f99d
+URxvt.color11: #f1fa8c
+! blue dark/light
+URxvt.color4:  #caa9fa
+URxvt.color12: #caa9fa
+! magenta dark/light
+URxvt.color5:  #ff92d0
+URxvt.color13: #ff79c6
+! cyan dark/light
+URxvt.color6:  #9aedfe
+URxvt.color14: #8be9fd
+! white dark/light
+URxvt.color7: #e6e6e6
+URxvt.color15:  #bfbfbf
