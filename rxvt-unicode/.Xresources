@@ -1,7 +1,9 @@
 URxvt.scrollBar: false
 
-URxvt.font: xft:DejaVu Sans Mono:size=12
-URxvt.boldFont: xft:DejaVu Sans Mono:size=12:weight=bold
+! sudo apt-get install ttf-wqy-microhei
+URxvt.font: xft:DejaVu Sans Mono,xft:WenQuanYi Micro Hei Mono:size=12
+!URxvt.font: xft:WenQuanYi Micro Hei Mono:size=12
+!URxvt.boldFont: xft:DejaVu Sans Mono:size=12:weight=bold
 
 ! background & foreground
 URxvt.background: #282a36
