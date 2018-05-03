@@ -31,9 +31,11 @@ fi
 # prompting
 # need to wrap '\[' and '\]' to every color variable to avoid position issure
 # (thx: https://superuser.com/a/980982)
+# ┌
+# └
 BOLD="\[\e[1m\]" RED="\[\e[91m\]" GREEN="\[\e[92m\]" BLUE="\[\e[94m\]" YELLOW="\[\e[93m\]" END="\[\e[0m\]"
-PS1="${YELLOW}┌─  ${BOLD}${GREEN}\u@\h${END} at ${BOLD}${RED}\t${END} in ${BOLD}${BLUE}\w${END}\n${YELLOW}└─▪ \$${END} "
-PS2="${YELLOW}└─▪ > ${END}"
+PS1="${YELLOW}┏─━ ${BOLD}${GREEN}\u@\h${END} at ${BOLD}${RED}\t${END} in ${BOLD}${BLUE}\w${END}\n${YELLOW}┗─━ \$${END} "
+PS2="${YELLOW}┗─━ > ${END}"
 unset BOLD BLUE RED YELLOW END
 
 
@@ -66,9 +68,10 @@ source ${ME_LIB_DIR}/me.sh
 
 
 # funny cowsay
-if command -v fortune &> /dev/null && command -v cowsay &> /dev/null; then
-  fortune | cowsay
-fi
+#if command -v fortune &> /dev/null && command -v cowsay &> /dev/null; then
+#  fortune | cowsay
+#fi
+command -v neofetch &> /dev/null && neofetch
 
 # load custom bashrc
 # -----------------------------------------------------------------------------

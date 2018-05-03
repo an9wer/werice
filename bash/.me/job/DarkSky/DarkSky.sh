@@ -126,8 +126,6 @@ send_sms() {
 # read variable from config file
 [[ -e "${ME_JOB_DARKSKY_CONF}" ]] && . ${ME_JOB_DARKSKY_CONF} || me warn "config flle doesn't exists"
 
-echo ${ME_JOB_DARKSKY_CONF}
-echo ${days}
 for (( i=1; i<=${days}; i++ )); do
   generate_message ${i}
 done
