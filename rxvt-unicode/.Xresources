@@ -1,17 +1,13 @@
 URxvt.scrollBar: false
 
 ! sudo apt-get install ttf-wqy-microhei
-! URxvt.font: xft:DejaVu Sans Mono:size=10,xft:WenQuanYi Micro Hei Mono:size=10
-URxvt.font: xft:Source Code Pro Semibold:size=10,xft:WenQuanYi Micro Hei Mono:size=10
-!URxvt.font: xft:WenQuanYi Micro Hei Mono:size=10
-!URxvt.boldFont: xft:DejaVu Sans Mono:size=12:weight=bold
+! URxvt.font: xft:Source Code Pro Semibold:size=10,xft:WenQuanYi Micro Hei Mono:size=10
+URxvt.font: xft:Source Code Pro Semibold:size=11,xft:Noto Sans CJK SC Regular:size=12
 
 
 ! background & foreground
 !URxvt.depth: 32
-!URxvt.background: [70]#282a36
-!URxvt.background: #ffffff
-!URxvt.background: #000000
+!URxvt.background: #282a36
 URxvt.transparent: true
 URxvt.shading: 50
 URxvt.foreground: #ffffff
@@ -40,6 +36,8 @@ URxvt.color14: #8be9fd
 ! white dark/light
 URxvt.color7:  #e6e6e6
 URxvt.color15: #bfbfbf
+
+URxvt.inputMethod: fcitx
 
 URxvt.perl-lib: ~/.urxvt/ext/
 URxvt.perl-ext-common: resize-font,keyboard-select
