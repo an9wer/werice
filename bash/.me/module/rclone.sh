@@ -1,15 +1,22 @@
-ME_LIB_RCLONE_DIR=${ME_LIB_DIR}/rclone
+ME_LIB_RCLONE=${ME_LIB_DIR}/rclone
+ME_BIN_RCLONE=${ME_BIN_DIR}/rclone
+ME_MAN_RCLONE=${ME_MAN_DIR}/man1/rclone.1
 
 
 # installation (thx: https://rclone.org/install.sh)
 # -----------------------------------------------------------------------------
 me_install_rclone() {
-  if [[ -d ${ME_LIB_RCLONE_DIR} ]]; then
+  if which rclone &> /dev/null; then
+    me prompt "rclone has been installed :)"
+    return 0
+  fi
+
+  if [[ -d ${ME_LIB_RCLONE} ]]; then
     if [[ ! -L ${ME_BIN_DIR}/rclone ]]; then
-      ln -sf ${ME_LIB_RCLONE_DIR}/rclone ${ME_BIN_DIR}/rclone
+      ln -sf ${ME_LIB_RCLONE}/rclone ${ME_BIN_RCLONE}
     fi
     if [[ ! -L ${ME_MAN_DIR} ]]; then
-      ln -sf ${ME_LIB_RCLONE_DIR}/rclone.1 ${ME_MAN_DIR}/man1/rclone.1
+      ln -sf ${ME_LIB_RCLONE}/rclone.1 ${ME_MAN_RCLONE}
     fi
     return 0
   fi
@@ -35,19 +42,41 @@ me_install_rclone() {
   if (( $? == 0 )); then
     # extract rclone zip file and move it into 'lib' directory
     unzip ${zip_file} -d ${unzip_dir} &> /dev/null
-    mv ${unzip_dir}/rclone-*-linux-${ME_MACHINE} ${ME_LIB_RCLONE_DIR}
+    mv ${unzip_dir}/rclone-*-linux-${ME_MACHINE} ${ME_LIB_RCLONE}
 
     chmod 755 ${ME_LIB_DIR}/rclone/rclone
-    ln -sf "${ME_LIB_RCLONE_DIR}/rclone" ${ME_BIN_DIR}/rclone
-    ln -sf ${ME_LIB_RCLONE_DIR}/rclone.1 ${ME_MAN_DIR}/man1/rclone.1
+    ln -sf "${ME_LIB_RCLONE}/rclone" ${ME_BIN_RCLONE}
+    ln -sf ${ME_LIB_RCLONE}/rclone.1 ${ME_MAN_RCLONE}
     mandb &> /dev/null
   fi
 }
 
 me_uninstall_rclone() {
-  rm -i ${ME_BIN_DIR}/rclone
-  rm -i ${ME_MAN_DIR}/man1/rclone.1 && mandb &> /dev/null
-  rm -rI ${ME_LIB_RCLONE_DIR}
+  if ! which rclone &> /dev/null; then
+    me warn "rclone hasn't been installed :("
+    return 1
+  fi
+
+  if [[ ! $(which rclone) == ${ME_BIN_RCLONE} ]]; then
+    me warn "rclone may be installed by your system package manager."
+    return 1
+  fi
+
+  printf "It'll remove:\n"
+  printf "    (1): ${ME_BIN_RCLONE}\n"
+  printf "    (2): ${ME_MAN_RCLONE}\n"
+  printf "    (3): ${ME_LIB_RCLONE}\n"
+  printf "are you sure? (y/n): "
+
+  local sure
+  read -r sure
+  if [[ "${sure}" == "y" ]]; then
+    rm ${ME_BIN_RCLONE}
+    rm ${ME_MAN_RCLONE} && mandb &> /dev/null
+    rm -rf ${ME_LIB_RCLONE}
+    unset -v ME_LIB_RCLONE ME_BIN_RCLONE ME_MAN_RCLONE
+    unset -f me_install_rclone me_uninstall_rclone rclone
+  fi
 }
 
 

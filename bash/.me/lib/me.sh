@@ -17,6 +17,7 @@ me() {
       ;;
 
     addm)  
+      local module
       for module in $@; do
         if [[ -e ${ME_MODULE_DIR}/${module}.sh ]]; then
           # create links to 'module' directory scripts in 'bashrc.d' directory
@@ -31,11 +32,12 @@ me() {
       ;;
 
     delm) 
+      local module
       for module in $@; do
         if [[ -L ${ME_BASHRC_DIR}/${module}.sh ]]; then
-          type "me_uninstall_${module}" &> /dev/null && eval "me_uninstall_${module}"
-          # remove module links in 'bashrc.d' directory
-          rm -i ${ME_BASHRC_DIR}/${module}.sh
+          type "me_uninstall_${module}" &> /dev/null &&
+          eval "me_uninstall_${module}" &&
+          rm ${ME_BASHRC_DIR}/${module}.sh # remove module links in 'bashrc.d' directory
         else
           me warn "${module} doesn't exist or can't be removed (not a symbolic file)."
         fi
