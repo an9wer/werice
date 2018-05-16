@@ -1,5 +1,6 @@
 ME_LIB_FZF=${ME_LIB_DIR}/fzf
 ME_BIN_FZF=${ME_BIN_DIR}/fzf
+ME_MAN_FZF=${ME_MAN_DIR}/man1/fzf.1
 
 
 # installation
@@ -7,12 +8,17 @@ ME_BIN_FZF=${ME_BIN_DIR}/fzf
 me_install_fzf() {
   if [[ -d ${ME_LIB_FZF} ]]; then
     if [[ ! -L ${ME_BIN_FZF} ]]; then
-      ln -sf ${ME_LIB_FZF}/fzf ${ME_BIN_FZF}
+      ln -sf ${ME_LIB_FZF}/bin/fzf ${ME_BIN_FZF}
+    fi
+    if [[ ! -L ${ME_MAN_FZF} ]]; then
+      ln -sf ${ME_LIB_FZF}/man/man1/fzf.1 ${ME_MAN_FZF}
+      mandb &> /dev/null
     fi
     return 0
   fi
 
   me prompt "start to install fzf..."
+  git clone --depth 1 "https://github.com/junegunn/fzf.git" ${ME_LIB_FZF}
   local version=$(
     curl https://github.com/junegunn/fzf-bin/releases/latest |
     sed -r "s/.*([0-9]+\.[0-9]+\.[0-9]).*/\1/"
@@ -31,12 +37,12 @@ me_install_fzf() {
   esac
 
   local url=https://github.com/junegunn/fzf-bin/releases/download/${version}/${tgz}
-  curl -fL ${url} | {
-  [[ -d ${ME_LIB_FZF} ]] || mkdir ${ME_LIB_FZF}
-  tar -C ${ME_LIB_FZF} -zxf -
-  }
+  curl -fL ${url} | tar -C ${ME_LIB_FZF}/bin -zxf -
   if (( $? == 0 )); then
-    ln -sf ${ME_LIB_FZF}/fzf ${ME_BIN_DIR}
+    chmod 755 ${ME_LIB_FZF}/bin/fzf
+    ln -sf ${ME_LIB_FZF}/bin/fzf ${ME_BIN_DIR}
+    ln -sf ${ME_LIB_FZF}/man/man1/fzf.1 ${ME_MAN_FZF}
+    mandb &> /dev/null
   fi
 }
 
