@@ -6,31 +6,22 @@ ME_MAN_AUTOSSH=${ME_MAN_DIR}/man1/autossh.1
 # installation
 # -----------------------------------------------------------------------------
 me_install_autossh() {
-  if which autossh &> /dev/null; then
-    me prompt "autossh has been installed :)"
-    return 0
-  fi
-
   if [[ -d ${ME_LIB_AUTOSSH} ]]; then
-    echo ${ME_BIN_AUTOSSH}
     if [[ ! -L ${ME_BIN_AUTOSSH} ]]; then
-      echo 1
       ln -sf ${ME_LIB_AUTOSSH}/bin/autossh ${ME_BIN_AUTOSSH}
     fi
     if [[ ! -L ${ME_MAN_AUTOSSH} ]]; then
-      echo 2
       ln -sf ${ME_LIB_AUTOSSH}/man/man1/autossh.1 ${ME_MAN_AUTOSSH}
     fi
-    echo 3
     return 0
   fi
 
   me prompt "start to install autossh..."
   local temp_dir=$(mktemp -d -t autossh.XXX)
-  wget "http://www.harding.motd.ca/autossh/autossh-1.4f.tgz" -P ${temp_dir}
+  local curr_dir=$(pwd)
+  curl -fL "http://www.harding.motd.ca/autossh/autossh-1.4f.tgz" |
+  tar -C ${temp_dir} -zxf -
   if (( $? == 0 )); then
-    tar -zxf "${temp_dir}/autossh-1.4f.tgz" -C ${temp_dir}
-    local curr_dir=$(pwd)
     cd ${temp_dir}/autossh-1.4f
     ./configure --prefix=${ME_LIB_AUTOSSH} && make && make install
     if (( $? == 0 )); then
@@ -43,16 +34,6 @@ me_install_autossh() {
 }
 
 me_uninstall_autossh() {
-  if ! which autossh $> /dev/null; then
-    me warn "autossh hasn't been installed :("
-    return 1
-  fi
-
-  if [[ ! $(which autossh) == ${ME_BIN_AUTOSSH} ]]; then
-    me warn "autossh may be installed by your system package manager."
-    return 1
-  fi
-
   printf "It'll remove:\n"
   printf "    (1): ${ME_BIN_AUTOSSH}\n"
   printf "    (2): ${ME_MAN_AUTOSSH}\n"

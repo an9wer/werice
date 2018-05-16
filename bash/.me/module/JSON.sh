@@ -5,11 +5,6 @@ ME_BIN_JSON=${ME_BIN_DIR}/JSON
 # installation
 # -----------------------------------------------------------------------------
 me_install_JSON() {
-  if which JSON &> /dev/null; then
-    me prompt "JSON has been installed :)"
-    return 0
-  fi
-
   if [[ -d $ME_LIB_JSON ]]; then
     if [[ ! -L ${ME_BIN_JSON} ]]; then
       ln -sf "${ME_LIB_JSON}/JSON.sh" "${ME_BIN_JSON}"
@@ -26,16 +21,6 @@ me_install_JSON() {
 }
 
 me_uninstall_JSON() {
-  if ! which JSON &> /dev/null; then
-    me warn "JSON hasn't been installed :("
-    return 1
-  fi
-
-  if [[ ! $(which JSON) == ${ME_BIN_JSON} ]]; then
-    me warn "JSON may be installed by your system package manager."
-    return 1
-  fi
-
   printf "It'll remove:\n"
   printf "    (1): ${ME_BIN_JSON}\n"
   printf "    (2): ${ME_LIB_JSON}\n"

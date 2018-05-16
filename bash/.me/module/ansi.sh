@@ -2,14 +2,9 @@ ME_LIB_ANSI=${ME_LIB_DIR}/ansi
 ME_BIN_ANSI=${ME_BIN_DIR}/ansi
 
 
-# installation (thx: https://rclone.org/install.sh)
+# installation
 # -----------------------------------------------------------------------------
 me_install_ansi() {
-  if which ansi &> /dev/null; then
-    me prompt "ansi has been installed :)"
-    return 0
-  fi
-
   if [[ -d ${ME_LIB_ANSI} ]]; then
     [[ ! -L ${ME_BIN_DIR} ]] && ln -sf ${ME_LIB_ANSI}/ansi ${ME_BIN_ANSI}
     return 0
@@ -24,16 +19,6 @@ me_install_ansi() {
 }
 
 me_uninstall_ansi() {
-  if ! which ansi &> /dev/null; then
-    me warn "ansi hasn't been installed :("
-    return 1
-  fi
-
-  if [[ ! $(which ansi) == ${ME_BIN_ANSI} ]]; then
-    me warn "ansi may be installed by your system package manager."
-    return 1
-  fi
-
   printf "It'll remove:\n"
   printf "    (1): ${ME_BIN_ANSI}\n"
   printf "    (2): ${ME_LIB_ANSI}\n"
