@@ -66,3 +66,5 @@ set number              " print the line number in front of each line.
 set relativenumber      " show the line number relative to the line with
                         " the cursor in front of each line
 set numberwidth=5       " minimal number of columns to use for the line number
+
+set colorcolumn=80      " a comma separated list of screen columns
