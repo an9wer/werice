@@ -8,6 +8,34 @@ execute pathogen#infect()
 map <F2> :NERDTreeToggle<CR>
 
 
+" fzf
+" -----------------------------------------------------------------------------
+" if fzf is installed using git
+if !empty(glob("~/.me/lib/fzf"))
+  set runtimepath+=~/.me/lib/fzf
+endif
+
+" Customize fzf colors to match your color scheme
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+" Q: let fzf ignore some files
+" thx: https://github.com/junegunn/fzf#respecting-gitignore
+" let $FZF_DEFAULT_COMMAND="find -L . ! -name '*.pyc'"
+" let $FZF_DEFAULT_OPTS="--height 100% --preview 'cat {}' --bind alt-j:preview-down,alt-k:preview-up,alt-b:preview-page-up,alt-f:preview-page-down"
+
 
 " options
 " -----------------------------------------------------------------------------
