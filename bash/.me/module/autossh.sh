@@ -51,3 +51,8 @@ me_uninstall_autossh() {
     me prompt "autossh has been uninstalled :)"
   fi 
 }
+
+me_unset_autossh() {
+  unset -v ME_BIN_AUTOSSH ME_MAN_AUTOSSH ME_LIB_AUTOSSH
+  unset -f me_install_autossh me_uninstall_autossh me_unset_autossh
+}

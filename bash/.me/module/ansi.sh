@@ -29,11 +29,14 @@ me_uninstall_ansi() {
   if [[ "${sure}" == "y" ]]; then
     rm  ${ME_BIN_ANSI}
     rm -rf ${ME_LIB_ANSI}
-    unset -v ME_LIB_ANSI ME_BIN_ANSI
-    unset -f me_install_ansi me_uninstall_ansi
-    unalias ansi
     me prompt "ansi has been uninstalled :)"
   fi
+}
+
+me_unset_ansi() {
+  unset -v ME_LIB_ANSI ME_BIN_ANSI
+  unset -f me_install_ansi me_uninstall_ansi me_unset_ansi
+  unalias ansi
 }
 
 

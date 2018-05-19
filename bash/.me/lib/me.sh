@@ -16,20 +16,32 @@ me() {
       printf "${BOLD}${RED}%s${END}\n" "$*"
       ;;
 
+    lsm)
+      for mod_name in $(ls ${ME_MODULE_DIR}); do
+        if [[ -L "${ME_BASHRC_DIR}/${mod_name}" ]]; then
+          printf "%-20s${BOLD}${BLUE}%s${END}\n" "${mod_name%\.sh}" "enable"
+        else
+          printf "%-20s${BOLD}${RED}%s${END}\n" "${mod_name%\.sh}" "disable"
+        fi
+      done
+      ;;
+
     addm)  
       local module
       for module in $@; do
-        if which ${module} &> /dev/null; then
-          me prompt "${module} has been installed :)"
-          return 0
-        fi
+        local install=me_install_${module}
 
         if [[ -e ${ME_MODULE_DIR}/${module}.sh ]]; then
           # create links to 'module' directory scripts in 'bashrc.d' directory
-          ln -sf ${ME_MODULE_DIR}/${module}.sh ${ME_BASHRC_DIR}/${module}.sh
-          source ${ME_BASHRC_DIR}/${module}.sh
+          ln -sf ${ME_MODULE_DIR}/${module}.sh ${ME_BASHRC_DIR}/${module}.sh &&
+          source ${ME_BASHRC_DIR}/${module}.sh &&
+          me prompt "create links to ${module} in 'bashrc.d' directory"
 
-          type "me_install_${module}" &> /dev/null && eval "me_install_${module}"
+          # module hasn't been installed and has install function
+          ! which ${module} &> /dev/null && command -v ${install} &> /dev/null &&
+          eval ${install} && me prompt "successfully install ${module}" ||
+          me warn "${module} may be installed by system package manager or is a built-in command."
+
         else
           me warn "${module} doesn't exist in module directory."
         fi
@@ -39,23 +51,33 @@ me() {
     delm) 
       local module
       for module in $@; do
-        if ! which ${module} &> /dev/null; then
+        local uninstall=me_uninstall_${module} unset=me_unset_${module}
+
+        # module command cannot be found
+        if ! command -v ${module} &> /dev/null; then
           me warn "${module} hasn't been installed :("
           return 1
         fi
 
-        if [[ ! $(which ${module}) == ${ME_BIN_DIR}/${module} ]]; then
-          me warn "${module} may be installed by your system package manager."
-          return 1
+        # module command can be found in 'ME_BIN_DIR'
+        if [[ $(which ${module} 2>&1) == ${ME_BIN_DIR}/${module} ]]; then
+          command -v ${uninstall} &> /dev/null && eval ${uninstall}
+        else
+          local warning="${module} may be installed by system package manager "
+          local warning+="or may be bash builtin command. "
+          local warning+="we'll just remove module's symbolic file in 'bashrc.d'"
+          me warn ${warning}
         fi
 
-        if [[ -L ${ME_BASHRC_DIR}/${module}.sh ]]; then
-          type "me_uninstall_${module}" &> /dev/null &&
-          eval "me_uninstall_${module}" &&
-          rm ${ME_BASHRC_DIR}/${module}.sh # remove module links in 'bashrc.d' directory
-        else
-          me warn "${module} doesn't exist or can't be removed (not a symbolic file)."
-        fi
+        # remove module.sh which is in 'bashrc.d' directory
+        [[ -L ${ME_BASHRC_DIR}/${module}.sh ]] &&
+        rm ${ME_BASHRC_DIR}/${module}.sh &&
+        me prompt "successfully remove module's symbolic file in 'bushrc.d" ||
+        me warn "${module} doesn't exist or can't be removed (not a symbolic file)."
+
+        # unset all variables in module
+        command -v ${unset} &> /dev/null && eval ${unset} && me prompt "unset all variables in ${module}"
+
       done
       ;;
 

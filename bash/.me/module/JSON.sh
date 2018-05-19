@@ -31,8 +31,11 @@ me_uninstall_JSON() {
   if [[ "${sure}" == "y" ]]; then
     rm ${ME_BIN_JSON}
     rm -rf ${ME_LIB_JSON}
-    unset -v ME_LIB_JSON ME_BIN_JSON
-    unset -f me_install_JSON me_uninstall_JSON
     me prompt "JSON has been uninstalled :)"
   fi
+}
+
+me_unset_JSON() {
+  unset -v ME_LIB_JSON ME_BIN_JSON
+  unset -f me_install_JSON me_uninstall_JSON me_unset_JSON
 }

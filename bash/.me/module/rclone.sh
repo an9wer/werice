@@ -59,9 +59,12 @@ me_uninstall_rclone() {
     rm ${ME_BIN_RCLONE}
     rm ${ME_MAN_RCLONE} && mandb &> /dev/null
     rm -rf ${ME_LIB_RCLONE}
-    unset -v ME_LIB_RCLONE ME_BIN_RCLONE ME_MAN_RCLONE
-    unset -f me_install_rclone me_uninstall_rclone rclone
   fi
+}
+
+me_unset_rclone() {
+  unset -v ME_LIB_RCLONE ME_BIN_RCLONE ME_MAN_RCLONE
+  unset -f me_install_rclone me_uninstall_rclone me_unset_rlone rclone
 }
 
 

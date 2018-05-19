@@ -62,3 +62,8 @@ me_uninstall_fzf() {
     me prompt "fzf has been uninstalled :)"
   fi 
 }
+
+me_unset_fzf() {
+  unset -v ME_BIN_FZF ME_LIB_FZF
+  unset -f me_install_fzf me_uninstall_fzf
+}

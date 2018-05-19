@@ -1,5 +1,12 @@
+# installation
+# -----------------------------------------------------------------------------
+me_unset_ssh() {
+  unset -f me_unset_ssh sshh
+}
+
+
 # usage
 # -----------------------------------------------------------------------------
 sshh() {
-  grep -w -i "Host" ~/.ssh/config | sed 's/Host//'
+  grep -wi "Host" ~/.ssh/config | grep -wv "\*" | sed 's/Host//'
 }
