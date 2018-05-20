@@ -1,0 +1,6 @@
+*
+!.gitignore
+!bundle
+!autoload
+!plugin
+!ftplugin

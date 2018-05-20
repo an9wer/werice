@@ -11,17 +11,17 @@ export ME_BASHRC_DIR=${ME_DIR}/bashrc.d
 
 # environment variable
 # -----------------------------------------------------------------------------
-export EDITOR=vi
-export VISUAL=vi
+export EDITOR=vim
+export VISUAL=vim
 
 # fc builtin editor
-export FCEDIT=vi
+export FCEDIT=vim
 
 # history
 export HISTFILE=~/.bash_history
-export HISTSIZE=1000
-export HISTFILESIZE=10000
-export HISTTIMEFORMAT="%Y/%m/%d %T  "
+export HISTSIZE=        # unlimited
+export HISTFILESIZE=    # unlimited
+export HISTTIMEFORMAT="[%Y/%m/%d %T]  "
 
 if [[ ! "${PATH}" =~ "${ME_BIN_DIR}" ]]; then
   export PATH="${PATH}:${ME_BIN_DIR}"
@@ -54,6 +54,7 @@ alias vimt="vim ~/.tmux.conf"
 
 alias sourceb="source ~/.bashrc"
 
+alias cdb="cd $(readlink -m ${ME_DIR}/..)"
 alias cdm="cd $(readlink -m ${ME_DIR})"
 
 alias info="info --vi-keys"
