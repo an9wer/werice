@@ -1,0 +1,9 @@
+[submodule "bash/.vim/bundle/nerdtree"]
+	path = bash/.vim/bundle/nerdtree
+	url = https://github.com/scrooloose/nerdtree.git
+[submodule "bash/.vim/bundle/fzf.vim"]
+	path = bash/.vim/bundle/fzf.vim
+	url = https://github.com/junegunn/fzf.vim.git
+[submodule "bash/.vim/bundle/accelerated-smooth-scroll"]
+	path = bash/.vim/bundle/accelerated-smooth-scroll
+	url = https://github.com/yonchu/accelerated-smooth-scroll.git

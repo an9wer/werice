@@ -1,6 +1,10 @@
 " runtimepath
 " -----------------------------------------------------------------------------
+if empty(glob("~/.vim/autoload/pathogen.vim"))  "download pathogen.vim
+  sil exe "!curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim"
+endif 
 execute pathogen#infect()
+
 
 " NERDTree
 " -----------------------------------------------------------------------------

@@ -1,2 +1,5 @@
 *
 !.gitignore
+!accelerated-smooth-scroll
+!fzf.vim
+!nerdtree
