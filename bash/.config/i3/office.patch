@@ -1,6 +1,6 @@
 --- config.orig	2018-05-21 15:03:13.783227489 +0800
-+++ config	2018-05-21 16:02:29.162024219 +0800
-@@ -175,3 +175,106 @@
++++ config	2018-05-21 18:42:18.326209664 +0800
+@@ -175,3 +175,107 @@
  
  # default config
  # =============================================================================
@@ -93,11 +93,12 @@
 +# customized mode
 +# -----------------------------------------------------------------------------
 +mode "application" {
-+    bindsym $mod+l exec notify-send -t 10 "\nc chrome\ne netease-cloud-music\nf FoxitReader\nn nautilus\ns shadowsocks"
++    bindsym $mod+l exec notify-send -t 10 "\nc chrome\ne evolution\nf FoxitReader\nm netease-cloud-music\nn nautilus\ns shadowsocks"
 +
 +    bindsym c exec google-chrome; mode "default"
-+    bindsym e exec netease-cloud-music; mode "default"
++    bindsym e exec evolution; mode "default"
 +    bindsym f exec FoxitReader; mode "default"
++    bindsym m exec netease-cloud-music; mode "default"
 +    bindsym n exec nautilus; mode "default"
 +    bindsym s exec "~/Tools/shadowsocks/Shadowsocks-Qt5-3.0.0-x86_64.AppImage"; mode "default"
 +
