@@ -22,6 +22,7 @@ export HISTFILE=~/.bash_history
 export HISTSIZE=        # unlimited
 export HISTFILESIZE=    # unlimited
 export HISTTIMEFORMAT="[%Y/%m/%d %T]  "
+export HISTIGNORE="ls:ll:history"
 
 if [[ ! "${PATH}" =~ "${ME_BIN_DIR}" ]]; then
   export PATH="${PATH}:${ME_BIN_DIR}"
@@ -47,6 +48,8 @@ alias ll="ls -l"
 alias grep="grep --color=auto"
 alias egrep="egrep --color=auto"
 alias fgrep="fgrep --color=auto"
+
+alias diff="diff --color=auto"
 
 alias vimv="vim ~/.vimrc"
 alias vimb="vim ~/.bashrc"

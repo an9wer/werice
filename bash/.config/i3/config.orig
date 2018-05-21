@@ -95,16 +95,16 @@ bindsym $mod+a focus parent
 # focus the child container
 bindsym $mod+d focus child
 
-set $ws1  "1: Chrome"
+set $ws1  "1: Browser"
 set $ws2  "2: Terminal"
-set $ws3  "3: FoxitReader"
+set $ws3  "3: Reader"
 set $ws4  "4"
 set $ws5  "5"
 set $ws6  "6"
 set $ws7  "7"
 set $ws8  "8"
 set $ws9  "9"
-set $ws10 "10: Music"
+set $ws0  "10: Music"
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -116,7 +116,7 @@ bindsym $mod+6 workspace $ws6
 bindsym $mod+7 workspace $ws7
 bindsym $mod+8 workspace $ws8
 bindsym $mod+9 workspace $ws9
-bindsym $mod+0 workspace $ws10
+bindsym $mod+0 workspace $ws0
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $ws1
@@ -128,7 +128,7 @@ bindsym $mod+Shift+6 move container to workspace $ws6
 bindsym $mod+Shift+7 move container to workspace $ws7
 bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
-bindsym $mod+Shift+0 move container to workspace $ws10
+bindsym $mod+Shift+0 move container to workspace $ws0
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -145,16 +145,16 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym h resize shrink width 10 px or 10 ppt
-        bindsym j resize grow height 10 px or 10 ppt
-        bindsym k resize shrink height 10 px or 10 ppt
-        bindsym l resize grow width 10 px or 10 ppt
+        bindsym h resize grow width 5 px or 5 ppt
+        bindsym j resize shrink height 5 px or 5 ppt
+        bindsym k resize grow height 5 px or 5 ppt
+        bindsym l resize shrink width 5 px or 5 ppt
 
         # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+        bindsym Left resize grow width 5 px or 5 ppt
+        bindsym Down resize shrink height 5 px or 5 ppt
+        bindsym Up resize grow height 5 px or 5 ppt
+        bindsym Right resize shrink width 5 px or 5 ppt
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
@@ -164,125 +164,14 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-mode "application" {
-    bindsym c exec chromium
-    bindsym f exec FoxitReader
-    bindsym n exec nautilus
-    bindsym e exec netease-cloud-music
 
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-    bindsym $mod+p mode "default"
-}
-
-bindsym $mod+p mode "application"
-
-
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-bar {
-
-    mode hide
-    hidden_state hide
-    modifier $mod
-
-    position bottom
-    strip_workspace_numbers no
-
-    colors {
-        separator #666666
-        background #222222
-        statusline #dddddd
-        focused_workspace #0088CC #0088CC #ffffff
-        active_workspace #333333 #333333 #ffffff
-        inactive_workspace #333333 #333333 #888888
-        urgent_workspace #2f343a #900000 #ffffff
-    }
-
-    status_command i3status
-}
-
-
-# client color
-# -----------------------------------------------------------------------------
-# class                 border  backgr. text    indicator child_border
-#client.focused          #4c7899 #285577 #ffffff #2e9ef4   #285577
-#client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
-#client.unfocused        #333333 #222222 #888888 #292d2e   #222222
-#client.urgent           #2f343a #900000 #ffffff #900000   #900000
-#client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
-#client.background       #ffffff
-
-
-# class                     border  backgr. text    indicator child_border
+# client class              border  backgr. text    indicator child_border
 client.focused              #222222 #444444 #BBBBBB #005394
 client.focused_inactive     #1A1A1A #1A1A1A #747474 #1A1A1A
 client.unfocused            #1A1A1A #1A1A1A #747474 #1A1A1A
 client.urgent               #1A1A1A #EA4C59 #a5a5a5
 client.background           #121212
 
-#client.focused              #222222 #222222 #BBBBBB #4F4F4F
-#client.focused_inactive     #1A1A1A #1A1A1A #747474 #747474
-#client.unfocused            #1A1A1A #1A1A1A #747474 #1A1A1A
-#client.urgent               #1A1A1A #EA4C59 #a5a5a5 #1A1A1A
-#client.background           #121212
-
 
 # default config
-# -----------------------------------------------------------------------------
-default_orientation horizontal
-new_window pixel 0
-mouse_warping none
-
-
-# workspace output
-# -----------------------------------------------------------------------------
-set $left_monitor DVI-D-0
-set $right_monitor VGA-0
-
-workspace 1 output $left_monitor
-workspace 3 output $left_monitor
-workspace 5 output $left_monitor
-workspace 7 output $left_monitor
-
-workspace 2 output $right_monitor
-workspace 4 output $right_monitor
-workspace 6 output $right_monitor
-workspace 8 output $right_monitor
-workspace 10 output $right_monitor
-
-
-# for window
-# -----------------------------------------------------------------------------
-for_window [class="(?i)urxvt"] border pixel 4
-# Automatically switch to a workspace when opening an application assigned to it
-for_window[class="."] focus
-
-
-# assignment
-# -----------------------------------------------------------------------------
-assign [class="(?i)google-chrome"] $ws1
-assign [class="(?)URxvt"] $ws2
-assign [class="Foxit Reader"] $ws3
-#assign [class="shadowsocks-qt5"] $ws10
-assign [class="netease-cloud-music"] $ws10
-
-
-# key bind
-# -----------------------------------------------------------------------------
-bindsym $mod+z exec "i3lock -i ~/Pictures/wallpapers/RickMorty.png -c 000000"
-
-# need to set Master/Headphone/Front
-bindsym XF86AudioRaiseVolume exec amixer -q set Master 2dB+ unmute
-bindsym XF86AudioLowerVolume exec amixer -q set Master 2dB- unmute
-#bindsym XF86AudioMute exec amixer -q set Master toggle
-
-
-# startup programe
-# -----------------------------------------------------------------------------
-exec --no-startup-id feh --bg-fill ~/Pictures/wallpapers/5.jpg
-exec --no-startup-id ss-qt5
-
-# default "Startup" workspace
-exec --no-startup-id i3-msg rename workspace 1 to $ws1
-exec --no-startup-id i3-msg rename workspace 2 to $ws2
+# =============================================================================
