@@ -1,0 +1,86 @@
+--- config.orig	2018-05-21 22:03:02.663474221 +0800
++++ config	2018-05-21 22:36:39.053414336 +0800
+@@ -175,3 +175,83 @@
+ 
+ # default config
+ # =============================================================================
++default_orientation horizontal
++new_window pixel 0
++mouse_warping none
++
++
++# i3bar to display a workspace bar
++# -----------------------------------------------------------------------------
++bar {
++
++    mode hide
++    hidden_state hide
++    modifier $mod
++
++    position bottom
++    strip_workspace_numbers no
++
++    colors {
++        separator  #666666
++        background #222222
++        statusline #dddddd
++        focused_workspace  #0088CC #0088CC #ffffff
++        active_workspace   #333333 #333333 #ffffff
++        inactive_workspace #333333 #333333 #888888
++        urgent_workspace   #2f343a #900000 #ffffff
++    }
++
++    status_command i3status
++}
++
++
++# for window
++# -----------------------------------------------------------------------------
++# automatically switch to a workspace when opening an application assigned to it
++for_window[class=".*"] focus
++# set urxvt window's border
++for_window [class="(?i)urxvt"] border pixel 4
++
++
++# assignment
++# -----------------------------------------------------------------------------
++assign [class="(?i)chromium"] $ws1
++assign [class="(?i)urxvt"] $ws2
++assign [class="(?i)Foxit Reader"] $ws3
++assign [class="(?i)spotify"] $ws0
++assign [class="shadowsocks-qt5"] $ws0
++
++
++# key bind
++# -----------------------------------------------------------------------------
++# window lock
++bindsym $mod+z exec "i3lock -i ~/Pictures/wallpapers/lock.png -c 000000"
++
++# TODO: need to set Master/Headphone/Front
++bindsym XF86AudioRaiseVolume exec amixer -q set Master 2dB+ unmute
++bindsym XF86AudioLowerVolume exec amixer -q set Master 2dB- unmute
++#bindsym XF86AudioMute exec amixer -q set Master toggle
++
++
++# startup programe
++# -----------------------------------------------------------------------------
++exec --no-startup-id feh --bg-fill ~/Pictures/wallpapers/wallpaper.jpg
++exec --no-startup-id ss-qt5
++
++
++# customized mode
++# -----------------------------------------------------------------------------
++mode "application" {
++    bindsym $mod+l exec notify-send -t 10 "\nc chromium\nf FoxitReader\nm spotify\ns shadowsocks"
++
++    bindsym c exec chromium; mode "default"
++    bindsym f exec FoxitReader; mode "default"
++    bindsym m exec spotify; mode "default"
++    bindsym s exec ss-qt5; mode "default"
++
++    bindsym Return mode "default"
++    bindsym Escape mode "default"
++    bindsym $mod+p mode "default"
++}
++
++bindsym $mod+p mode "application"
