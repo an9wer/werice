@@ -13,3 +13,6 @@
 [submodule "bash/.vim/bundle/vim-SearchHighlighting"]
 	path = bash/.vim/bundle/vim-SearchHighlighting
 	url = https://github.com/inkarkat/vim-SearchHighlighting.git
+[submodule "bash/.vim/bundle/vimwiki"]
+	path = bash/.vim/bundle/vimwiki
+	url = https://github.com/vimwiki/vimwiki.git
