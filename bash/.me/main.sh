@@ -22,7 +22,7 @@ export HISTFILE=~/.bash_history
 export HISTSIZE=        # unlimited
 export HISTFILESIZE=    # unlimited
 export HISTTIMEFORMAT="[%Y/%m/%d %T]  "
-export HISTIGNORE="ls:ll:history"
+export HISTIGNORE="ls:ll:pwd:vim:history"
 
 if [[ ! "${PATH}" =~ "${ME_BIN_DIR}" ]]; then
   export PATH="${PATH}:${ME_BIN_DIR}"

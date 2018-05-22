@@ -100,3 +100,41 @@ set relativenumber      " show the line number relative to the line with
 set numberwidth=5       " minimal number of columns to use for the line number
 
 set colorcolumn=80      " a comma separated list of screen columns
+
+
+" key map (see h: key-notation)
+" -----------------------------------------------------------------------------
+
+" fix meta-keys <M-A> ... <M-Z> which generate <Esc>a ... <Escz
+" thx: http://vim.wikia.com/wiki/VimTip738
+" thx: https://stackoverflow.com/a/10216459
+" thx: http://vim.wikia.com/wiki/Get_Alt_key_to_work_in_terminal
+let s:alpha = 'a'
+while s:alpha <= 'z'
+  execute "set <M-" . toupper(s:alpha) . ">=\e" . s:alpha
+  "execute "imap \e" . s:alpha . " <M-" . toupper(s:alpha) . ">"
+  let s:alpha = nr2char(1+char2nr(s:alpha))
+endwhile
+unlet s:alpha
+
+" redefine commandline editing key (see h: cmdline-editing)
+" move cursor to the begining/end
+cnoremap <C-A> <Home>
+cnoremap <C-E> <End>
+" move cursor left/right
+cnoremap <C-B> <Left>
+cnoremap <C-F> <Right>
+" move cursor one word left/right
+cnoremap <M-B> <S-Left>
+cnoremap <M-F> <S-Right>
+
+" redefine insert special key (see h: ins-special-key)
+" move cursor to the begining/end
+inoremap <C-A> <Home>
+inoremap <C-E> <End>
+" move cursor left/right
+inoremap <C-B> <Left>
+inoremap <C-F> <Right>
+" move cursor one word left/right
+inoremap <M-B> <S-Left>
+inoremap <M-F> <S-Right>
