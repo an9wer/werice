@@ -9,7 +9,22 @@ execute pathogen#infect()
 " NERDTree
 " -----------------------------------------------------------------------------
 "set runtimepath^=~/.vim/bundle/NERDTreeToggle
-map <F2> :NERDTreeToggle<CR>
+"map <F2> :NERDTreeToggle<CR>
+
+map <F2> :NERDTreeToggleOrFind<CR>
+command! NERDTreeToggleOrFind call <SID>NERDTreeToggleOrFind()
+
+function! s:NERDTreeToggleOrFind()
+  if exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1
+    execute ":NERDTreeClose"
+  else
+    if expand("%:t") != ''
+      execute ":NERDTreeFind"
+    else
+      execute ":NERDTreeToggle"
+    endif
+  endif
+endfunction
 
 
 " fzf
@@ -39,6 +54,11 @@ let g:fzf_colors =
 " thx: https://github.com/junegunn/fzf#respecting-gitignore
 " let $FZF_DEFAULT_COMMAND="find -L . ! -name '*.pyc'"
 " let $FZF_DEFAULT_OPTS="--height 100% --preview 'cat {}' --bind alt-j:preview-down,alt-k:preview-up,alt-b:preview-page-up,alt-f:preview-page-down"
+
+
+" vimwiki
+let g:vimwiki_list =
+\ [{'path': '~/Documents/notes', 'path_html': '~/Documents/notes_html'}]
 
 
 " options
