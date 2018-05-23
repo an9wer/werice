@@ -96,6 +96,7 @@ set shiftwidth=4        " number of spaces to use for each step of (auto)indent
 set expandtab           " replace <Tab> with appropriate number of sapce
 set autoindent          " automatically copy indent from current line when
                         " starting a new line
+set formatoptions=tqlj  " automatic formating
 
 " Q: delay when pressing <SHIFT> + o after pressing <ESC>
 " thx: https://stackoverflow.com/a/2158610
