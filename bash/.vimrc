@@ -5,6 +5,8 @@ if empty(glob("~/.vim/autoload/pathogen.vim"))  "download pathogen.vim
 endif 
 execute pathogen#infect()
 
+let g:gundo_prefer_python3 = 1
+nnoremap <F5> :GundoToggle<CR>
 
 " NERDTree
 " -----------------------------------------------------------------------------
@@ -18,7 +20,7 @@ function! s:NERDTreeToggleOrFind()
   if exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1
     execute ":NERDTreeClose"
   else
-    if expand("%:t") != ''
+    if expand("%:t") != '' && glob("%") != ''
       execute ":NERDTreeFind"
     else
       execute ":NERDTreeToggle"
@@ -90,13 +92,17 @@ set history=50          " keep 50 lines of command line history
 set ruler               " show the line and column number of the cursor
                         " position, separated by a comma
 
-" you may need to see ':h retab' when you want to change all tab in some file.
+" you may need to use :retab when you want to change all tab in some file.
 set tabstop=4           " number of spaces that a <Tab> in the file counts for
 set shiftwidth=4        " number of spaces to use for each step of (auto)indent
 set expandtab           " replace <Tab> with appropriate number of sapce
 set autoindent          " automatically copy indent from current line when
                         " starting a new line
-set formatoptions=tqlj  " automatic formating
+
+set wrap                " lines longer than the width of the window will wrap
+                        " and displaying continues on the next line.
+set textwidth=0         " maximum width of text that is being inserted
+set formatoptions=tqjmB " automatic formating
 
 " Q: delay when pressing <SHIFT> + o after pressing <ESC>
 " thx: https://stackoverflow.com/a/2158610
@@ -113,7 +119,7 @@ set suffixes+=.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
 
 " modelines have historically been a source of security/resource
 " vulnerabilities -- disable by default, even when 'nocompatible' is set
-set nomodeline
+" set nomodeline
 
 set number              " print the line number in front of each line.
 set relativenumber      " show the line number relative to the line with
@@ -122,6 +128,7 @@ set numberwidth=5       " minimal number of columns to use for the line number
 
 set colorcolumn=80      " a comma separated list of screen columns
 
+set hidden
 
 " key map (see h: key-notation)
 " -----------------------------------------------------------------------------
@@ -159,3 +166,5 @@ inoremap <C-F> <Right>
 " move cursor one word left/right
 inoremap <M-B> <S-Left>
 inoremap <M-F> <S-Right>
+
+" vim: set tabstop=2 shiftwidth=2 expandtab fileformat=unix :

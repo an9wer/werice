@@ -1,7 +1,8 @@
 " Vim global plugin for executing contents of register in visual mode
-" Last Change:  2018 May 23                                             
-" Maintainer:   an9wer <an9wer@gmail.com>     
+" Last Change:  2018 May 24
+" Maintainer:   an9wer <an9wer@gmail.com>
 " License:      This file is placed in the public domain.
+
 
 if exists('g:loaded_visualat')
   finish
