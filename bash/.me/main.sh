@@ -57,8 +57,8 @@ alias vimt="vim ~/.tmux.conf"
 
 alias sourceb="source ~/.bashrc"
 
-alias cdb="cd $(readlink -m ${ME_DIR}/..)"
-alias cdm="cd $(readlink -m ${ME_DIR})"
+alias cdb="cd $(readlink -m ${ME_DIR}/..)"    # directory 'bash'
+alias cdm="cd $(readlink -m ${ME_DIR})"       # directory 'me'
 
 alias info="info --vi-keys"
 

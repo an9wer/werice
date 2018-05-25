@@ -10,9 +10,6 @@ nnoremap <F5> :GundoToggle<CR>
 
 " NERDTree
 " -----------------------------------------------------------------------------
-"set runtimepath^=~/.vim/bundle/NERDTreeToggle
-"map <F2> :NERDTreeToggle<CR>
-
 map <F2> :NERDTreeToggleOrFind<CR>
 command! NERDTreeToggleOrFind call <SID>NERDTreeToggleOrFind()
 
@@ -52,15 +49,11 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
-" Q: let fzf ignore some files
-" thx: https://github.com/junegunn/fzf#respecting-gitignore
-" let $FZF_DEFAULT_COMMAND="find -L . ! -name '*.pyc'"
-" let $FZF_DEFAULT_OPTS="--height 100% --preview 'cat {}' --bind alt-j:preview-down,alt-k:preview-up,alt-b:preview-page-up,alt-f:preview-page-down"
-
 
 " vimwiki
+" -----------------------------------------------------------------------------
 let g:vimwiki_list =
-\ [{'path': '~/Documents/notes', 'path_html': '~/Documents/notes_html'}]
+  \ [{'path': '~/Documents/notes', 'path_html': '~/Documents/notes_html'}]
 
 
 " options
@@ -102,7 +95,9 @@ set autoindent          " automatically copy indent from current line when
 set wrap                " lines longer than the width of the window will wrap
                         " and displaying continues on the next line.
 set textwidth=0         " maximum width of text that is being inserted
-set formatoptions=tqjmB " automatic formating
+" Q: set formatoptions=qj doesn't work
+" thx: https://stackoverflow.com/a/8748154
+autocmd BufNewFile,BufRead,BufWinEnter * setlocal formatoptions=qj
 
 " Q: delay when pressing <SHIFT> + o after pressing <ESC>
 " thx: https://stackoverflow.com/a/2158610
@@ -167,4 +162,8 @@ inoremap <C-F> <Right>
 inoremap <M-B> <S-Left>
 inoremap <M-F> <S-Right>
 
-" vim: set tabstop=2 shiftwidth=2 expandtab fileformat=unix :
+
+" load customized config
+" -----------------------------------------------------------------------------
+packadd! config   " The extra '!' is so that the plugin isn't loaded if Vim was
+                  " started with '-noplugin'.
