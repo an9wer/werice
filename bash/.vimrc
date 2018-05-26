@@ -108,8 +108,8 @@ set wrap                " lines longer than the width of the window will wrap
                         " and displaying continues on the next line.
 set textwidth=0         " maximum width of text that is being inserted
 " Q: set formatoptions=qj doesn't work
-" thx: https://stackoverflow.com/a/8748154
-autocmd BufNewFile,BufRead,BufWinEnter * setlocal formatoptions=qj
+" thx: https://stackoverflow.com/a/24170442
+autocmd BufWinEnter * setlocal formatoptions=qj
 
 " Q: delay when pressing <SHIFT> + o after pressing <ESC>
 " thx: https://stackoverflow.com/a/2158610
