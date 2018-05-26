@@ -12,6 +12,12 @@ augroup ftplugin_vimwiki
   " unmap vimwiki's default o and O in normal model
   " nnoremap <silent> <buffer> o :<C-U>call vimwiki#lst#kbd_o()<CR>
   " nnoremap <silent> <buffer> O :<C-U>call vimwiki#lst#kbd_O()<CR>
-  autocmd BufWinEnter *.wiki nunmap <buffer> o
-  autocmd BufWinEnter *.wiki nunmap <buffer> O
+  autocmd BufWinEnter *.wiki
+    \ if !empty(maparg('o', 'n')) |
+    \   nunmap <buffer> o|
+    \ endif
+  autocmd BufWinEnter *.wiki
+    \ if !empty(maparg('O', 'n')) |
+    \   nunmap <buffer> O|
+    \ endif
 augroup END
