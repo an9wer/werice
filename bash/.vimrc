@@ -112,12 +112,12 @@ set textwidth=0         " maximum width of text that is being inserted
 autocmd BufWinEnter * setlocal formatoptions=qj
 
 " Q: delay when pressing <SHIFT> + o after pressing <ESC>
-" thx: https://stackoverflow.com/a/2158610
 " thx: https://github.com/vim/vim/issues/24
 " also check termcap document to find help (:h termcap).
-set notimeout           " don't timeout on mappings
+set notimeout           " do not timeout on mappings
 set ttimeout            " do timeout on terminal key codes
-set timeoutlen=100      " timeout after 100 msec
+set ttimeoutlen=100     " wait up to 100ms after Esc for special key
+
 
 " Suffixes that get lower priority when doing tab completion for filenames.
 " These are files we are not likely to want to edit or read.

@@ -21,3 +21,7 @@ augroup ftplugin_vimwiki
     \   nunmap <buffer> O|
     \ endif
 augroup END
+
+
+inoreabbrev <buffer> 2= ==  ==<Left><Left><Left>
+inoreabbrev <buffer> = =  =<Left><Left>
