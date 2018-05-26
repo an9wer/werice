@@ -1,4 +1,3 @@
-set formatoptions=qjmB  " automatic formating
-set tabstop=2           " number of spaces that a <Tab> in the file counts for
-set shiftwidth=2        " number of spaces to use for each step of (auto)indent
-set expandtab           " replace <Tab> with appropriate number of sapce
+setlocal tabstop=2      " number of spaces that a <Tab> in the file counts for
+setlocal shiftwidth=2   " number of spaces to use for each step of (auto)indent
+setlocal expandtab      " replace <Tab> with appropriate number of sapce

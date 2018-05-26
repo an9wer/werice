@@ -22,7 +22,8 @@ export HISTFILE=~/.bash_history
 export HISTSIZE=        # unlimited
 export HISTFILESIZE=    # unlimited
 export HISTTIMEFORMAT="[%Y/%m/%d %T]  "
-export HISTIGNORE="ls:ll:pwd:vim:history"
+export HISTCONTROL=ignoredups
+export HISTIGNORE="ls:ll:pwd:vim:history:git status"
 
 if [[ ! "${PATH}" =~ "${ME_BIN_DIR}" ]]; then
   export PATH="${PATH}:${ME_BIN_DIR}"
@@ -54,9 +55,11 @@ alias diff="diff --color=auto"
 alias vimv="vim ~/.vimrc"
 alias vimb="vim ~/.bashrc"
 alias vimt="vim ~/.tmux.conf"
+alias vimm="vim ~/.me/main.sh"
 
 alias sourceb="source ~/.bashrc"
 
+alias cdc="cd $(readlink -m ${ME_DIR}/../..)" # directory 'mydotfiles'
 alias cdb="cd $(readlink -m ${ME_DIR}/..)"    # directory 'bash'
 alias cdm="cd $(readlink -m ${ME_DIR})"       # directory 'me'
 
@@ -71,10 +74,7 @@ source ${ME_LIB_DIR}/me.sh
 # -----------------------------------------------------------------------------
 
 
-# funny cowsay
-#if command -v fortune &> /dev/null && command -v cowsay &> /dev/null; then
-#  fortune | cowsay
-#fi
+# say hello
 command -v neofetch &> /dev/null && neofetch
 
 # load custom bashrc

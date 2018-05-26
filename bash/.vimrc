@@ -2,7 +2,7 @@
 " -----------------------------------------------------------------------------
 if empty(glob("~/.vim/autoload/pathogen.vim"))  "download pathogen.vim
   sil exe "!curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim"
-endif 
+endif
 execute pathogen#infect()
 
 let g:gundo_prefer_python3 = 1
@@ -55,6 +55,16 @@ let g:fzf_colors =
 let g:vimwiki_list =
   \ [{'path': '~/Documents/notes', 'path_html': '~/Documents/notes_html'}]
 
+"let g:vimwiki_folding = 'list'
+
+" vimwiki header color
+highlight VimwikiHeader1 ctermbg=DarkRed
+highlight VimwikiHeader2 ctermbg=DarkGreen
+highlight VimwikiHeader3 ctermbg=DarkBlue
+highlight VimwikiHeader4 ctermbg=DarkMagenta
+highlight VimwikiHeader5 ctermbg=DarkYellow
+highlight VimwikiHeader6 ctermbg=DarkCyan
+
 
 " options
 " -----------------------------------------------------------------------------
@@ -82,6 +92,8 @@ set backspace=indent,eol,start  " allow backspacing over everything
                                 " in insert mode
 
 set history=50          " keep 50 lines of command line history
+set showcmd             " show (partial) command in the last line of the screen,
+                        " set this option off if your terminal is slow
 set ruler               " show the line and column number of the cursor
                         " position, separated by a comma
 
@@ -116,7 +128,7 @@ set suffixes+=.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
 " vulnerabilities -- disable by default, even when 'nocompatible' is set
 " set nomodeline
 
-set number              " print the line number in front of each line.
+set number              " print the line number in front of each line
 set relativenumber      " show the line number relative to the line with
                         " the cursor in front of each line
 set numberwidth=5       " minimal number of columns to use for the line number
@@ -128,7 +140,7 @@ set hidden
 " key map (see h: key-notation)
 " -----------------------------------------------------------------------------
 
-" fix meta-keys <M-A> ... <M-Z> which generate <Esc>a ... <Escz
+" fix meta-keys <M-A> ... <M-Z> which generate <Esc>a ... <Esc>z
 " thx: http://vim.wikia.com/wiki/VimTip738
 " thx: https://stackoverflow.com/a/10216459
 " thx: http://vim.wikia.com/wiki/Get_Alt_key_to_work_in_terminal
@@ -163,7 +175,15 @@ inoremap <M-B> <S-Left>
 inoremap <M-F> <S-Right>
 
 
+" color
+" -----------------------------------------------------------------------------
+" tab bar
+highlight TabLineFill ctermfg=DarkGray
+highlight TabLine ctermbg=Gray
+highlight TabLineSel ctermbg=DarkBlue
+
+
 " load customized config
 " -----------------------------------------------------------------------------
 packadd! config   " The extra '!' is so that the plugin isn't loaded if Vim was
-                  " started with '-noplugin'.
+                  " started with '-noplugin'
