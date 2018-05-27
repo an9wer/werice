@@ -58,12 +58,12 @@ let g:vimwiki_list =
 "let g:vimwiki_folding = 'list'
 
 " vimwiki header color
-highlight VimwikiHeader1 ctermbg=DarkRed
-highlight VimwikiHeader2 ctermbg=DarkGreen
-highlight VimwikiHeader3 ctermbg=DarkBlue
-highlight VimwikiHeader4 ctermbg=DarkMagenta
-highlight VimwikiHeader5 ctermbg=DarkYellow
-highlight VimwikiHeader6 ctermbg=DarkCyan
+highlight VimwikiHeader1 ctermfg=Black ctermbg=DarkRed
+highlight VimwikiHeader2 ctermfg=Black ctermbg=DarkGreen
+highlight VimwikiHeader3 ctermfg=Black ctermbg=DarkBlue
+highlight VimwikiHeader4 ctermfg=Black ctermbg=DarkMagenta
+highlight VimwikiHeader5 ctermfg=Black ctermbg=DarkYellow
+highlight VimwikiHeader6 ctermfg=Black ctermbg=DarkCyan
 
 
 " options
