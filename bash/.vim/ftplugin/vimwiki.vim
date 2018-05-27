@@ -22,26 +22,44 @@ augroup ftplugin_vimwiki
     \ endif
 augroup END
 
-inoreabbrev <buffer>  = <C-R>=execute('VimwikiHeader 1')<CR>
-inoreabbrev <buffer> 1= <C-R>=execute('VimwikiHeader 1')<CR>
-inoreabbrev <buffer> 2= <C-R>=execute('VimwikiHeader 2')<CR>
-inoreabbrev <buffer> 3= <C-R>=execute('VimwikiHeader 3')<CR>
-inoreabbrev <buffer> 4= <C-R>=execute('VimwikiHeader 4')<CR>
-inoreabbrev <buffer> 5= <C-R>=execute('VimwikiHeader 5')<CR>
-inoreabbrev <buffer> 6= <C-R>=execute('VimwikiHeader 6')<CR>
 
-" TODO: Fix problem which 'asdf 5=' will be convert to 'asdf 5 ='
-" use normal command '|' to move to first column in current line (see h: bar)
-command -nargs=1 -buffer VimwikiHeader
-  \ let times = <args> |
-  \ if getline('.') =~ '^$' |
-  \   let insert_cmd = 'normal! i' . repeat('=', times) . '  ' . repeat('=', times) |
-  \   call execute(insert_cmd) |
-  \   let times += 2 |
-  \   let cursor_cmd = 'normal! ' . times . '|' |
-  \   call execute(cursor_cmd) |
-  \ else |
-  \   let insert_cmd = 'normal! i<C-u>' . getline('.') . times . '=' |
-  \   call execute(insert_cmd) |
-  \ endif |
-  \ unlet! times insert_cmd cursor_cmd
+" equal abbreviate
+inoreabbrev <buffer> 1=
+  \ <C-R>=<SID>VimwikiHeader(1)<CR><C-R>=<SID>VimwikiHeaderCursor(1)<CR>
+inoreabbrev <buffer> 2=
+  \ <C-R>=<SID>VimwikiHeader(2)<CR><C-R>=<SID>VimwikiHeaderCursor(2)<CR>
+inoreabbrev <buffer> 3=
+  \ <C-R>=<SID>VimwikiHeader(3)<CR><C-R>=<SID>VimwikiHeaderCursor(3)<CR>
+inoreabbrev <buffer> 4=
+  \ <C-R>=<SID>VimwikiHeader(4)<CR><C-R>=<SID>VimwikiHeaderCursor(4)<CR>
+inoreabbrev <buffer> 5=
+  \ <C-R>=<SID>VimwikiHeader(5)<CR><C-R>=<SID>VimwikiHeaderCursor(5)<CR>
+inoreabbrev <buffer> 6=
+  \ <C-R>=<SID>VimwikiHeader(6)<CR><C-R>=<SID>VimwikiHeaderCursor(6)<CR>
+
+if exists('g:load_ftplugin_vimwiki')
+  finish
+endif
+let g:load_ftplugin_vimwiki = 1
+
+function s:VimwikiHeader(level)
+  let l:lcont = getline('.')
+  if l:lcont =~ '^$'
+    return repeat('=', a:level) . '  ' . repeat('=', a:level)
+  else
+    if getcurpos()[2] == 1
+      normal! cc
+      return repeat('=', a:level) . ' ' . l:lcont . ' ' . repeat('=', a:level)
+    else
+      return a:level . '='
+endfunction
+
+function s:VimwikiHeaderCursor(level)
+  let l:lcont = getline('.')
+  let l:start = strlen(l:lcont) - a:level - 1
+  let l:col = match(l:lcont, ' ' . repeat('=', a:level), l:start)
+  if l:col != -1
+    execute('normal! ' . (l:col+1) . '|')
+  endif
+  return ''
+endfunction
