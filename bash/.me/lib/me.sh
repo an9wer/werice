@@ -60,8 +60,10 @@ me() {
         fi
 
         # module command can be found in 'ME_BIN_DIR'
-        if [[ $(which ${module} 2>&1) == ${ME_BIN_DIR}/${module} ]]; then
-          command -v ${uninstall} &> /dev/null && eval ${uninstall}
+        #if [[ $(which ${module} 2>&1) == ${ME_BIN_DIR}/${module} ]]; then
+        #  command -v ${uninstall} &> /dev/null && eval ${uninstall}
+        if command -v ${uninstall} &> /dev/null; then
+          eval ${uninstall}
         else
           local warning="${module} may be installed by system package manager "
           local warning+="or may be bash builtin command. "

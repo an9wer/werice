@@ -13,7 +13,7 @@ me_install_JSON() {
   fi
     
   me prompt "start to install JSON..."
-  git clone "https://github.com/dominictarr/JSON.sh.git" ${ME_LIB_JSON}
+  git clone --depth 1 "https://github.com/dominictarr/JSON.sh.git" ${ME_LIB_JSON}
   if (( $? == 0 )); then
     chmod 755 "${ME_LIB_JSON}/JSON.sh"
     ln -sf "${ME_LIB_JSON}/JSON.sh" "${ME_BIN_JSON}"

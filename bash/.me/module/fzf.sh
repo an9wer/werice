@@ -56,9 +56,7 @@ me_uninstall_fzf() {
   read -r sure
   if [[ "${sure}" == 'y' ]]; then
     rm ${ME_BIN_FZF}
-    rm -r ${ME_LIB_FZF}
-    unset -v ME_BIN_FZF ME_LIB_FZF
-    unset -f me_install_fzf me_uninstall_fzf
+    rm -rf ${ME_LIB_FZF}
     me prompt "fzf has been uninstalled :)"
   fi 
 }

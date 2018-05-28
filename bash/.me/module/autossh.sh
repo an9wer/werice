@@ -45,9 +45,7 @@ me_uninstall_autossh() {
   if [[ "${sure}" == 'y' ]]; then
     rm ${ME_BIN_AUTOSSH}
     rm ${ME_MAN_AUTOSSH} && mandb $> /dev/null
-    rm -r ${ME_LIB_AUTOSSH}
-    unset -v ME_BIN_AUTOSSH ME_MAN_AUTOSSH ME_LIB_AUTOSSH
-    unset -f me_install_autossh me_uninstall_autossh
+    rm -rf ${ME_LIB_AUTOSSH}
     me prompt "autossh has been uninstalled :)"
   fi 
 }

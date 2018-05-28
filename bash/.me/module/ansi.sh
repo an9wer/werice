@@ -11,7 +11,7 @@ me_install_ansi() {
   fi
 
   me prompt "start to install ansi..."
-  git clone "https://github.com/fidian/ansi.git" ${ME_LIB_ANSI}
+  git clone --depth 1 "https://github.com/fidian/ansi.git" ${ME_LIB_ANSI}
   if (( $? == 0 )); then
     chmod 755 ${ME_LIB_ANSI}/ansi
     ln -sf ${ME_LIB_ANSI}/ansi ${ME_BIN_ANSI}
