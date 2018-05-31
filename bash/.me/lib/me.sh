@@ -96,5 +96,36 @@ me() {
   esac
 }
 
-# need to export function 'me', then we can call it from subshell
+_me_completion() {
+  local pre="${COMP_WORDS[COMP_CWORD - 1]}"
+  local cur="${COMP_WORDS[COMP_CWORD]}"
+  local opt="lsm addm delm job"
+  COMPREPLY=()
+  case ${pre} in
+    me)
+      COMPREPLY=( $(compgen -W "${opt}" -- ${cur}))
+      ;;
+    addm)
+      for mod_name in $(ls ${ME_MODULE_DIR}); do
+        if ! [[ -L "${ME_BASHRC_DIR}/${mod_name}" ]]; then
+          COMPREPLY+=(${mod_name})
+        fi
+      done
+      ;;
+    delm)
+      for mod_name in $(ls ${ME_MODULE_DIR}); do
+        if [[ -L "${ME_BASHRC_DIR}/${mod_name}" ]]; then
+          COMPREPLY+=(${mod_name})
+        fi
+      done
+      ;;
+    *)
+      ;;
+  esac
+}
+
+
+# we need to export function 'me', so that we can call it from subshell
 declare -fx me
+# completion for me
+complete -F _me_completion me

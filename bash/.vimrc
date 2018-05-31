@@ -134,8 +134,10 @@ set relativenumber      " show the line number relative to the line with
 set numberwidth=5       " minimal number of columns to use for the line number
 
 set colorcolumn=80      " a comma separated list of screen columns
+set scrolloff=999       " the cursor line will always be in the middle of the
+                        " window
 
-set hidden
+set hidden              " a buffer becomes hidden when it is abandoned
 
 " key map (see h: key-notation)
 " -----------------------------------------------------------------------------
