@@ -6,7 +6,7 @@ endif
 execute pathogen#infect()
 
 let g:gundo_prefer_python3 = 1
-nnoremap <F5> :GundoToggle<CR>
+nnoremap <F1> :GundoToggle<CR>
 
 " NERDTree
 " -----------------------------------------------------------------------------
@@ -48,6 +48,10 @@ let g:fzf_colors =
   \ 'marker':  ['fg', 'Keyword'],
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
+
+" key bind
+nnoremap <Leader>ff :Files<CR>
+nnoremap <Leader>fb :Buffers<CR>
 
 
 " vimwiki

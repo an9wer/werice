@@ -4,6 +4,10 @@ URxvt.scrollBar: false
 ! URxvt.font: xft:Source Code Pro Semibold:size=10,xft:WenQuanYi Micro Hei Mono:size=10
 URxvt.font: xft:Source Code Pro Semibold:size=11,xft:Noto Sans CJK SC Regular:size=12
 
+! disable iso14755 when hitting ctrl+shift
+! thx: https://urxvt.wordpress.com/2015/05/14/if-youve-been-vexed-by-urxvts-picture-insert-mode-andor-iso-14755-mode-heres-how-to-fix-them/
+URxvt.iso14755: false
+URxvt.iso14755_52: false
 
 ! background & foreground
 !URxvt.depth: 32
