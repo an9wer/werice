@@ -77,3 +77,5 @@ rclone() {
   command rclone $@
   unset http_proxy https_proxy no_proxy
 }
+
+declare -fx rclone

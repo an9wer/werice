@@ -123,8 +123,11 @@ send_sms() {
 }
 
 
+# main
+# -----------------------------------------------------------------------------
 # read variable from config file
-[[ -e "${ME_JOB_DARKSKY_CONF}" ]] && . ${ME_JOB_DARKSKY_CONF} || me warn "config flle doesn't exists"
+[[ -e "${ME_JOB_DARKSKY_CONF}" ]] && . ${ME_JOB_DARKSKY_CONF} ||
+  { me warn "config flle doesn't exists"; exit; }
 
 for (( i=1; i<=${days}; i++ )); do
   generate_message ${i}
