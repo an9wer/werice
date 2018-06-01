@@ -143,6 +143,13 @@ set scrolloff=999       " the cursor line will always be in the middle of the
 
 set hidden              " a buffer becomes hidden when it is abandoned
 
+set background=dark     " When set to 'dark', Vim will try to use colors that
+                        " look good on a dark background.  When set to 'light',
+                        " Vim will try to use colors that look good on a light
+                        " background.
+
+set directory=~/.vim/swap   " list of directory names for the swap file
+
 " key map (see h: key-notation)
 " -----------------------------------------------------------------------------
 
