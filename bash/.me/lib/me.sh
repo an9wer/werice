@@ -38,9 +38,9 @@ me() {
           me prompt "create links to ${module} in 'bashrc.d' directory"
 
           # module hasn't been installed and has install function
-          ! which ${module} &> /dev/null && command -v ${install} &> /dev/null &&
-          eval ${install} && me prompt "successfully install ${module}" ||
-          me warn "${module} may be installed by system package manager or is a built-in command."
+          ! which ${module} &> /dev/null && command -v ${install} &> /dev/null && {
+            eval ${install} && me prompt "successfully install ${module}"
+          } || me warn "${module} may be installed by system package manager or is a built-in command."
 
         else
           me warn "${module} doesn't exist in module directory."
@@ -60,8 +60,6 @@ me() {
         fi
 
         # module command can be found in 'ME_BIN_DIR'
-        #if [[ $(which ${module} 2>&1) == ${ME_BIN_DIR}/${module} ]]; then
-        #  command -v ${uninstall} &> /dev/null && eval ${uninstall}
         if command -v ${uninstall} &> /dev/null; then
           eval ${uninstall}
         else
@@ -74,11 +72,13 @@ me() {
         # remove module.sh which is in 'bashrc.d' directory
         [[ -L ${ME_BASHRC_DIR}/${module}.sh ]] &&
         rm ${ME_BASHRC_DIR}/${module}.sh &&
-        me prompt "successfully remove module's symbolic file in 'bushrc.d" ||
+        me prompt "successfully remove module's symbolic file in 'bushrc.d'" ||
         me warn "${module} doesn't exist or can't be removed (not a symbolic file)."
 
         # unset all variables in module
-        command -v ${unset} &> /dev/null && eval ${unset} && me prompt "unset all variables in ${module}"
+        command -v ${unset} &> /dev/null && {
+          eval ${unset} && me prompt "unset all variables in ${module}"
+        }
 
       done
       ;;
@@ -100,23 +100,29 @@ _me_completion() {
   local pre="${COMP_WORDS[COMP_CWORD - 1]}"
   local cur="${COMP_WORDS[COMP_CWORD]}"
   local opt="lsm addm delm job"
+  local mod_name job_name
   COMPREPLY=()
   case ${pre} in
     me)
-      COMPREPLY=( $(compgen -W "${opt}" -- ${cur}))
+      COMPREPLY=($(compgen -W "${opt}" -- ${cur}))
       ;;
     addm)
       for mod_name in $(ls ${ME_MODULE_DIR}); do
-        if ! [[ -L "${ME_BASHRC_DIR}/${mod_name}" ]]; then
-          COMPREPLY+=(${mod_name})
-        fi
+        [[ ! -L "${ME_BASHRC_DIR}/${mod_name}" && ${mod_name} =~ ^${cur} ]] && {
+          COMPREPLY+=(${mod_name%.sh})
+        }
       done
       ;;
     delm)
       for mod_name in $(ls ${ME_MODULE_DIR}); do
-        if [[ -L "${ME_BASHRC_DIR}/${mod_name}" ]]; then
-          COMPREPLY+=(${mod_name})
-        fi
+        [[ -L "${ME_BASHRC_DIR}/${mod_name}" && "${mod_name}" =~ ^${cur} ]] && {
+            COMPREPLY+=(${mod_name%.sh})
+        }
+      done
+      ;;
+    job)
+      for job_name in $(ls ${ME_JOB_DIR}); do
+        [[ "${job_name}" =~ ^${cur} ]] && COMPREPLY+=(${job_name%.sh})
       done
       ;;
     *)
