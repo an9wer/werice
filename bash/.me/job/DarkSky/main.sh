@@ -6,7 +6,7 @@ command -v JSON &> /dev/null || me addm JSON
 export ME_JOB_DARKSKY_DIR=${ME_JOB_DIR}/DarkSky
 export ME_JOB_DARKSKY_SH=${ME_JOB_DARKSKY_DIR}/DarkSky.sh
 export ME_JOB_DARKSKY_LOG=${ME_JOB_DARKSKY_DIR}/DarkSky.log
-export ME_JOB_DARKSKY_CONF=""
+export ME_JOB_DARKSKY_CONF="~/.config/me/DarkSky.conf"
 
 
 case $1 in
@@ -20,5 +20,8 @@ case $1 in
   -l)
     # usage: me job DarkSky -l
     less ${ME_JOB_DARKSKY_LOG}
+    ;;
+  *)
+    bash ${ME_JOB_DARKSKY_SH} &>> ${ME_JOB_DARKSKY_LOG}
     ;;
 esac
