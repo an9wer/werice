@@ -125,7 +125,8 @@ _me_completion() {
         [[ "${job_name}" =~ ^${cur} ]] && COMPREPLY+=(${job_name%.sh})
       done
       ;;
-    *)
+    -*)
+      COMPREPLY=($(compgen -fd ${cur}))
       ;;
   esac
 }
@@ -134,4 +135,4 @@ _me_completion() {
 # we need to export function 'me', so that we can call it from subshell
 declare -fx me
 # completion for me
-complete -F _me_completion me
+complete -o filenames -F _me_completion me
