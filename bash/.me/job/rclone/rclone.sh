@@ -20,7 +20,7 @@ alert() {
 }
 
 synchronous() {
-  rclone check ${from} ${to} && alert suc || alert err
+  rclone copy ${from} ${to} && alert suc || alert err
 }
 
 # main
