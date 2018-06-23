@@ -56,6 +56,7 @@ alias vimv="vim ~/.vimrc"
 alias vimb="vim ~/.bashrc"
 alias vimt="vim ~/.tmux.conf"
 alias vimm="vim ~/.me/main.sh"
+alias vimtest="vim --noplugin -N -u"
 
 alias sourceb="source ~/.bashrc"
 

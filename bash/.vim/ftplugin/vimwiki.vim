@@ -22,6 +22,14 @@ augroup ftplugin_vimwiki
     \ endif
 augroup END
 
+" equal map
+nnoremap <buffer> <Leader>1 :<C-U>call <SID>VimwikiHeaderWrap(1)<CR>
+nnoremap <buffer> <Leader>2 :<C-U>call <SID>VimwikiHeaderWrap(2)<CR>
+nnoremap <buffer> <Leader>3 :<C-U>call <SID>VimwikiHeaderWrap(3)<CR>
+nnoremap <buffer> <Leader>4 :<C-U>call <SID>VimwikiHeaderWrap(4)<CR>
+nnoremap <buffer> <Leader>5 :<C-U>call <SID>VimwikiHeaderWrap(5)<CR>
+nnoremap <buffer> <Leader>6 :<C-U>call <SID>VimwikiHeaderWrap(6)<CR>
+
 
 " equal abbreviate
 inoreabbrev <buffer> 1=
@@ -41,6 +49,14 @@ if exists('g:load_ftplugin_vimwiki')
   finish
 endif
 let g:load_ftplugin_vimwiki = 1
+
+function s:VimwikiHeaderWrap(level)
+  s/\m^[[:space:]=]*//  " remove starting space and equal symbol
+  s/\m[[:space:]=]*$//  " remove trailing space and esqul symbol
+  let l:header =
+    \ repeat('=', a:level) . ' ' . getline('.') . ' ' . repeat('=', a:level)
+  s/\m.*/\=l:header/
+endfunction
 
 function s:VimwikiHeader(level)
   let l:lcont = getline('.')
