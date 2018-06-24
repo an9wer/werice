@@ -36,7 +36,7 @@ fi
 # ┌
 # └
 BOLD="\[\e[1m\]" RED="\[\e[91m\]" GREEN="\[\e[92m\]" BLUE="\[\e[94m\]" YELLOW="\[\e[93m\]" END="\[\e[0m\]"
-PS1="${YELLOW}┏─━ ${BOLD}${GREEN}\u@\h${END} at ${BOLD}${RED}\t${END} in ${BOLD}${BLUE}\w${END}\n${YELLOW}┗─━ \$${END} "
+PS1="${YELLOW}┏─━ ${BOLD}${GREEN}\u@\h${END} at ${BOLD}${RED}\t${END} in ${BOLD}${BLUE}\w${END}\n${YELLOW}┗─━ \$ ${END}"
 PS2="${YELLOW}┗─━ > ${END}"
 unset BOLD BLUE RED YELLOW END
 

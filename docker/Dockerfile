@@ -9,7 +9,6 @@ SHELL ["/bin/bash", "-c"]
 COPY --chown=root:root set_*.sh /root/
 
 RUN pacman -Syu --noconfirm
-RUN /root/set_ssh.sh
-RUN /root/set_dotfiles.sh
+RUN for script in $(ls /root/set_*.sh); do ${script}; done
 
 EXPOSE 22

@@ -1,14 +1,14 @@
-install_depedence() {
-  pacman -Sy --noconfirm git man vim
-}
+#!/usr/bin/env bash
 
-download_dotfiles() {
-  mkdir ~/Naruto && cd ~/Naruto
-  git clone https://github.com/an9wer/mydotfiles.git
+{
+  # install depedence
+  pacman -Sy --needed --noconfirm git man vim curl
+} && {
+  # download dotfiles
+  dir=/usr/local/src/mydotfiles
+  git clone --depth 1 https://github.com/an9wer/mydotfiles.git ${dir}
+  cd ${dir} && git submodule update --init --recursive
+} && {
+  # install dotfiles
+  ${dir}/bash/install.sh
 }
-
-install_dotfiles() {
-  ~/Naruto/mydotfiles/bash/install.sh
-}
-
-install_depedence && download_dotfiles && install_dotfiles
