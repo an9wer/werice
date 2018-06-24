@@ -15,3 +15,15 @@ for target in $(ls ${DIR}/.config); do
   [[ -e "${home_target}" ]] && mv "${home_target}" "${home_target}.bak"
   ln -sf "${dir_target}" "${home_target}"
 done
+
+# bash_profile
+[[ -f ~/.bash_profile ]] && cp ~/.bash_profile ~/.bash_profile.bak
+cat << EOF >> ~/.bash_profile
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+[[ ! $DISPLAY && $XDG_VTNR -eq 1 ]] && startx
+EOF
+
+# bashrc
+[[ -f ~/.bashrc ]] && cp ~/.bashrc ~/.bashrc.bak
+echo '[[ -d ~/.me ]] && . ~/.me/main.sh' >> ~/.bashrc
