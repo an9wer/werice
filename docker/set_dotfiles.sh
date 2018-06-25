@@ -2,7 +2,7 @@
 
 {
   # install depedence
-  pacman -Sy --needed --noconfirm git man vim curl
+  pacman -Sy --needed --noconfirm git man vim curl fzf
 } && {
   # download dotfiles
   dir=/usr/local/src/mydotfiles

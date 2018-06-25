@@ -11,5 +11,5 @@
   echo 'LANG=en_US.UTF-8' > /etc/locale.conf
 }
 
-# after the settings above, run the command `source /etc/profile.d/locale.sh to
-# set locale environment in docker container.
+# after running the settings above, run the command `. /etc/profile.d/locale.sh`
+# to set locale environment in docker container.
