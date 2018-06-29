@@ -11,7 +11,7 @@ let g:loaded_undofile = 1
 let s:cpo_save = &cpo
 set cpo&vim
 
-" ensure to keep 'undofile' off, otherwise you end up with two undo files for
+" ensure to keep 'undofile' off, otherwise you'll end up with two undo files for
 " every write.
 set noundofile
 
