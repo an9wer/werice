@@ -18,6 +18,7 @@
 
 (function() {
     'use strict';
+
     var moveX = { startX: 0, endX: 0, };
 
     document.addEventListener("dragstart", function(event) {
@@ -41,4 +42,5 @@
             }
         }
     }, false);
+
 })();

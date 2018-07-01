@@ -1,14 +1,15 @@
 // ==UserScript==
-// @name         damn-toplist
+// @name         damn_toplist
 // @namespace    http://tampermonkey.net/
 // @version      0.1
-// @description  Hide baidu toplist.
+// @description  Hide baidu toplist
 // @author       an9wer
 // @match        *://www.baidu.com/*
 // @grant        https://gist.github.com/icodejs/3183154
 // ==/UserScript==
 
 (function() {
+    'use strict';
 
     // hide toplist after GET request
     var toplists = document.querySelectorAll("[tpl=right_toplist]");
