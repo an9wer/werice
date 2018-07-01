@@ -1,9 +1,9 @@
 " vim bundle manager and config
-" Last Change:  2018 Jun 29
+" Last Change:  2018 Jul 1
 " Maintainer:   an9wer <an9wer@gmail.com>
 " License:      This file is placed in the public domain
 
-" TODO: quickfix
+" TODO: running asynchronously
 
 if exists('g:loaded_bundle')
   finish
@@ -13,8 +13,14 @@ let g:loaded_bundle = 1
 let s:cpo_save = &cpo
 set cpo&vim
 
+nnoremap <Leader>bi :<C-U>call Bundle("install")<CR>
+nnoremap <Leader>bu :<C-U>call Bundle("update")<CR>
+nnoremap <Leader>br :<C-U>call Bundle("remove")<CR>
+
+
+let s:bundle_buf_name = "__Bundle__"
 let s:self_dir_path = expand("<sfile>:p:h")
-let s:bundle_dir_path = '/tmp'
+let s:bundle_dir_path = simplify(s:self_dir_path . "/../bundle")
 let s:plugins = [
   \   "yonchu/accelerated-smooth-scroll",
   \   "inkarkat/vim-ingo-library",
@@ -25,77 +31,91 @@ let s:plugins = [
   \   "sjl/gundo.vim",
   \ ]
 
-function BundleInstall()
-  function BundleInstallOutHandler(channel, msg)
-    echo a:msg
-  endfunction
-
-  function BundleInstallErrHandler(channel, msg)
-    echoe a:msg
-  endfunction
-
-  function BundleInstallCloseHandler(channel)
-    echo "installation is done"
-  endfunction
-
-  for l:plugin in s:plugins
-    let l:cmd = ["/bin/bash", "-c"]
-    let l:cmd += [
-      \ "git clone --depth 1 https://github.com/" . l:plugin . ".git " .
-      \ <SID>BundlePluginPath(l:plugin)]
-    echo l:cmd
-    " call system(l:cmd)
-    let l:job = job_start(l:cmd, {
-      \   "out_cb": "BundleInstallOutHandler",
-      \   "err_cb": "BundleInstallErrHandler",
-      \   "close_cb": "BundleInstallCloseHandler",
-      \ })
-  endfor
-endfunction
-
-function BundleUpdate()
-  function BundleUpdateOutHandler(channel, msg)
-    echo a:msg
-  endfunction
-
-  function BundleUpdateErrHandler(channel, msg)
-    echoe a:msg
-  endfunction
-
-  function BundleUpdateCloseHandler(channel)
-    echo "update is done"
-  endfunction
-
-  for l:plugin in s:plugins
-    let l:cmd = ["/bin/bash", "-c"]
-    let l:cmd += [
-      \ "cd " . <SID>BundlePluginPath(l:plugin) . " && git pull origin master"]
-
-    echo l:cmd
-    let l:job = job_start(l:cmd, {
-      \   "out_cb": "BundleUpdateOutHandler",
-      \   "err_cb": "BundleUpdateErrHandler",
-      \   "close_cb": "BundleUpdateCloseHandler",
-      \ })
-  endfor
-endfunction
-
-function BundleRemove(...)
-  let l:plugins = a:0 == 0 ? s:plugins : a:000
-  for l:plugin in l:plugins
-    if match(s:plugins, l:plugin) != -1
-      let l:cmd = ["/bin/bash", "-c"]
-      let l:cmd += ["rm -rf " . <SID>BundlePluginPath(l:plugin)]
-      echo l:cmd
-      " TODO: job_start()
-    else
-      echoerr "plugin '" l:plugin . "' doesn't exist"
-    endif
-  endfor
-endfunction
 
 function s:BundlePluginPath(plugin)
   return s:bundle_dir_path . "/" .split(a:plugin, "/")[-1]
+endfunction
+
+
+function s:BundleWindowOpen()
+  " create bundle window if not present
+  if bufnr(s:bundle_buf_name) == -1
+    execute "botright " . (len(s:plugins) + 2) . "new " . s:bundle_buf_name
+  endif
+  if bufwinnr(s:bundle_buf_name) == -1
+    execute "botright " . (len(s:plugins) + 2) . "new " . s:bundle_buf_name
+  endif
+endfunction
+
+
+function s:BundleWindowGoto()
+  " move cursor to the bundle window
+  execute bufwinnr(s:bundle_buf_name) . "wincmd w"
+  call cursor(1, 1)
+endfunction
+
+
+function s:BundleWindowRender(event)
+  setlocal modifiable
+  call setline(1, a:event)
+  call setline(2, repeat('-', 79))
+  call setline(3, s:plugins)
+  setlocal nomodifiable
+  redraw
+endfunction
+
+
+function s:BundleWindowSetting()
+  setlocal buftype=nofile
+  setlocal bufhidden=hide
+  setlocal noswapfile
+  setlocal nobuflisted
+  setlocal nomodifiable
+  setlocal filetype=diff
+  setlocal nonumber
+  setlocal norelativenumber
+  setlocal nowrap
+  setlocal foldlevel=20
+  setlocal foldmethod=diff
+endfunction
+
+
+function s:BundleExe(plugin, cmd)
+  setlocal modifiable
+  call setline(search(a:plugin), a:plugin . "  doing")
+  setlocal nomodifiable
+  redraw
+
+  call system(a:cmd)
+
+  setlocal modifiable
+  call setline(search(a:plugin), a:plugin . "  done")
+  setlocal nomodifiable
+  redraw
+endfunction
+
+
+function Bundle(event)
+  call s:BundleWindowOpen()
+  call s:BundleWindowGoto()
+  call s:BundleWindowSetting()
+  call s:BundleWindowRender(a:event)
+
+  for l:plugin in s:plugins
+    if a:event == "install"
+      let l:cmd = "git clone --depth 1 https://github.com/" . l:plugin . ".git "
+        \ . <SID>BundlePluginPath(l:plugin)
+    elseif a:event == "update"
+      let l:cmd = "cd " . <SID>BundlePluginPath(l:plugin) .
+        \ " && git pull origin master"
+    elseif a:event == "remove"
+      let l:cmd = "rm -rf " . <SID>BundlePluginPath(l:plugin)
+    else
+      return -1
+    endif
+    call s:BundleExe(l:plugin, l:cmd)
+  endfor
+
 endfunction
 
 
