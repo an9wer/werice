@@ -3,17 +3,20 @@ FROM base/archlinux
 LABEL maintainer.name="an9wer"
 LABEL maintainer.email="an9wer@gmail.com"
 
-USER root:root
 SHELL ["/bin/bash", "-c"]
 
-COPY --chown=root:root set_*.sh /root/
-
+USER root:root
+ENV ROOT_STARTUP /root/startup
+COPY --chown=root:root root_startup/set_*.sh ${ROOT_STARTUP}/
 RUN pacman -Syu --noconfirm
-#RUN for script in $(ls /root/set_*.sh); do ${script}; done
-RUN /root/set_timezone.sh
-RUN /root/set_locale.sh
-RUN /root/set_ssh.sh
-RUN /root/set_dotfiles.sh
-RUN /root/set_tldr.sh
+RUN ${ROOT_STARTUP}/set_timezone.sh
+RUN ${ROOT_STARTUP}/set_locale.sh
+RUN ${ROOT_STARTUP}/set_user.sh
+RUN ${ROOT_STARTUP}/set_ssh.sh
+
+USER an9wer:wheel
+ENV AN9WER_STARTUP /home/an9wer/startup
+COPY --chown=an9wer:wheel an9wer_startup/set_*.sh ${AN9WER_STARTUP}/
+RUN ${AN9WER_STARTUP}/set_dotfiles.sh
 
 EXPOSE 22

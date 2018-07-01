@@ -27,3 +27,6 @@ EOF
 # bashrc
 [[ -f ~/.bashrc ]] && cp ~/.bashrc ~/.bashrc.bak
 echo '[[ -d ~/.me ]] && . ~/.me/main.sh' >> ~/.bashrc
+
+# vim bundle
+vim -e -c "call Bundle('install') | visual | qa"
