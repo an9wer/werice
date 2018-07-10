@@ -14,7 +14,7 @@
     document.addEventListener("keypress", function(event) {
         var word = window.getSelection().toString();
         if (event.ctrlKey && event.key == " ") {
-            window.open("https://dictionary.cambridge.org/dictionary/english/" + word);
+            window.open("https://dictionary.cambridge.org/search/english/direct/?source=gadgets&q=" + word);
         }
     }, false)
 
