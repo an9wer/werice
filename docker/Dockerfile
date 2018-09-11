@@ -13,6 +13,7 @@ RUN ${ROOT_STARTUP}/set_timezone.sh
 RUN ${ROOT_STARTUP}/set_locale.sh
 RUN ${ROOT_STARTUP}/set_user.sh
 RUN ${ROOT_STARTUP}/set_ssh.sh
+RUN ${ROOT_STARTUP}/set_basic_tools.sh
 
 USER an9wer:wheel
 ENV AN9WER_STARTUP /home/an9wer/startup
