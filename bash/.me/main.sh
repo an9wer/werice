@@ -25,17 +25,15 @@ export HISTTIMEFORMAT="[%Y/%m/%d %T]  "
 export HISTCONTROL=ignoredups
 export HISTIGNORE="ls:ll:pwd:vim:history:git status"
 
-if [[ ! "${PATH}" =~ "${ME_BIN_DIR}" ]]; then
-  export PATH="${PATH}:${ME_BIN_DIR}"
-fi
+[[ ! "${PATH}" =~ "${ME_BIN_DIR}" ]] && export PATH="${ME_BIN_DIR}:${PATH}"
+[[ ! "${PATH}" =~ "${HOME}/.git-extensions" ]] && export PATH="${HOME}/.git-extensions:${PATH}"
 #export MANPATH=":${ME_MAN_DIR}"
 
-# prompting
-# need to wrap '\[' and '\]' to every color variable to avoid position issure
-# (thx: https://superuser.com/a/980982)
-# ┌
-# └
+# Q: prompting need to wrap '\[' and '\]' to every color variable to avoid
+# position issure
+# thx: https://superuser.com/a/980982
 BOLD="\[\e[1m\]" RED="\[\e[91m\]" GREEN="\[\e[92m\]" BLUE="\[\e[94m\]" YELLOW="\[\e[93m\]" END="\[\e[0m\]"
+# alternatively use: ┌ └
 PS1="${YELLOW}┏─━ ${BOLD}${GREEN}\u@\h${END} at ${BOLD}${RED}\t${END} in ${BOLD}${BLUE}\w${END}\n${YELLOW}┗─━ \$ ${END}"
 PS2="${YELLOW}┗─━ > ${END}"
 unset BOLD BLUE RED YELLOW END

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+set -e
+
+git checkout $(git rev-list $(git rev-parse HEAD)..$1 | tail -1)
