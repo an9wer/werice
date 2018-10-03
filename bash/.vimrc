@@ -2,8 +2,10 @@
 " -----------------------------------------------------------------------------
 if empty(glob("~/.vim/autoload/pathogen.vim"))  "download pathogen.vim
   sil exe "!curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim"
+  execute pathogen#infect()
+else
+  execute pathogen#infect()
 endif
-execute pathogen#infect()
 
 let g:gundo_prefer_python3 = 1
 nnoremap <F1> :GundoToggle<CR>

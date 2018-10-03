@@ -9,5 +9,5 @@
   git clone --depth 1 https://github.com/an9wer/mydotfiles.git ${dir}
 } && {
   # install dotfiles
-  ${dir}/bash/install.sh
+  echo 0 | ${dir}/bash/install.sh
 }
