@@ -26,7 +26,7 @@ me_uninstall_ansi() {
 
   local sure
   read -r sure
-  if [[ "${sure}" == "y" ]]; then
+  if [[ "${sure}" =~ [Y/y] ]]; then
     rm  ${ME_BIN_ANSI}
     rm -rf ${ME_LIB_ANSI}
     me prompt "ansi has been uninstalled :)"

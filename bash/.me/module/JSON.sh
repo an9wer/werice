@@ -28,7 +28,7 @@ me_uninstall_JSON() {
 
   local sure
   read -r sure
-  if [[ "${sure}" == "y" ]]; then
+  if [[ "${sure}" =~ [Y/y] ]]; then
     rm ${ME_BIN_JSON}
     rm -rf ${ME_LIB_JSON}
     me prompt "JSON has been uninstalled :)"

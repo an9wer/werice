@@ -37,10 +37,10 @@ me() {
           source ${ME_BASHRC_DIR}/${module}.sh &&
           me prompt "create links to ${module} in 'bashrc.d' directory"
 
-          # module hasn't been installed and has install function
+          # module hasn't been installed but has install function
           ! which ${module} &> /dev/null && command -v ${install} &> /dev/null && {
             eval ${install} && me prompt "successfully install ${module}"
-          } || me warn "${module} may be installed by system package manager or is a built-in command."
+          } || me warn "${module} may be installed by system package manager or a built-in command."
 
         else
           me warn "${module} doesn't exist in module directory."
@@ -64,7 +64,7 @@ me() {
           eval ${uninstall}
         else
           local warning="${module} may be installed by system package manager "
-          local warning+="or may be bash builtin command. "
+          local warning+="or a builtin command. "
           local warning+="we'll just remove module's symbolic file in 'bashrc.d'"
           me warn ${warning}
         fi
@@ -132,7 +132,7 @@ _me_completion() {
 }
 
 
-# we need to export function 'me', so that we can call it from subshell
+# we should to export function 'me', so that we can call it from subshell
 declare -fx me
 # completion for me
 complete -o filenames -F _me_completion me

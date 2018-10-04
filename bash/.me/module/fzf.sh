@@ -54,7 +54,7 @@ me_uninstall_fzf() {
 
   local sure
   read -r sure
-  if [[ "${sure}" == 'y' ]]; then
+  if [[ "${sure}" =~ [Y/y] ]]; then
     rm ${ME_BIN_FZF}
     rm -rf ${ME_LIB_FZF}
     me prompt "fzf has been uninstalled :)"

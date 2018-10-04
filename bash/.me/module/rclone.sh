@@ -55,7 +55,7 @@ me_uninstall_rclone() {
 
   local sure
   read -r sure
-  if [[ "${sure}" == "y" ]]; then
+  if [[ "${sure}" =~ [Y/y] ]]; then
     rm ${ME_BIN_RCLONE}
     rm ${ME_MAN_RCLONE} && mandb &> /dev/null
     rm -rf ${ME_LIB_RCLONE}
