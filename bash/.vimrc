@@ -58,8 +58,18 @@ nnoremap <Leader>fb :Buffers<CR>
 
 " vimwiki
 " -----------------------------------------------------------------------------
-let g:vimwiki_list =
-  \ [{'path': '~/Documents/notes', 'path_html': '~/Documents/notes_html'}]
+let g:vimwiki_list = [{
+ \    'path': '~/Documents/notes',
+ \    'path_html': '~/Documents/notes_html'
+ \  },
+ \  {
+ \    'path': '~/Documents/an9wer.github.io/wiki',
+ \    'path_html': '~/Documents/an9wer.github.io/html',
+ \    'template_path': '~/Documents/an9wer.github.io/templates',
+ \    'template_default': 'default',
+ \    'template_ext': '.html',
+ \    'css_name': 'statics/css/style.css',
+ \  }]
 
 "let g:vimwiki_folding = 'list'
 
