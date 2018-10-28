@@ -63,12 +63,20 @@ let g:vimwiki_list = [{
  \    'path_html': '~/Documents/notes_html'
  \  },
  \  {
- \    'path': '~/Documents/an9wer.github.io/wiki',
- \    'path_html': '~/Documents/an9wer.github.io/html',
- \    'template_path': '~/Documents/an9wer.github.io/templates',
- \    'template_default': 'default',
+ \    'path': '~/Documents/an9wer.github.io/wiki/blog',
+ \    'path_html': '~/Documents/an9wer.github.io/html/blog',
+ \    'template_path': '~/Documents/an9wer.github.io/html/templates',
+ \    'template_default': 'blog',
  \    'template_ext': '.html',
- \    'css_name': 'statics/css/style.css',
+ \    'css_name': '../statics/css/style.css',
+ \  },
+ \  {
+ \    'path': '~/Documents/an9wer.github.io/wiki/notes',
+ \    'path_html': '~/Documents/an9wer.github.io/html/notes',
+ \    'template_path': '~/Documents/an9wer.github.io/html/templates',
+ \    'template_default': 'notes',
+ \    'template_ext': '.html',
+ \    'css_name': '../statics/css/style.css',
  \  }]
 
 "let g:vimwiki_folding = 'list'
