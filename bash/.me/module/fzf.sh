@@ -40,7 +40,7 @@ me_install_fzf() {
   curl -fL ${url} | tar -C ${ME_LIB_FZF}/bin -zxf -
   if (( $? == 0 )); then
     chmod 755 ${ME_LIB_FZF}/bin/fzf
-    ln -sf ${ME_LIB_FZF}/bin/fzf ${ME_BIN_DIR}
+    ln -sf ${ME_LIB_FZF}/bin/fzf ${ME_BIN_FZF}
     ln -sf ${ME_LIB_FZF}/man/man1/fzf.1 ${ME_MAN_FZF}
     mandb &> /dev/null
   fi
