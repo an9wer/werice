@@ -42,7 +42,7 @@ me_uninstall_autossh() {
 
   local sure
   read -r sure
-  if [[ "${sure}" == 'y' ]]; then
+  if [[ "${sure}" =~ [Y/y] ]]; then
     rm ${ME_BIN_AUTOSSH}
     rm ${ME_MAN_AUTOSSH} && mandb $> /dev/null
     rm -rf ${ME_LIB_AUTOSSH}

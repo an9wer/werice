@@ -34,8 +34,8 @@ me() {
         if [[ -e ${ME_MODULE_DIR}/${module}.sh ]]; then
           # create links to 'module' directory scripts in 'bashrc.d' directory
           ln -sf ${ME_MODULE_DIR}/${module}.sh ${ME_BASHRC_DIR}/${module}.sh &&
-          source ${ME_BASHRC_DIR}/${module}.sh &&
-          me prompt "create links to ${module} in 'bashrc.d' directory"
+            source ${ME_BASHRC_DIR}/${module}.sh &&
+            me prompt "create links to ${module} in 'bashrc.d' directory"
 
           # module hasn't been installed but has install function
           ! which ${module} &> /dev/null && command -v ${install} &> /dev/null && {

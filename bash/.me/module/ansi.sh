@@ -6,7 +6,7 @@ ME_BIN_ANSI=${ME_BIN_DIR}/ansi
 # -----------------------------------------------------------------------------
 me_install_ansi() {
   if [[ -d ${ME_LIB_ANSI} ]]; then
-    [[ ! -L ${ME_BIN_DIR} ]] && ln -sf ${ME_LIB_ANSI}/ansi ${ME_BIN_ANSI}
+    [[ ! -L ${ME_BIN_ANSI} ]] && ln -sf ${ME_LIB_ANSI}/ansi ${ME_BIN_ANSI}
     return 0
   fi
 
