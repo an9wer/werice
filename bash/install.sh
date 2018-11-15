@@ -2,15 +2,42 @@
 
 DIR=$(cd $(dirname $0) && pwd)
 
-declare -A CONFIG=(
-  [3]=".me"
-  [4]=".vimrc .vim"
-  [5]=".tmux.conf"
-  [6]=".gitconfig"
+declare -A CONFIG_FUNC=(
+  [1]="config_bashrc"
+  [2]="config_bash_profile"
+  [3]="config .vimrc .vim"
+  [4]="config .tmux.conf"
+  [5]="config .gitconfig"
 )
 
-_config_write_cmdline() {
-  # $1: file to save cmdline
+declare -A CONFIG_CB=(
+  [1]=""
+  [2]=""
+  [3]="callback_vim"
+  [4]=""
+  [5]=""
+)
+
+_backup() {
+  # $1: file to backup
+
+  [[ -e "${1}" ]] || return
+  [[ -h "${1}" ]] && rm -vf "$1" && return
+
+  local backup_file
+  local suffix=0
+  
+  for backup_file in $(ls ${1}.bak.[0-9] ${1}.bak.[0-9]+ 2>/dev/null); do
+    (( suffix < ${backup_file##*.} )) && suffix=${backup_file##*.}
+    cmp --silent "${1}" "${backup_file}" && rm -f "${backup_file}"
+  done
+
+  [[ -f "${1}".bak.${suffix} ]] && suffix=$(( suffix + 1 ))
+  cp -vf "${1}" "${1}".bak.${suffix}
+}
+
+_write_cmdlines() {
+  # $1: file to write cmdline
 
   for line in "${cmdlines[@]}"; do
     if [ -e ${1} ]; then
@@ -24,53 +51,47 @@ _config_write_cmdline() {
 config_bashrc() {
   # $1: whether to backup bashrc
 
-  file=~/.bashrc
   cmdlines=(
     '[[ -d ~/.me ]] && . ~/.me/main.sh'
   )
 
-  if [[ -e ${file} ]]; then
-    [[ ${1} =~ [nN] ]] || cp -vf ${file} ${file}.bak
-  fi
-  _config_write_cmdline ${file}
+  [[ ${1} =~ [Nn] ]] || _backup ~/.me
+  ln -vsf ${DIR}/.me ~/.me
+
+  [[ ${1} =~ [Nn] ]] || _backup ~/.bashrc
+  _write_cmdlines ~/.bashrc
 }
 
 config_bash_profile() {
   # $1: whether to backup bashrc
 
-  file=~/.bash_profile
   cmdlines=(
     'export GTK_IM_MODULE=fcitx'
     'export QT_IM_MODULE=fcitx'
     '[[ ! $DISPLAY && $XDG_VTNR -eq 1 ]] && startx'
   )
 
-  if [[ -e ~/.bash_profile ]]; then
-    [[ ${1} =~ [nN] ]] || cp -vf ${file} ${file}.bak
-  fi
-  _config_write_cmdline ${file}
+  [[ ${1} =~ [Nn] ]] || _backup ~/.bash_profile
+  _write_cmdlines ~/.bash_profile
 }
 
 config() {
-  # $1: which configuration to install
-  # $2: whether to backup configrations
+  # $1 ... ${n-1}: which configuration file to install
+  # $n: whether to backup configrations
 
-
-  (( ${1} == 1 )) && { config_bashrc $2; return; }
-  (( ${1} == 2 )) && { config_bash_profile $2; return; }
-  [[ -z ${CONFIG[${1}]} ]] && { echo unknown choice; exit 1; }
-
-  for c in ${CONFIG[${1}]}; do
-    if [[ -f ~/${c} ]]; then
-      [[ ${2} =~ [nN] ]] && rm -vf ~/${c} || mv -vf ~/${c} ~/${c}.bak
-    elif [[ -h ~/${c} ]]; then
-      rm -vf ~/${c}
-    fi
-    ln -vsf ${DIR}/${c} ~/${c}
+  for file in ${@:1:${#@}-1}; do
+    [[ ${@: -1} =~ [Nn] ]] || _backup ~/${file}
+    ln -vsf ${DIR}/${file} ~/${file}
   done
 }
 
+callback_vim() {
+  # vim bundle
+  vim -e -c "call Bundle('install') | visual | qa"
+}
 
+
+# main
 [[ -d ~/.config ]] || mkdir ~/.config
 cat <<EOF
                        === rice installation ===
@@ -78,18 +99,25 @@ This script is intend to install configuration files for the following programs.
   0. all
   1. bashrc
   2. bash_profile
-  3. me
-  4. vim
-  5. tmux
-  6. git
+  3. vim
+  4. tmux
+  5. git
 EOF
 read -p "Let me known what is your choice: " choice
 read -p "Do you want to backup your original configurations?(y/n): " backup
 
 case ${choice} in
-  0) for (( i = 1; i <= ${#CONFIG[@]}+2; i++ )); do config ${i} ${backup}; done ;;
-  *) config ${choice} ${backup} ;;
+  0)
+    for (( i = 1; i <= ${#CONFIG_FUNC[@]}; i++ )); do
+      eval "${CONFIG_FUNC[${i}]} ${backup}"
+      eval "${CONFIG_CB[${i}]}"
+    done ;;
+  *)
+    if [[ -n ${CONFIG_FUNC[${choice}]} ]]; then
+      eval "${CONFIG_FUNC[${choice}]} ${backup}"
+      eval "${CONFIG_CB[${choice}]}"
+    else
+      echo unknown choice
+      exit 1
+    fi ;;
 esac
-
-# vim bundle
-#vim -e -c "call Bundle('install') | visual | qa"
