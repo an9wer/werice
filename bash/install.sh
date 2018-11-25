@@ -20,6 +20,7 @@ declare -A CONFIG_CB=(
 
 _backup() {
   # $1: file to backup
+  # Note: It'll remove origin file.
 
   [[ -e "${1}" ]] || return
   [[ -h "${1}" ]] && rm -vf "$1" && return
@@ -29,30 +30,39 @@ _backup() {
   
   for backup_file in $(ls ${1}.bak.[0-9] ${1}.bak.[0-9]+ 2>/dev/null); do
     (( suffix < ${backup_file##*.} )) && suffix=${backup_file##*.}
-    cmp --silent "${1}" "${backup_file}" && rm -f "${backup_file}"
+    [[ -f "${1}" && -f "${backup_file}" ]] && {
+      cmp --silent "${1}" "${backup_file}" && rm -f "${backup_file}"
+    }
   done
 
   [[ -f "${1}".bak.${suffix} ]] && suffix=$(( suffix + 1 ))
-  cp -vf "${1}" "${1}".bak.${suffix}
+  mv -vf "${1}" "${1}".bak.${suffix}
 }
 
 _write_cmdlines() {
   # $1: file to write cmdline
 
   for line in "${cmdlines[@]}"; do
-    if [ -e ${1} ]; then
-      [[ -z $(grep "${line}" ${1}) ]] && echo "${line}" >> ${1}
-    else
-      echo "${line}" >> ${1}
-    fi
+    echo "${line}" >> ${1}
   done
 }
 
 config_bashrc() {
   # $1: whether to backup bashrc
 
-  cmdlines=(
-    '[[ -d ~/.me ]] && . ~/.me/main.sh'
+  cmdlines=()
+  local pass=""
+  while IFS='' read -r line || [[ -n "${line}" ]]; do
+    [[ "${line}" =~ "werice start" ]] && { pass="y"; continue; }
+    [[ "${line}" =~ "werice end" ]] && { pass=""; continue; }
+    [[ -n "$pass" ]] && continue
+    cmdlines+=("$line")
+  done < ~/.bashrc
+
+  cmdlines+=(
+'# werice start {{{
+[[ -d ~/.me ]] && . ~/.me/main.sh
+# }}} werice end'
   )
 
   [[ ${1} =~ [Nn] ]] || _backup ~/.me
@@ -65,10 +75,21 @@ config_bashrc() {
 config_bash_profile() {
   # $1: whether to backup bashrc
 
-  cmdlines=(
-    'export GTK_IM_MODULE=fcitx'
-    'export QT_IM_MODULE=fcitx'
-    '[[ ! $DISPLAY && $XDG_VTNR -eq 1 ]] && startx'
+  cmdlines=()
+  local pass=""
+  while IFS='' read -r line || [[ -n "${line}" ]]; do
+    [[ "${line}" =~ "werice start" ]] && { pass="y"; continue; }
+    [[ "${line}" =~ "werice end" ]] && { pass=""; continue; }
+    [[ -n "$pass" ]] && continue
+    cmdlines+=("$line")
+  done < ~/.bash_profile
+
+  cmdlines+=(
+'# werice start {{{
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+[[ ! $DISPLAY && $XDG_VTNR -eq 1 ]] && startx
+# }}} werice end'
   )
 
   [[ ${1} =~ [Nn] ]] || _backup ~/.bash_profile
