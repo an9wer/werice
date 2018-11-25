@@ -27,10 +27,9 @@ export HISTIGNORE="ls:ll:pwd:vim:history:git status"
 
 [[ ! "${PATH}" =~ "${ME_BIN_DIR}" ]] && export PATH="${ME_BIN_DIR}:${PATH}"
 [[ ! "${PATH}" =~ "${HOME}/.git-extensions" ]] && export PATH="${HOME}/.git-extensions:${PATH}"
-#export MANPATH=":${ME_MAN_DIR}"
 
 # Q: prompting need to wrap '\[' and '\]' to every color variable to avoid
-# position issure
+#    position issure?
 # thx: https://superuser.com/a/980982
 BOLD="\[\e[1m\]" RED="\[\e[91m\]" GREEN="\[\e[92m\]" BLUE="\[\e[94m\]" YELLOW="\[\e[93m\]" END="\[\e[0m\]"
 # alternatively use: ┌ └
@@ -58,7 +57,7 @@ alias vimtest="vim --noplugin -N -u"
 
 alias sourceb="source ~/.bashrc"
 
-alias cdc="cd $(readlink -m ${ME_DIR}/../..)" # directory 'mydotfiles'
+alias cdr="cd $(readlink -m ${ME_DIR}/../..)" # directory 'werice'
 alias cdb="cd $(readlink -m ${ME_DIR}/..)"    # directory 'bash'
 alias cdm="cd $(readlink -m ${ME_DIR})"       # directory 'me'
 
