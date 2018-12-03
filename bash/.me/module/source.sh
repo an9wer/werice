@@ -14,7 +14,7 @@ source() {
     VIRTUAL_ENV_DISABLE_PROMPT=1
 
     if builtin source "$*"; then
-      # record old virtual ps1 used by (venv)/bin/activate
+      # save old virtual ps1 used by (venv)/bin/activate
       _OLD_VIRTUAL_PS1="$PS1"
 
       local path=$(readlink -ev "$*")
@@ -24,7 +24,6 @@ source() {
       PS1="${YELLOW}┏─━ ${END}($venv) ${BOLD}${GREEN}\u@\h${END} "
       PS1+="at ${BOLD}${RED}\t${END} in ${BOLD}${BLUE}\w${END}\n"
       PS1+="${YELLOW}┗─━ \$${END} "
-      export PS1
     fi
   else
     builtin source "$*"

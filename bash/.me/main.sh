@@ -8,6 +8,14 @@ export ME_JOB_DIR=${ME_DIR}/job
 export ME_MODULE_DIR=${ME_DIR}/module
 export ME_BASHRC_DIR=${ME_DIR}/bashrc.d
 
+export ME_ANSI_RED="\[\e[91m\]"
+export ME_ANSI_BLUE="\[\e[94m\]"
+export ME_ANSI_GREEN="\[\e[92m\]"
+export ME_ANSI_YELLOW="\[\e[93m\]"
+export ME_ANSI_MAGENTA="\[\e[95m\]"
+export ME_ANSI_BOLD="\[\e[1m\]"
+export ME_ANSI_END="\[\e[0m\]"
+
 
 # environment variable
 # -----------------------------------------------------------------------------
@@ -27,15 +35,6 @@ export HISTIGNORE="ls:ll:pwd:vim:history:git status"
 
 [[ ! "${PATH}" =~ "${ME_BIN_DIR}" ]] && export PATH="${ME_BIN_DIR}:${PATH}"
 [[ ! "${PATH}" =~ "${HOME}/.git-extensions" ]] && export PATH="${HOME}/.git-extensions:${PATH}"
-
-# Q: prompting need to wrap '\[' and '\]' to every color variable to avoid
-#    position issure?
-# thx: https://superuser.com/a/980982
-BOLD="\[\e[1m\]" RED="\[\e[91m\]" GREEN="\[\e[92m\]" BLUE="\[\e[94m\]" YELLOW="\[\e[93m\]" END="\[\e[0m\]"
-# alternatively use: ┌ └
-PS1="${YELLOW}┏─━ ${BOLD}${GREEN}\u@\h${END} at ${BOLD}${RED}\t${END} in ${BOLD}${BLUE}\w${END}\n${YELLOW}┗─━ \$ ${END}"
-PS2="${YELLOW}┗─━ > ${END}"
-unset BOLD BLUE RED YELLOW END
 
 
 # aliases
@@ -66,6 +65,7 @@ alias info="info --vi-keys"
 
 # load function 'me'
 source ${ME_LIB_DIR}/me.sh
+source ${ME_LIB_DIR}/prompt.sh
 
 
 # basic module
