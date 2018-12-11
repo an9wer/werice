@@ -1,5 +1,5 @@
 # requirement
-command -v JSON &> /dev/null || me addm JSON
+command -v JSON &> /dev/null || me install JSON
 
 
 # global variable

@@ -60,9 +60,9 @@ config_bashrc() {
   done < ~/.bashrc
 
   cmdlines+=(
-'# werice start {{{
-[[ -d ~/.me ]] && . ~/.me/main.sh
-# }}} werice end'
+    '# werice start {{{'
+    '[[ -d ~/.me ]] && . ~/.me/me.sh'
+    '# }}} werice end'
   )
 
   [[ ${1} =~ [Nn] ]] || _backup ~/.me
@@ -85,11 +85,11 @@ config_bash_profile() {
   done < ~/.bash_profile
 
   cmdlines+=(
-'# werice start {{{
-export GTK_IM_MODULE=fcitx
-export QT_IM_MODULE=fcitx
-[[ ! $DISPLAY && $XDG_VTNR -eq 1 ]] && startx
-# }}} werice end'
+    '# werice start {{{'
+    'export GTK_IM_MODULE=fcitx'
+    'export QT_IM_MODULE=fcitx'
+    '[[ ! $DISPLAY && $XDG_VTNR -eq 1 ]] && startx"'
+    '# }}} werice end'
   )
 
   [[ ${1} =~ [Nn] ]] || _backup ~/.bash_profile

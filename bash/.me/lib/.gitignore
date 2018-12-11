@@ -1,4 +1,5 @@
 *
-!me.sh
+!base.sh
+!package.sh
 !prompt.sh
 !.gitignore
