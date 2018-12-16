@@ -1,0 +1,5 @@
+! unbind modifier 'Lock'
+clear Lock
+! bind Caps_Lock key to modifier 'Control'
+keysym Caps_Lock = Control_L
+add Control = Control_L
