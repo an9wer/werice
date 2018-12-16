@@ -74,6 +74,8 @@ alias vimt="vim ~/.tmux.conf"
 alias vimm="vim ~/.me/main.sh"
 alias vimtest="vim --noplugin -N -u"
 
+alias todo="vim ~/Documents/notes/todo.wiki"
+
 
 # load libs
 source ${ME_LIB_DIR}/base.sh

@@ -8,6 +8,7 @@ declare -A CONFIG_FUNC=(
   [3]="config .vimrc .vim"
   [4]="config .tmux.conf"
   [5]="config .gitconfig"
+  [6]="config .Xmodmap"
 )
 
 declare -A CONFIG_CB=(
@@ -16,6 +17,7 @@ declare -A CONFIG_CB=(
   [3]="callback_vim"
   [4]=""
   [5]=""
+  [6]=""
 )
 
 _backup() {
@@ -123,6 +125,7 @@ This script is intend to install configuration files for the following programs.
   3. vim
   4. tmux
   5. git
+  6. xmodmap
 EOF
 read -p "Let me known what is your choice: " choice
 read -p "Do you want to backup your original configurations?(y/n): " backup

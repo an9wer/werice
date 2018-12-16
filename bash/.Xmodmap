@@ -1,5 +1,16 @@
-! unbind modifier 'Lock'
-clear Lock
-! bind Caps_Lock key to modifier 'Control'
-keysym Caps_Lock = Control_L
-add Control = Control_L
+! unbind Caps_Lock key in modifier 'Lock'
+remove Lock = Caps_Lock
+! turn Caps_Lock key to Return key
+keysym Caps_Lock = Return NoSymbol Return
+
+! turn Caps_Lock key to modifier 'Control'
+!keysym Caps_Lock = Control_L NoSymbol Control_L
+!add Control = Control_L
+
+! unbind Alt_R key in modifier 'mod1'
+remove mod1 = Alt_R
+! turn Alt_R key to BackSpace key
+keysym Alt_R = BackSpace BackSpace BackSpace BackSpace
+
+! turn Menu key to backslash key
+keysym Menu = backslash bar backslash bar
