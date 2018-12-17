@@ -14,3 +14,8 @@ keysym Alt_R = BackSpace BackSpace BackSpace BackSpace
 
 ! turn Menu key to backslash key
 keysym Menu = backslash bar backslash bar
+
+! ubind Super_R in modifier 'mod4'
+remove mod4 = Super_R
+! turn Super_R to Escape key
+keysym Super_R = Escape NoSymbol Escape
