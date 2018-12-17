@@ -12,7 +12,7 @@ me_install_JSON() {
     return 0
   fi
     
-  me prompt "start to install JSON..."
+  me_info "start to install JSON..."
   git clone --depth 1 "https://github.com/dominictarr/JSON.sh.git" ${ME_LIB_JSON}
   if (( $? == 0 )); then
     chmod 755 "${ME_LIB_JSON}/JSON.sh"
@@ -31,7 +31,7 @@ me_uninstall_JSON() {
   if [[ "${sure}" =~ [Y/y] ]]; then
     rm ${ME_BIN_JSON}
     rm -rf ${ME_LIB_JSON}
-    me prompt "JSON has been uninstalled :)"
+    me_info "JSON has been uninstalled :)"
   fi
 }
 

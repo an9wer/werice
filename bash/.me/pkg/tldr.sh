@@ -7,7 +7,7 @@ ME_BIN_TLDR=${ME_BIN_DIR}/tldr
 me_install_tldr() {
   [[ -d ${ME_LIB_TLDR} ]] && return 0
 
-  me prompt "start to install z..."
+  me_info "start to install z..."
   git clone --depth 1 "https://github.com/raylee/tldr.git" ${ME_LIB_TLDR}
 
   if (( $? == 0 )); then
@@ -26,7 +26,7 @@ me_uninstall_tldr() {
   if [[ "${sure}" =~ [Y/y] ]]; then
     rm ${ME_BIN_TLDR}
     rm -rf ${ME_LIB_TLDR}
-    me prompt "TLDR has been uninstalled :)"
+    me_info "TLDR has been uninstalled :)"
   fi
 }
 

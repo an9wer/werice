@@ -10,7 +10,7 @@ me_install_ansi() {
     return 0
   fi
 
-  me prompt "start to install ansi..."
+  me_info "start to install ansi..."
   git clone --depth 1 "https://github.com/fidian/ansi.git" ${ME_LIB_ANSI}
   if (( $? == 0 )); then
     chmod 755 ${ME_LIB_ANSI}/ansi
@@ -29,7 +29,7 @@ me_uninstall_ansi() {
   if [[ "${sure}" =~ [Y/y] ]]; then
     rm  ${ME_BIN_ANSI}
     rm -rf ${ME_LIB_ANSI}
-    me prompt "ansi has been uninstalled :)"
+    me_info "ansi has been uninstalled :)"
   fi
 }
 

@@ -6,7 +6,7 @@ ME_LIB_BASE16=${ME_LIB_DIR}/base16
 me_install_base16() {
   [[ -d ${ME_LIB_BASE16} ]] && return 0
 
-  me prompt "start to install base16..."
+  me_info "start to install base16..."
   git clone --depth 1 \
     "https://github.com/chriskempson/base16-shell.git" ${ME_LIB_BASE16}
 
@@ -29,7 +29,7 @@ me_uninstall_base16() {
   read -r sure
   if [[ "${sure}" =~ [Y/y] ]]; then
     rm -rf ${ME_LIB_BASE16}
-    me prompt "base64 has been uninstalled :)"
+    me_info "base64 has been uninstalled :)"
   fi 
 }
 

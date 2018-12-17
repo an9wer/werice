@@ -7,7 +7,7 @@ ME_MAN_Z=${ME_MAN_DIR}/man1/z.1
 me_install_z() {
   [[ -d ${ME_LIB_Z} ]] && return 0
 
-  me prompt "start to install z..."
+  me_info "start to install z..."
   git clone --depth 1 "https://github.com/rupa/z.git" ${ME_LIB_Z}
 
   if (( $? == 0 )); then
@@ -27,7 +27,7 @@ me_uninstall_z() {
   if [[ "${sure}" =~ [Y/y] ]]; then
     rm ${ME_MAN_Z} && mandb $> /dev/null
     rm -rf ${ME_LIB_Z}
-    me prompt "z has been uninstalled :)"
+    me_info "z has been uninstalled :)"
   fi 
 }
 

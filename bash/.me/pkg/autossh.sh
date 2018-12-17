@@ -7,16 +7,14 @@ ME_MAN_AUTOSSH=${ME_MAN_DIR}/man1/autossh.1
 # -----------------------------------------------------------------------------
 me_install_autossh() {
   if [[ -d ${ME_LIB_AUTOSSH} ]]; then
-    if [[ ! -L ${ME_BIN_AUTOSSH} ]]; then
-      ln -sf ${ME_LIB_AUTOSSH}/bin/autossh ${ME_BIN_AUTOSSH}
-    fi
-    if [[ ! -L ${ME_MAN_AUTOSSH} ]]; then
-      ln -sf ${ME_LIB_AUTOSSH}/man/man1/autossh.1 ${ME_MAN_AUTOSSH}
-    fi
+    [[ ! -L ${ME_BIN_AUTOSSH} ]] &&
+      ln -sf "${ME_LIB_AUTOSSH}/bin/autossh" "${ME_BIN_AUTOSSH}"
+    [[ ! -L ${ME_MAN_AUTOSSH} ]] &&
+      ln -sf "${ME_LIB_AUTOSSH}/man/man1/autossh.1" "${ME_MAN_AUTOSSH}"
     return 0
   fi
 
-  me prompt "start to install autossh..."
+  me_info "start to install autossh..."
   local temp_dir=$(mktemp -d -t autossh.XXX)
   local curr_dir=$(pwd)
   curl -fL "http://www.harding.motd.ca/autossh/autossh-1.4f.tgz" |
@@ -46,7 +44,7 @@ me_uninstall_autossh() {
     rm ${ME_BIN_AUTOSSH}
     rm ${ME_MAN_AUTOSSH} && mandb $> /dev/null
     rm -rf ${ME_LIB_AUTOSSH}
-    me prompt "autossh has been uninstalled :)"
+    me_info "autossh has been uninstalled :)"
   fi 
 }
 

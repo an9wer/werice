@@ -18,7 +18,7 @@ me_install_lsb_release() {
 
   # Q: How to install lsb_release from source code?
   # thx: http://www.linuxfromscratch.org/blfs/view/8.1/postlfs/lsb-release.html
-  me prompt "start to install lsb_release..."
+  me_info "start to install lsb_release..."
   curl -fL "https://downloads.sourceforge.net/lsb/lsb-release-1.4.tar.gz" |
     tar -C ${ME_LIB_LSB_RELEASE} -zxf -
   ${ME_LIB_LSB_RELEASE}/help2man \
@@ -45,7 +45,7 @@ me_uninstall_lsb_release() {
     rm ${ME_BIN_LSB_RELEASE}
     rm ${ME_MAN_LSB_RELEASE} && mandb $> /dev/null
     rm -rf ${ME_LIB_LSB_RELEASE}
-    me prompt "lsb_release has been uninstalled :)"
+    me_info "lsb_release has been uninstalled :)"
   fi 
 }
 

@@ -17,7 +17,7 @@ me_install_fzf() {
     return 0
   fi
 
-  me prompt "start to install fzf..."
+  me_info "start to install fzf..."
   git clone --depth 1 "https://github.com/junegunn/fzf.git" ${ME_LIB_FZF}
   local version=$(
     curl https://github.com/junegunn/fzf-bin/releases/latest |
@@ -57,7 +57,7 @@ me_uninstall_fzf() {
   if [[ "${sure}" =~ [Y/y] ]]; then
     rm ${ME_BIN_FZF}
     rm -rf ${ME_LIB_FZF}
-    me prompt "fzf has been uninstalled :)"
+    me_info "fzf has been uninstalled :)"
   fi 
 }
 
