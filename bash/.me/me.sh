@@ -52,14 +52,19 @@ export HISTIGNORE="ls:ll:pwd:vim:history:git status"
 
 # aliases
 # -----------------------------------------------------------------------------
-alias ls="ls --color=auto"
+alias ls="ls --color=always"
 alias ll="ls -l"
 
-alias grep="grep --color=auto"
-alias egrep="egrep --color=auto"
-alias fgrep="fgrep --color=auto"
+alias grep="grep --color=always"
+alias egrep="egrep --color=always"
+alias fgrep="fgrep --color=always"
 
-alias diff="diff --color=auto"
+alias diff="diff --color=always"
+
+# Display colors when using less
+# thx: https://superuser.com/a/275869
+alias less="less -R"
+
 alias info="info --vi-keys"
 
 alias sourceb="source ~/.bashrc"
@@ -71,7 +76,7 @@ alias cdm="cd $(readlink -m ${ME_DIR})"       # directory 'me'
 alias vimv="vim ~/.vimrc"
 alias vimb="vim ~/.bashrc"
 alias vimt="vim ~/.tmux.conf"
-alias vimm="vim ~/.me/main.sh"
+alias vimm="vim ~/.me/me.sh"
 alias vimtest="vim --noplugin -N -u"
 
 alias todo="vim ~/Documents/notes/todo.wiki"
