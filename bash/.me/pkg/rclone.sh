@@ -3,20 +3,20 @@ ME_BIN_RCLONE=${ME_BIN_DIR}/rclone
 ME_MAN_RCLONE=${ME_MAN_DIR}/man1/rclone.1
 
 
-# installation (thx: https://rclone.org/install.sh)
+# Installation (thx: https://rclone.org/install.sh)
 # -----------------------------------------------------------------------------
 me_install_rclone() {
   if [[ -d ${ME_LIB_RCLONE} ]]; then
-    if [[ ! -L ${ME_BIN_DIR}/rclone ]]; then
+    [[ ! -L ${ME_BIN_DIR}/rclone ]] &&
       ln -sf ${ME_LIB_RCLONE}/rclone ${ME_BIN_RCLONE}
-    fi
-    if [[ ! -L ${ME_MAN_DIR} ]]; then
+    [[ ! -L ${ME_MAN_DIR} ]] && {
       ln -sf ${ME_LIB_RCLONE}/rclone.1 ${ME_MAN_RCLONE}
-    fi
+      mandb &> /dev/null
+    }
     return 0
   fi
 
-  me prompt "start to install rclone..."
+  me_info "start to install rclone..."
 
   # detect the platform (only in linux)
   local ME_MACHINE=$(uname -m)
@@ -24,7 +24,7 @@ me_install_rclone() {
     x86_64|amd64) ME_MACHINE=amd64;;
     i?86|x86) ME_MACHINE=386;;
     arm*) ME_MACHINE=arm;;
-    *) me warn "cannnot install rclone (check your machine)"; return 1;;
+    *) me_warn "cannnot install rclone (check your machine)"; return 1;;
   esac
 
   # create temporary file
@@ -68,7 +68,8 @@ me_unset_rclone() {
 }
 
 
-# usage
+
+# The hack way
 # -----------------------------------------------------------------------------
 rclone() {
   http_proxy="http://127.0.0.1:1080/"  \

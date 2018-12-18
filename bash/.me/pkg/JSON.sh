@@ -2,7 +2,7 @@ ME_LIB_JSON=${ME_LIB_DIR}/JSON
 ME_BIN_JSON=${ME_BIN_DIR}/JSON
 
 
-# installation
+# Installation
 # -----------------------------------------------------------------------------
 me_install_JSON() {
   if [[ -d $ME_LIB_JSON ]]; then

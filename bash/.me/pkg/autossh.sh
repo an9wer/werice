@@ -9,8 +9,10 @@ me_install_autossh() {
   if [[ -d ${ME_LIB_AUTOSSH} ]]; then
     [[ ! -L ${ME_BIN_AUTOSSH} ]] &&
       ln -sf "${ME_LIB_AUTOSSH}/bin/autossh" "${ME_BIN_AUTOSSH}"
-    [[ ! -L ${ME_MAN_AUTOSSH} ]] &&
+    [[ ! -L ${ME_MAN_AUTOSSH} ]] && {
       ln -sf "${ME_LIB_AUTOSSH}/man/man1/autossh.1" "${ME_MAN_AUTOSSH}"
+      mandb &> /dev/null
+    }
     return 0
   fi
 
@@ -42,7 +44,7 @@ me_uninstall_autossh() {
   read -r sure
   if [[ "${sure}" =~ [Y/y] ]]; then
     rm ${ME_BIN_AUTOSSH}
-    rm ${ME_MAN_AUTOSSH} && mandb $> /dev/null
+    rm ${ME_MAN_AUTOSSH} && mandb &> /dev/null
     rm -rf ${ME_LIB_AUTOSSH}
     me_info "autossh has been uninstalled :)"
   fi 

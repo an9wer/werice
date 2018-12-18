@@ -2,7 +2,7 @@ ME_LIB_TLDR=${ME_LIB_DIR}/tldr
 ME_BIN_TLDR=${ME_BIN_DIR}/tldr
 
 
-# installation
+# Installation
 # -----------------------------------------------------------------------------
 me_install_tldr() {
   [[ -d ${ME_LIB_TLDR} ]] && return 0

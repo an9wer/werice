@@ -27,7 +27,7 @@ ME_MAN_DASHT=(
 )
 
 
-# installation
+# Installation
 # -----------------------------------------------------------------------------
 me_install_dasht() {
   if [[ -d ${ME_LIB_DASHT} ]]; then
@@ -39,6 +39,7 @@ me_install_dasht() {
     for man in ${ME_MAN_DASHT[@]}; do
       [[ ! -L ${man} ]] && ln -sf "${ME_LIB_DASHT}/man/man1/${man##*/}" "${man}"
     done
+    mandb &> /dev/null
 
     return 0
   fi
@@ -54,6 +55,7 @@ me_install_dasht() {
     for man in ${ME_MAN_DASHT[@]}; do
       ln -sf "${ME_LIB_DASHT}/man/man1/${man##*/}" "${man}"
     done
+    mandb &> /dev/null
   fi
 
 }
@@ -76,6 +78,7 @@ me_uninstall_dasht() {
     for man in ${ME_MAN_DASHT[@]}; do
       rm ${man}
     done
+    mandb &> /dev/null
 
     rm -rf ${ME_LIB_DASHT}
     me_info "DASHT has been uninstalled :)"

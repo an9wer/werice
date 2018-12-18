@@ -1,11 +1,12 @@
-# installation
+# Installation
 # -----------------------------------------------------------------------------
 me_unset_ssh() {
   unset -f me_unset_ssh sshh
 }
 
 
-# usage
+
+# The hack way
 # -----------------------------------------------------------------------------
 if ! pgrep -u "$USER" ssh-agent > /dev/null; then
   ssh-agent > ~/.ssh/.ssh-agent.rc

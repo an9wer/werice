@@ -2,7 +2,7 @@ ME_LIB_Z=${ME_LIB_DIR}/z
 ME_MAN_Z=${ME_MAN_DIR}/man1/z.1
 
 
-# installation
+# Installation
 # -----------------------------------------------------------------------------
 me_install_z() {
   [[ -d ${ME_LIB_Z} ]] && return 0
@@ -25,7 +25,7 @@ me_uninstall_z() {
   local sure
   read -r sure
   if [[ "${sure}" =~ [Y/y] ]]; then
-    rm ${ME_MAN_Z} && mandb $> /dev/null
+    rm ${ME_MAN_Z} && mandb &> /dev/null
     rm -rf ${ME_LIB_Z}
     me_info "z has been uninstalled :)"
   fi 
@@ -36,7 +36,8 @@ me_unset_z() {
   unset -f me_install_z me_uninstall_z me_unset_z
 }
 
-# usage
+
+# The hack way
 # -----------------------------------------------------------------------------
 # source z.sh
 [[ -f ${ME_LIB_Z}/z.sh ]] && source ${ME_LIB_Z}/z.sh

@@ -3,7 +3,7 @@ ME_BIN_FZF=${ME_BIN_DIR}/fzf
 ME_MAN_FZF=${ME_MAN_DIR}/man1/fzf.1
 
 
-# installation
+# Installation
 # -----------------------------------------------------------------------------
 me_install_fzf() {
   if [[ -d ${ME_LIB_FZF} ]]; then
@@ -33,7 +33,7 @@ me_install_fzf() {
     Linux\ aarch64*) tgz=fzf-${version}-linux_${binary_arch:-arm8}.tgz    ;;
     Linux\ *64)      tgz=fzf-${version}-linux_${binary_arch:-amd64}.tgz   ;;
     Linux\ *86)      tgz=fzf-${version}-linux_${binary_arch:-386}.tgz     ;;
-    *)             me warn "cannot install fzf in this machine"; return 1 ;;
+    *)             me_warn "cannot install fzf in this machine"; return 1 ;;
   esac
 
   local url=https://github.com/junegunn/fzf-bin/releases/download/${version}/${tgz}

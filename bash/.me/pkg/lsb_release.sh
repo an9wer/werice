@@ -5,6 +5,9 @@ ME_LIB_LSB_RELEASE=${ME_LIB_DIR}/lsb_release
 ME_BIN_LSB_RELEASE=${ME_BIN_DIR}/lsb_release
 ME_MAN_LSB_RELEASE=${ME_MAN_DIR}/man1/lsb_release.1
 
+
+# Installation
+# -----------------------------------------------------------------------------
 me_install_lsb_release() {
   if [[ -d ${ME_LIB_LSB_RELEASE} ]]; then
     if [[ ! -L ${ME_BIN_LSB_RELEASE} ]]; then

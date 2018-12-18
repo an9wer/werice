@@ -2,7 +2,7 @@ ME_LIB_ANSI=${ME_LIB_DIR}/ansi
 ME_BIN_ANSI=${ME_BIN_DIR}/ansi
 
 
-# installation
+# Installation
 # -----------------------------------------------------------------------------
 me_install_ansi() {
   if [[ -d ${ME_LIB_ANSI} ]]; then
@@ -40,6 +40,6 @@ me_unset_ansi() {
 }
 
 
-# usage
+# The hack way
 # -----------------------------------------------------------------------------
 alias ansi="ansi -n"

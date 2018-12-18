@@ -1,7 +1,7 @@
 ME_LIB_BASE16=${ME_LIB_DIR}/base16
 
 
-# installation
+# Installation
 # -----------------------------------------------------------------------------
 me_install_base16() {
   [[ -d ${ME_LIB_BASE16} ]] && return 0
@@ -39,7 +39,8 @@ me_unset_base16() {
   unset -f me_install_base16 me_uninstall_base16 me_unset_base16 base16
 }
 
-# usage
+
+# The hack way
 # -----------------------------------------------------------------------------
 base16() {
   source ${ME_LIB_BASE16}/scripts/base16-${1}.sh
