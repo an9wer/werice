@@ -19,3 +19,12 @@ keysym Menu = backslash bar backslash bar
 remove mod4 = Super_R
 ! turn Super_R to Escape key
 keysym Super_R = Escape NoSymbol Escape
+
+! turn BackSpace key to F5 key
+keysym BackSpace = F5 F5 F5 F5 F5 F5 XF86Switch_VT_5
+
+! turn backslash key to Home key
+keysym backslash = Home NoSymbol Home
+
+! turn Escape key to grave key
+keysym Escape = grave asciitilde grave asciitilde
