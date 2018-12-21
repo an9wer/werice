@@ -12,7 +12,7 @@ nnoremap <F1> :GundoToggle<CR>
 
 " NERDTree
 " -----------------------------------------------------------------------------
-map <F2> :NERDTreeToggleOrFind<CR>
+map <Leader>n :NERDTreeToggleOrFind<CR>
 command! NERDTreeToggleOrFind call <SID>NERDTreeToggleOrFind()
 
 function! s:NERDTreeToggleOrFind()

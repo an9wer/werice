@@ -5,7 +5,6 @@ me_unset_ssh() {
 }
 
 
-
 # The hack way
 # -----------------------------------------------------------------------------
 if ! pgrep -u "$USER" ssh-agent > /dev/null; then

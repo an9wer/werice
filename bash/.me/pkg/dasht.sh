@@ -89,3 +89,22 @@ me_unset_dasht() {
   unset -v ME_BIN_DASHT ME_MAN_DASHT ME_LIB_DASHT
   unset -f me_install_dasht me_uninstall_dasht me_unset_dasht
 }
+
+
+# The hack way
+# -----------------------------------------------------------------------------
+dasht() {
+  # Force to run basht in bash environment (default is sh)
+  (( ${#@} != 1 )) && { bash -c "command dasht $@"; return $?; }
+
+  local DASHT_DOCSETS_DIR=${XDG_DATA_HOME:-$HOME/.local/share}/dasht/docsets
+
+  [[ $* == Bash ]] && {
+    w3m ${DASHT_DOCSETS_DIR}/Bash.docset/Contents/Resources/Documents/bash/index.html
+    return $?
+  }
+  [[ $* == Python_3 ]] && {
+    w3m ${DASHT_DOCSETS_DIR}/Python_3.docset/Contents/Resources/Documents/doc/index.html
+    return $?
+  }
+}
