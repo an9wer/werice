@@ -8,7 +8,7 @@ declare -A CONFIG_FUNC=(
   [3]="config .vimrc .vim"
   [4]="config .tmux.conf"
   [5]="config .gitconfig"
-  [6]="config .Xmodmap"
+  [6]="config_xmodmap"
 )
 
 declare -A CONFIG_CB=(
@@ -98,6 +98,20 @@ config_bash_profile() {
   _write_cmdlines ~/.bash_profile
 }
 
+config_xmodmap() {
+  local choice
+  cat <<EOF
+1. rapoo V500
+2. GANSS ALT 61
+EOF
+  read -p "Which keyboard do you want to set? (1/2): " choice
+  case $choice in
+    1) ln -sf ${DIR}/.rapoo_V500.Xmodmap ~/.Xmodmap ;;
+    2) ln -sf ${DIR}/.GANSS_ALT_61.Xmodmap ~/.Xmodmap ;;
+    *) echo "Unknown choice of keyboard :(" ;;
+  esac
+}
+
 config() {
   # $1 ... ${n-1}: which configuration file to install
   # $n: whether to backup configrations
@@ -127,8 +141,9 @@ This script is intend to install configuration files for the following programs.
   5. git
   6. xmodmap
 EOF
-read -p "Let me known what is your choice: " choice
-read -p "Do you want to backup your original configurations?(y/n): " backup
+read -p "Which configuration file do you want to install? (0/1/.../6): " choice
+read -p "Do you want to backup your original configurations? (y/n): " backup
+echo ""
 
 case ${choice} in
   0)
@@ -141,7 +156,7 @@ case ${choice} in
       eval "${CONFIG_FUNC[${choice}]} ${backup}"
       eval "${CONFIG_CB[${choice}]}"
     else
-      echo unknown choice
+      echo "Unknown choice of configuration file :("
       exit 1
     fi ;;
 esac

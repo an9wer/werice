@@ -1,0 +1,28 @@
+! unbind Caps_Lock key in modifier 'Lock'
+remove Lock = Caps_Lock
+! turn Caps_Lock key to Return key
+keysym Caps_Lock = Return NoSymbol Return
+
+! turn Caps_Lock key to modifier 'Control'
+!keysym Caps_Lock = Control_L NoSymbol Control_L
+!add Control = Control_L
+
+! turn Escape key to grave key
+keysym Escape = grave asciitilde grave asciitilde
+
+! turn Return key to Home key
+keysym Return = Home NoSymbol Home
+
+! unbind Alt_R key in modifier 'mod1'
+remove mod1 = Alt_R
+! turn Alt_R key to backslash
+keysym Alt_R = backslash bar backslash bar
+
+! turn Menu key to Escake key
+keysym Menu = Escape NoSymbol Escape
+
+! unbind Control_R key in modifier 'Control'
+remove Control = Control_R
+! turn Control_R key to Backspace key
+keysym Control_R = BackSpace BackSpace BackSpace BackSpace
+

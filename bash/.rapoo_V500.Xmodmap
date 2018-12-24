@@ -9,22 +9,13 @@ keysym Caps_Lock = Return NoSymbol Return
 
 ! unbind Alt_R key in modifier 'mod1'
 remove mod1 = Alt_R
-! turn Alt_R key to BackSpace key
-keysym Alt_R = BackSpace BackSpace BackSpace BackSpace
-
-! turn Menu key to backslash key
-keysym Menu = backslash bar backslash bar
+! turn Alt_R key to backslash key
+keysym Alt_R = backslash bar backslash bar
 
 ! ubind Super_R in modifier 'mod4'
 remove mod4 = Super_R
 ! turn Super_R to Escape key
 keysym Super_R = Escape NoSymbol Escape
 
-! turn BackSpace key to F5 key
-keysym BackSpace = F5 F5 F5 F5 F5 F5 XF86Switch_VT_5
-
-! turn backslash key to Home key
-keysym backslash = Home NoSymbol Home
-
-! turn Escape key to grave key
-keysym Escape = grave asciitilde grave asciitilde
+! turn Menu key to BackSpace key
+keysym Menu = BackSpace BackSpace BackSpace BackSpace
