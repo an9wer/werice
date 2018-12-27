@@ -6,12 +6,15 @@ me_git_prompt() {
   which git &> /dev/null || return
   git rev-parse --is-inside-work-tree &> /dev/null || return
 
-  local branch="${ME_PROMPT_MAGENTA}$(git symbolic-ref --short HEAD)"
+  git symbolic-ref --short HEAD &>/dev/null &&
+    local branch="${ME_PROMPT_MAGENTA}$(git symbolic-ref --short HEAD)" ||
+    local branch="HEAD detached at ${ME_PROMPT_MAGENTA}$(git rev-parse --short HEAD)" 
+
   (( $(git status -s -uno | wc -l) == 0 )) &&
     local status="${ME_PROMPT_GREEN}✓" ||
     local status="${ME_PROMPT_RED}✗"
 
-  echo "(${ME_PROMPT_BOLD}${ME_PROMPT_MAGENTA}${branch} ${status}${ME_PROMPT_END})"
+  echo "(${ME_PROMPT_BOLD}${branch} ${status}${ME_PROMPT_END})"
 }
 
 ps1_command() {

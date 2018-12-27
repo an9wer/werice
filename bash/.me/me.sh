@@ -9,25 +9,29 @@ export ME_PKG_DIR=${ME_DIR}/pkg
 export ME_BASHRC_DIR=${ME_DIR}/bashrc.d
 
 
+export ME_ANSI_END="\e[0m"
+export ME_ANSI_BOLD="\e[1m"
 export ME_ANSI_RED="\e[91m"
-export ME_ANSI_BLUE="\e[94m"
 export ME_ANSI_GREEN="\e[92m"
 export ME_ANSI_YELLOW="\e[93m"
+export ME_ANSI_BLUE="\e[94m"
 export ME_ANSI_MAGENTA="\e[95m"
-export ME_ANSI_BOLD="\e[1m"
-export ME_ANSI_END="\e[0m"
+export ME_ANSI_CYAN="\e[96m"
+export ME_ANSI_WHITE="\e[97m"
 
 # Wrapping the format code in '\[' and '\]' can avoid prompt issues when
 # scrolling command history.
 # thx: https://superuser.com/a/980982
 # thx: http://tldp.org/HOWTO/Bash-Prompt-HOWTO/nonprintingchars.html
+export ME_PROMPT_END="\[\e[0m\]"
+export ME_PROMPT_BOLD="\[\e[1m\]"
 export ME_PROMPT_RED="\[\e[91m\]"
-export ME_PROMPT_BLUE="\[\e[94m\]"
 export ME_PROMPT_GREEN="\[\e[92m\]"
 export ME_PROMPT_YELLOW="\[\e[93m\]"
+export ME_PROMPT_BLUE="\[\e[94m\]"
 export ME_PROMPT_MAGENTA="\[\e[95m\]"
-export ME_PROMPT_BOLD="\[\e[1m\]"
-export ME_PROMPT_END="\[\e[0m\]"
+export ME_PROMPT_CYAN="\[\e[96m\]"
+export ME_PROMPT_WHITE="\[\e[97m\]"
 
 
 # environment variable
@@ -53,7 +57,7 @@ export HISTIGNORE="ls:ll:pwd:vim:history:git status"
 # aliases
 # -----------------------------------------------------------------------------
 alias ls="ls --color=always"
-alias ll="ls -l"
+alias ll="ls -lh"
 
 alias grep="grep --color=always"
 alias egrep="egrep --color=always"
