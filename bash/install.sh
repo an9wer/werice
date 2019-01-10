@@ -9,6 +9,7 @@ declare -A CONFIG_FUNC=(
   [4]="config .tmux.conf"
   [5]="config .gitconfig"
   [6]="config_xmodmap"
+  [7]="config .gnupg/gpg.conf"
 )
 
 declare -A CONFIG_CB=(
@@ -18,6 +19,7 @@ declare -A CONFIG_CB=(
   [4]=""
   [5]=""
   [6]=""
+  [7]=""
 )
 
 _backup() {
@@ -140,8 +142,9 @@ This script is intend to install configuration files for the following programs.
   4. tmux
   5. git
   6. xmodmap
+  7. gpg
 EOF
-read -p "Which configuration file do you want to install? (0/1/.../6): " choice
+read -p "Which configuration file do you want to install? (0/1/.../${#CONFIG_FUNC[@]}): " choice
 read -p "Do you want to backup your original configurations? (y/n): " backup
 echo ""
 
