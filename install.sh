@@ -13,29 +13,28 @@ declare -A CONFIG_FUNC=(
 )
 
 declare -A CONFIG_CB=(
-  [1]=""
+  [1]="echo Please run the command \'source \~/.bashrc\'"
   [2]=""
   [3]="callback_vim"
   [4]=""
   [5]=""
-  [6]=""
+  [6]="xmodmap ~/.Xmodmap"
   [7]=""
 )
 
 _backup() {
   # $1: file to backup
-  # Note: It'll remove origin file.
 
   [[ -e "${1}" ]] || return
   [[ -h "${1}" ]] && rm -vf "$1" && return
 
-  local backup_file
+  local dotbak
   local suffix=0
   
-  for backup_file in $(ls ${1}.bak.[0-9] ${1}.bak.[0-9]+ 2>/dev/null); do
-    (( suffix < ${backup_file##*.} )) && suffix=${backup_file##*.}
-    [[ -f "${1}" && -f "${backup_file}" ]] && {
-      cmp --silent "${1}" "${backup_file}" && rm -f "${backup_file}"
+  for dotbak in $(ls ${1}.bak.[0-9] ${1}.bak.[0-9]+ 2>/dev/null); do
+    (( suffix < ${dotbak##*.} )) && suffix=${dotbak##*.}
+    [[ -f "${1}" && -f "${dotbak}" ]] && {
+      cmp --silent "${1}" "${dotbak}" && rm -f "${dotbak}"
     }
   done
 
@@ -43,8 +42,22 @@ _backup() {
   mv -vf "${1}" "${1}".bak.${suffix}
 }
 
+_read_cmdlines() {
+  # $1: file to read cmdlines
+  cmdlines=()
+  cmdlines_old=()
+  local pass=""
+  while IFS='' read -r line || [[ -n "${line}" ]]; do
+    cmdlines_old+=("$line")
+    [[ "${line}" =~ "werice start" ]] && { pass="y"; continue; }
+    [[ "${line}" =~ "werice end" ]] && { pass=""; continue; }
+    [[ -n "$pass" ]] && continue
+    cmdlines+=("$line")
+  done < "${1}"
+}
+
 _write_cmdlines() {
-  # $1: file to write cmdline
+  # $1: file to write cmdlines
 
   for line in "${cmdlines[@]}"; do
     echo "${line}" >> ${1}
@@ -54,14 +67,7 @@ _write_cmdlines() {
 config_bashrc() {
   # $1: whether to backup bashrc
 
-  cmdlines=()
-  local pass=""
-  while IFS='' read -r line || [[ -n "${line}" ]]; do
-    [[ "${line}" =~ "werice start" ]] && { pass="y"; continue; }
-    [[ "${line}" =~ "werice end" ]] && { pass=""; continue; }
-    [[ -n "$pass" ]] && continue
-    cmdlines+=("$line")
-  done < ~/.bashrc
+  _read_cmdlines ~/.bashrc
 
   cmdlines+=(
     '# werice start {{{'
@@ -72,6 +78,7 @@ config_bashrc() {
   [[ ${1} =~ [Nn] ]] || _backup ~/.me
   ln -vsf ${DIR}/.me ~/.me
 
+  [[ "${cmdlines[*]}" == "${cmdlines_old[*]}" ]] && return
   [[ ${1} =~ [Nn] ]] || _backup ~/.bashrc
   _write_cmdlines ~/.bashrc
 }
@@ -79,14 +86,7 @@ config_bashrc() {
 config_bash_profile() {
   # $1: whether to backup bashrc
 
-  cmdlines=()
-  local pass=""
-  while IFS='' read -r line || [[ -n "${line}" ]]; do
-    [[ "${line}" =~ "werice start" ]] && { pass="y"; continue; }
-    [[ "${line}" =~ "werice end" ]] && { pass=""; continue; }
-    [[ -n "$pass" ]] && continue
-    cmdlines+=("$line")
-  done < ~/.bash_profile
+  _read_cmdlines ~/.bash_profile
 
   cmdlines+=(
     '# werice start {{{'
@@ -128,7 +128,6 @@ callback_vim() {
   # vim bundle
   vim -e -c "call Bundle('install') | visual | qa"
 }
-
 
 # main
 [[ -d ~/.config ]] || mkdir ~/.config
