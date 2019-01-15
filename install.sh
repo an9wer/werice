@@ -103,14 +103,14 @@ config_bash_profile() {
 config_xmodmap() {
   local choice
   cat <<EOF
-1. rapoo V500
-2. GANSS ALT 61
+1. HP EliteBook 8470p
+2. Rapoo V500
 EOF
   read -p "Which keyboard do you want to set? (1/2): " choice
   case $choice in
-    1) ln -sf ${DIR}/.rapoo_V500.Xmodmap ~/.Xmodmap ;;
-    2) ln -sf ${DIR}/.GANSS_ALT_61.Xmodmap ~/.Xmodmap ;;
-    *) echo "Unknown choice of keyboard :(" ;;
+    1) ln -sf ${DIR}/xmodmap/HP_EliteBook_8470p.Xmodmap ~/.Xmodmap ;;
+    2) ln -sf ${DIR}/xmodmap/Rapoo_V500.Xmodmap ~/.Xmodmap ;;
+    *) echo "Unknown keyboard :(" ;;
   esac
 }
 
