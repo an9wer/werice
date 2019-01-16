@@ -31,14 +31,15 @@ _backup() {
   local dotbak
   local suffix=0
   
-  for dotbak in $(ls ${1}.bak.[0-9] ${1}.bak.[0-9]+ 2>/dev/null); do
+  for dotbak in $(ls ${1}.bak.[0-9] ${1}.bak.[1-9][0-9]* 2>/dev/null); do
     (( suffix < ${dotbak##*.} )) && suffix=${dotbak##*.}
+    # compare only when they are regular files
     [[ -f "${1}" && -f "${dotbak}" ]] && {
       cmp --silent "${1}" "${dotbak}" && rm -f "${dotbak}"
     }
   done
 
-  [[ -f "${1}".bak.${suffix} ]] && suffix=$(( suffix + 1 ))
+  [[ -e "${1}".bak.${suffix} ]] && suffix=$(( suffix + 1 ))
   mv -vf "${1}" "${1}".bak.${suffix}
 }
 
@@ -60,8 +61,8 @@ _write_cmdlines() {
   # $1: file to write cmdlines
 
   for line in "${cmdlines[@]}"; do
-    echo "${line}" >> ${1}
-  done
+    echo "${line}"
+  done > ${1}
 }
 
 config_bashrc() {
@@ -130,7 +131,6 @@ callback_vim() {
 }
 
 # main
-[[ -d ~/.config ]] || mkdir ~/.config
 cat <<EOF
                        === rice installation ===
 This script is intend to install configuration files for the following programs.
@@ -158,7 +158,7 @@ case ${choice} in
       eval "${CONFIG_FUNC[${choice}]} ${backup}"
       eval "${CONFIG_CB[${choice}]}"
     else
-      echo "Unknown choice of configuration file :("
+      echo "Unknown choice of configuration files :("
       exit 1
     fi ;;
 esac
