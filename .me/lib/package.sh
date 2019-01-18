@@ -77,6 +77,7 @@ me() {
         me_warn "The job '$1' doesn't exist"
       fi
       ;;
+
     *)
       echo \
         'Usage: me <command> [<args>]'            $'\n' \

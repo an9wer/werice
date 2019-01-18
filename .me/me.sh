@@ -56,18 +56,20 @@ export HISTIGNORE="ls:ll:pwd:vim:history:git status"
 
 # aliases
 # -----------------------------------------------------------------------------
-alias ls="ls --color=always"
+alias ls="ls --color=auto"
 alias ll="ls -lh"
+alias lsc="ls --color=always"
+alias llc="ll --color=always"
 
-alias grep="grep --color=always"
-alias egrep="egrep --color=always"
-alias fgrep="fgrep --color=always"
+alias grep="grep --color=auto"
+alias egrep="egrep --color=auto"
+alias fgrep="fgrep --color=auto"
 
-alias diff="diff --color=always"
+alias diff="diff --color=auto"
 
 # Display colors when using less
 # thx: https://superuser.com/a/275869
-alias less="less -R"
+#alias less="less -R"
 
 alias info="info --vi-keys"
 
