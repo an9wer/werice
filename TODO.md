@@ -1,0 +1,2 @@
+-   [ ] Backup suckless
+-   [ ] uninstall suckless

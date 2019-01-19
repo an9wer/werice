@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# $1: which module
+
+diff -up $1/config.def.h $1/config.h > \
+  $1-patches/$1-config-$(date +%Y%m%d)-$(cd $1; git rev-parse --short HEAD).diff

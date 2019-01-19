@@ -1,3 +1,6 @@
 [submodule "suckless/dwm"]
 	path = suckless/dwm
 	url = https://git.suckless.org/dwm
+[submodule "suckless/st"]
+	path = suckless/st
+	url = https://git.suckless.org/st
