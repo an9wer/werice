@@ -23,17 +23,18 @@ _write_cmdlines() {
 }
 
 unconfig() {
-  # $1: file to recovery
-  [[ -e "${1}" ]] || return
-  [[ -h "${1}" ]] || return
-  rm -vf "${1}"
+  for file in ${@}; do
+    [[ -e "${file}" ]] || continue
+    [[ -h "${file}" ]] || continue
+    rm -vf "${file}"
 
-  local dotbak
-  local suffix=0
-  for dotbak in $(ls ${1}.bak.[0-9] ${1}.bak.[1-9][0-9]* 2>/dev/null); do
-    (( suffix < ${dotbak##*.} )) && suffix=${dotbak##*.}
+    local dotbak=
+    local suffix=0
+    for dotbak in $(ls ${file}.bak.[0-9] ${file}.bak.[1-9][0-9]* 2>/dev/null); do
+      (( suffix < ${dotbak##*.} )) && suffix=${dotbak##*.}
+    done
+    [[ -n $dotbak ]] && mv -vf "${file}.bak.${suffix}" "${file}"
   done
-  [[ -n $dotbak ]] && mv -vf "${1}.bak.${suffix}" "${1}"
 }
 
 unconfig_bashrc() {
@@ -56,7 +57,7 @@ UNCONFIG_FUNC=(
   [4]="unconfig ~/.tmux.conf"
   [5]="unconfig ~/.gitconfig ~/.git-extensions"
   [6]="unconfig ~/.Xmodmap"
-  [7]="unconfig ~/.gnupg/gpg.conf"
+  [7]="unconfig ~/.gnupg/gpg.conf ~/.gnupg/dirmngr.conf ~/.gnupg/sks-keyserver.netCA.pem"
   [8]="unconfig ~/.w3m/keymap"
 )
 
