@@ -12,6 +12,7 @@ declare -A CONFIG_FUNC=(
   [7]="config .gnupg/gpg.conf"
   [8]="config_suckless dwm"
   [9]="config_suckless st"
+  [10]="config_suckless slstatus"
 )
 
 declare -A CONFIG_CB=(
@@ -24,6 +25,7 @@ declare -A CONFIG_CB=(
   [7]=""
   [8]=""
   [9]=""
+  [10]=""
 )
 
 _backup() {
@@ -163,6 +165,7 @@ This script is intend to install configuration files for the following programs.
   7. gpg
   8. dwm
   9. st
+ 10. slstatus
 EOF
 read -p "Which configuration file do you want to install? (0/1/.../${#CONFIG_FUNC[@]}): " choice
 read -p "Do you want to backup your original configurations? (y/n): " backup

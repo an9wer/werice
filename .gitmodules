@@ -4,3 +4,6 @@
 [submodule "suckless/st"]
 	path = suckless/st
 	url = https://git.suckless.org/st
+[submodule "suckless/slstatus"]
+	path = suckless/slstatus
+	url = https://git.suckless.org/slstatus
