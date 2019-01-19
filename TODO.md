@@ -1,2 +1,3 @@
 -   [ ] Backup suckless
--   [ ] uninstall suckless
+-   [ ] Uninstall suckless
+-   [ ] Hooker for shutdown command

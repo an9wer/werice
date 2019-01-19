@@ -7,7 +7,7 @@ declare -A CONFIG_FUNC=(
   [2]="config_bash_profile"
   [3]="config .vimrc .vim"
   [4]="config .tmux.conf"
-  [5]="config .gitconfig"
+  [5]="config .gitconfig .git-extensions"
   [6]="config_xmodmap"
   [7]="config .gnupg/gpg.conf"
   [8]="config_suckless dwm"
@@ -126,8 +126,8 @@ config_suckless() {
 
   [[ -h ~/.suckless ]] || ln -sf ${DIR}/suckless ~/.suckless
 
-  local MOD_DIR=~/.suckless/$1
-  git submodule update $MOD_DIR
+  local MOD_DIR=${DIR}/suckless/$1
+  git submodule update --init $MOD_DIR
 
   cd ${MOD_DIR}
   patch -bo config.h config.def.h \
