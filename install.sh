@@ -10,6 +10,7 @@ declare -A CONFIG_FUNC=(
   [5]="config .gitconfig"
   [6]="config_xmodmap"
   [7]="config .gnupg/gpg.conf"
+  [8]="config_suckless dwm"
 )
 
 declare -A CONFIG_CB=(
@@ -20,6 +21,7 @@ declare -A CONFIG_CB=(
   [5]=""
   [6]="xmodmap ~/.Xmodmap"
   [7]=""
+  [8]=""
 )
 
 _backup() {
@@ -115,6 +117,23 @@ EOF
   esac
 }
 
+config_suckless() {
+  # $1: which suckless module to config
+
+  [[ -h ~/.suckless ]] || ln -sf ${DIR}/suckless ~/.suckless
+
+  local MOD_DIR=~/.suckless/$1
+  git submodule update $MOD_DIR
+
+  cd ${MOD_DIR}
+  patch -o config.h config.def.h $MOD_DIR-patches/dwm-config-*-$(git rev-parse --short HEAD).diff
+  make && sudo make install
+}
+
+config_dwm() {
+  git submodule update ${DIR}/suckless/dwm
+}
+
 config() {
   # $1 ... ${n-1}: which configuration file to install
   # $n: whether to backup configrations
@@ -142,6 +161,7 @@ This script is intend to install configuration files for the following programs.
   5. git
   6. xmodmap
   7. gpg
+  8. dwm
 EOF
 read -p "Which configuration file do you want to install? (0/1/.../${#CONFIG_FUNC[@]}): " choice
 read -p "Do you want to backup your original configurations? (y/n): " backup
