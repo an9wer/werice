@@ -10,9 +10,10 @@ declare -A CONFIG_FUNC=(
   [5]="config .gitconfig .git-extensions"
   [6]="config_xmodmap"
   [7]="config .gnupg/gpg.conf"
-  [8]="config_suckless dwm"
-  [9]="config_suckless st"
-  [10]="config_suckless slstatus"
+  [8]="config .w3m/keymap"
+  [9]="config_suckless dwm"
+  [10]="config_suckless st"
+  [11]="config_suckless slstatus"
 )
 
 declare -A CONFIG_CB=(
@@ -26,6 +27,7 @@ declare -A CONFIG_CB=(
   [8]=""
   [9]=""
   [10]=""
+  [11]=""
 )
 
 _backup() {
@@ -72,8 +74,6 @@ _write_cmdlines() {
 }
 
 config_bashrc() {
-  # $1: whether to backup bashrc
-
   _read_cmdlines ~/.bashrc
 
   cmdlines+=(
@@ -82,17 +82,15 @@ config_bashrc() {
     '# }}} werice end'
   )
 
-  [[ ${1} =~ [Nn] ]] || _backup ~/.me
+  [[ ${backup} =~ [Nn] ]] || _backup ~/.me
   ln -vsf ${DIR}/.me ~/.me
 
   [[ "${cmdlines[*]}" == "${cmdlines_old[*]}" ]] && return
-  [[ ${1} =~ [Nn] ]] || _backup ~/.bashrc
+  [[ ${backup} =~ [Nn] ]] || _backup ~/.bashrc
   _write_cmdlines ~/.bashrc
 }
 
 config_bash_profile() {
-  # $1: whether to backup bashrc
-
   _read_cmdlines ~/.bash_profile
 
   cmdlines+=(
@@ -103,7 +101,7 @@ config_bash_profile() {
     '# }}} werice end'
   )
 
-  [[ ${1} =~ [Nn] ]] || _backup ~/.bash_profile
+  [[ ${backup} =~ [Nn] ]] || _backup ~/.bash_profile
   _write_cmdlines ~/.bash_profile
 }
 
@@ -138,10 +136,11 @@ config_suckless() {
 
 config() {
   # $1 ... ${n-1}: which configuration file to install
-  # $n: whether to backup configrations
 
-  for file in ${@:1:${#@}-1}; do
-    [[ ${@: -1} =~ [Nn] ]] || _backup ~/${file}
+  #for file in ${@:1:${#@}-1}; do
+  for file in ${@}; do
+    mkdir -pv $(dirname ${file})
+    [[ ${backup} =~ [Nn] ]] || _backup ~/${file}
     ln -vsf ${DIR}/${file} ~/${file}
   done
 }
@@ -163,9 +162,10 @@ This script is intend to install configuration files for the following programs.
   5. git
   6. xmodmap
   7. gpg
-  8. dwm
-  9. st
- 10. slstatus
+  8. w3m
+  9. dwm
+ 10. st
+ 11. slstatus
 EOF
 read -p "Which configuration file do you want to install? (0/1/.../${#CONFIG_FUNC[@]}): " choice
 read -p "Do you want to backup your original configurations? (y/n): " backup
@@ -174,12 +174,12 @@ echo ""
 case ${choice} in
   0)
     for (( i = 1; i <= ${#CONFIG_FUNC[@]}; i++ )); do
-      eval "${CONFIG_FUNC[${i}]} ${backup}"
+      eval "${CONFIG_FUNC[${i}]}"
       eval "${CONFIG_CB[${i}]}"
     done ;;
   *)
     if [[ -n ${CONFIG_FUNC[${choice}]} ]]; then
-      eval "${CONFIG_FUNC[${choice}]} ${backup}"
+      eval "${CONFIG_FUNC[${choice}]}"
       eval "${CONFIG_CB[${choice}]}"
     else
       echo "Unknown choice of configuration files :("

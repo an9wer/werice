@@ -52,11 +52,12 @@ unconfig_bash_profile() {
 UNCONFIG_FUNC=(
   [1]="unconfig_bashrc"
   [2]="unconfig_bash_profile"
-  [3]="unconfig .vimrc .vim"
-  [4]="unconfig .tmux.conf"
-  [5]="unconfig .gitconfig"
-  [6]="unconfig .Xmodmap"
-  [7]="unconfig .gnupg/gpg.conf"
+  [3]="unconfig ~/.vimrc ~/.vim"
+  [4]="unconfig ~/.tmux.conf"
+  [5]="unconfig ~/.gitconfig ~/.git-extensions"
+  [6]="unconfig ~/.Xmodmap"
+  [7]="unconfig ~/.gnupg/gpg.conf"
+  [8]="unconfig ~/.w3m/keymap"
 )
 
 declare -A CONFIG_CB=(
@@ -67,6 +68,7 @@ declare -A CONFIG_CB=(
   [5]=""
   [6]=""
   [7]=""
+  [8]=""
 )
 
 # main
@@ -81,6 +83,7 @@ This script is intend to uninstall configuration files for the following program
   5. git
   6. xmodmap
   7. gpg
+  8. w3m
 EOF
 read -p "Which configuration file do you want to uninstall? (0/1/.../${#UNCONFIG_FUNC[@]}): " choice
 echo ""
@@ -88,12 +91,12 @@ echo ""
 case ${choice} in
   0)
     for (( i = 1; i <= ${#UNCONFIG_FUNC[@]}; i++ )); do
-      eval "${UNCONFIG_FUNC[${i}]} ${backup}"
+      eval "${UNCONFIG_FUNC[${i}]}"
       eval "${UNCONFIG_CB[${i}]}"
     done ;;
   *)
     if [[ -n ${UNCONFIG_FUNC[${choice}]} ]]; then
-      eval "${UNCONFIG_FUNC[${choice}]} ${backup}"
+      eval "${UNCONFIG_FUNC[${choice}]}"
       eval "${UNCONFIG_CB[${choice}]}"
     else
       echo "Unknown choice of configuration files :("
