@@ -3,5 +3,6 @@
 # $1: which module
 
 mkdir -p $1-patches
+
 diff -up $1/config.def.h $1/config.h > \
-  $1-patches/$1-config-$(date +%Y%m%d)-$(cd $1; git rev-parse --short HEAD).diff
+  $1-patches/$1-config$(hostname)-$(date +%Y%m%d)-$(cd $1; git rev-parse --short HEAD).diff

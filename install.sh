@@ -133,7 +133,7 @@ config_suckless() {
 
   cd ${MOD_DIR}
   patch -bo config.h config.def.h \
-    $MOD_DIR-patches/$1-config-*-$(git rev-parse --short HEAD).diff
+    $MOD_DIR-patches/$1-config$(hostname)-*-$(git rev-parse --short HEAD).diff
   make && sudo make install && make clean
   cd ${DIR}
 }
