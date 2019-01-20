@@ -1,5 +1,5 @@
---- /home/an9wer/Naruto/suckless/dwm/config.def.h	2019-01-18 14:29:41.907896629 +0800
-+++ /home/an9wer/Naruto/suckless/dwm/config.h	2019-01-18 14:56:22.271318273 +0800
+--- dwm/config.def.h	2019-01-18 16:59:03.458389885 +0800
++++ dwm/config.h	2019-01-19 17:56:08.218668749 +0800
 @@ -4,7 +4,7 @@
  static const unsigned int borderpx  = 1;        /* border pixel of windows */
  static const unsigned int snap      = 32;       /* snap pixel */

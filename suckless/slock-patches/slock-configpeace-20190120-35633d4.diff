@@ -1,5 +1,5 @@
 --- slock/config.def.h	2019-01-20 11:17:23.103246011 +0800
-+++ slock/config.h	2019-01-20 11:17:52.319911692 +0800
++++ slock/config.h	2019-01-20 11:19:05.783242547 +0800
 @@ -1,6 +1,6 @@
  /* user and group to drop privileges to */
  static const char *user  = "nobody";
