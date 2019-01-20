@@ -14,6 +14,7 @@ declare -A CONFIG_FUNC=(
   [9]="config_suckless dwm"
   [10]="config_suckless st"
   [11]="config_suckless slstatus"
+  [12]="config_suckless dmenu"
 )
 
 declare -A CONFIG_CB=(
@@ -28,6 +29,7 @@ declare -A CONFIG_CB=(
   [9]=""
   [10]=""
   [11]=""
+  [12]=""
 )
 
 _backup() {
@@ -166,6 +168,7 @@ This script is intend to install configuration files for the following programs.
   9. dwm
  10. st
  11. slstatus
+ 12. dmenu
 EOF
 read -p "Which configuration file do you want to install? (0/1/.../${#CONFIG_FUNC[@]}): " choice
 read -p "Do you want to backup your original configurations? (y/n): " backup
