@@ -2,7 +2,7 @@
 
 {
   # install depedence
-  pacman -Sy --needed --noconfirm sudo
+  pacman -Sy --needed --noconfirm audit sudo
 } && {
   # create group and user
   groupadd -f wheel
