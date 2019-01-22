@@ -87,6 +87,11 @@ alias vimtest="vim --noplugin -N -u"
 
 alias todo="vim ~/Documents/notes/todo.wiki"
 
+# virtual console
+[[ $(tty) =~ /dev/tty ]] && {
+  setfont Tamsyn10x20r &> /dev/null
+  setterm --blength 0
+}
 
 # load libs
 source ${ME_LIB_DIR}/base.sh
@@ -106,3 +111,4 @@ done
 
 # say hello
 command -v neofetch &> /dev/null && neofetch
+#setterm --blength 0
