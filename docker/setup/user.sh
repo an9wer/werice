@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
-{
-  # install depedence
+{ # Install depedence
   pacman -Sy --needed --noconfirm audit sudo
-} && {
-  # create group and user
+
+} && { # Create group and user
   groupadd -f wheel
   useradd -g wheel -m an9wer
-} && {
-  # config sudo
+
+} && { # Config sudo
   echo '%wheel ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/wheel
+
 }
     

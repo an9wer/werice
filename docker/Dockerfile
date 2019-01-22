@@ -6,18 +6,15 @@ LABEL maintainer.email="an9wer@gmail.com"
 SHELL ["/bin/bash", "-c"]
 
 USER root:root
-ENV ROOT_STARTUP /root/startup
-COPY --chown=root:root root_startup/set_*.sh ${ROOT_STARTUP}/
+ENV SETUP /root/setup
+COPY --chown=root:root setup/*.sh ${SETUP}/
 RUN pacman -Syu --noconfirm
-RUN ${ROOT_STARTUP}/set_timezone.sh
-RUN ${ROOT_STARTUP}/set_locale.sh
-RUN ${ROOT_STARTUP}/set_user.sh
-RUN ${ROOT_STARTUP}/set_ssh.sh
-RUN ${ROOT_STARTUP}/set_basic_tools.sh
+RUN ${SETUP}/timezone.sh
+RUN ${SETUP}/locale.sh
+RUN ${SETUP}/ssh.sh
+RUN ${SETUP}/user.sh
+RUN ${SETUP}/basetools.sh
 
 USER an9wer:wheel
-ENV AN9WER_STARTUP /home/an9wer/startup
-COPY --chown=an9wer:wheel an9wer_startup/set_*.sh ${AN9WER_STARTUP}/
-RUN ${AN9WER_STARTUP}/set_dotfiles.sh
 
 EXPOSE 22

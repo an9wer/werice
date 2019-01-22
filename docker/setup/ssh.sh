@@ -2,19 +2,19 @@
 
 # thx: https://github.com/retorillo/archlinux-sshd/blob/master/Dockerfile
 
-{
-  # install depedence
+{ # Install dependences
   pacman -Sy --needed --noconfirm openssh
-} && {
-  # config ssh
+
+} && { # Config ssh
   SSHD_CONFIG="/etc/ssh/sshd_config"
-  [[ -f /etc/ssh/sshd_config ]] && cp ${SSHD_CONFIG} ${SSHD_CONFIG}.bak
+  [[ -f /etc/ssh/sshd_config ]] && cp ${SSHD_CONFIG}{,.bak}
   {
     echo "PermitRootLogin yes"
     echo "PasswordAuthentication yes"
   } >> ${SSHD_CONFIG}
-} && {
-  # startup ssh
+
+} && { # Setup ssh
   [[ ! -f /etc/ssh/ssh_host_rsa_key ]] && ssh-keygen -A
   /bin/sshd
+
 }
