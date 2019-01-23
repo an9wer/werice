@@ -1,0 +1,13 @@
+diff --git a/x.c b/x.c
+index 0422421..ccde597 100644
+--- a/x.c
++++ b/x.c
+@@ -1033,7 +1033,7 @@ xinit(int cols, int rows)
+ 	xw.attrs.background_pixel = dc.col[defaultbg].pixel;
+ 	xw.attrs.border_pixel = dc.col[defaultbg].pixel;
+ 	xw.attrs.bit_gravity = NorthWestGravity;
+-	xw.attrs.event_mask = FocusChangeMask | KeyPressMask
++	xw.attrs.event_mask = FocusChangeMask | KeyPressMask | KeyReleaseMask
+ 		| ExposureMask | VisibilityChangeMask | StructureNotifyMask
+ 		| ButtonMotionMask | ButtonPressMask | ButtonReleaseMask;
+ 	xw.attrs.colormap = xw.cmap;

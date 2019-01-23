@@ -136,8 +136,11 @@ config_suckless() {
   git submodule update --init $MOD_DIR
 
   cd ${MOD_DIR}
-  patch -bo config.h config.def.h \
+  git stash
+  patch -b -o config.h config.def.h \
     $MOD_DIR-patches/$1-config$(hostname)-*-$(git rev-parse --short HEAD).diff
+  git apply \
+    $MOD_DIR-patches/$1-custom-*-$(git rev-parse --short HEAD).diff
   make && sudo make install && make clean
   cd ${DIR}
 }
