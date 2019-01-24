@@ -1,8 +1,8 @@
-me_venv_prompt() {
+_me_venv_prompt() {
   [[ -n ${VIRTUAL_ENV} ]] && echo "(${VIRTUAL_ENV}) "
 }
 
-me_git_prompt() {
+_me_git_prompt() {
   which git &> /dev/null || return
   git rev-parse --is-inside-work-tree &> /dev/null || return
 
@@ -17,18 +17,18 @@ me_git_prompt() {
   echo "G ${ME_PROMPT_BOLD}${branch} ${status}${ME_PROMPT_END}"
 }
 
-ps1_command() {
+_me_ps1() {
   PS1="${ME_PROMPT_BOLD}${ME_PROMPT_YELLOW}.--==${ME_PROMPT_END} "
-  PS1+="$(me_venv_prompt)"
+  PS1+="$(_me_venv_prompt)"
   PS1+="${ME_PROMPT_BOLD}${ME_PROMPT_GREEN}\u@\h${ME_PROMPT_END} "
   PS1+="at ${ME_PROMPT_BOLD}${ME_PROMPT_RED}\t${ME_PROMPT_END} "
   PS1+="in ${ME_PROMPT_BOLD}${ME_PROMPT_BLUE}\w${ME_PROMPT_END} "
-  PS1+="$(me_git_prompt)\n"
+  PS1+="$(_me_git_prompt)\n"
   PS1+="${ME_PROMPT_BOLD}${ME_PROMPT_YELLOW}\\\`--== \$ ${ME_PROMPT_END}"
 }
 
 # ps1
-PROMPT_COMMAND=$PROMPT_COMMAND$'\n'"ps1_command;"
+PROMPT_COMMAND=$PROMPT_COMMAND$'\n'"_me_ps1;"
 
 # ps2
 PS2="${ME_PROMPT_BOLD}${ME_PROMPT_YELLOW}\\\`--== > ${ME_PROMPT_END}"

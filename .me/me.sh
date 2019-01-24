@@ -4,9 +4,12 @@ export ME_DIR=$(dirname ${BASH_SOURCE[0]})
 export ME_BIN_DIR=${ME_DIR}/bin
 export ME_MAN_DIR=${ME_DIR}/man
 export ME_LIB_DIR=${ME_DIR}/lib
-export ME_JOB_DIR=${ME_DIR}/job
-export ME_PKG_DIR=${ME_DIR}/pkg
+export ME_LOG_DIR=${ME_DIR}/log
+export ME_CFG_DIR=${ME_DIR}/config
 export ME_BASHRC_DIR=${ME_DIR}/bashrc.d
+# Obsolete:
+export ME_PKG_DIR=${ME_DIR}/pkg
+export ME_JOB_DIR=${ME_DIR}/job
 
 
 export ME_ANSI_END="\e[0m"
@@ -96,7 +99,6 @@ alias todo="vim ~/Documents/notes/todo.wiki"
 # load libs
 source ${ME_LIB_DIR}/base.sh
 source ${ME_LIB_DIR}/package.sh
-source ${ME_LIB_DIR}/prompt.sh
 
 
 # basic module
@@ -111,4 +113,3 @@ done
 
 # say hello
 command -v neofetch &> /dev/null && neofetch
-#setterm --blength 0

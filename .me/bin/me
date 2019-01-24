@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+shopt -s extglob
+
+LIB_ME_DIR=$ME_LIB_DIR/me
+LIB_PKG_DIR=$ME_LIB_DIR/me-packages
+
+package_list() {
+  for pkg in $(ls $LIB_PKG_DIR); do
+    [[ ! -d $LIB_PKG_DIR/$pkg ]] && continue
+
+    printf "%-20s" "${pkg%\.sh}"
+    if [[ -L $ME_BASHRC_DIR/$pkg.sh ]]; then
+      printf "${ME_ANSI_BOLD}${ME_ANSI_BLUE}%s${ME_ANSI_END}\n" "enable"
+    else
+      printf "${ME_ANSI_BOLD}${ME_ANSI_RED}%s${ME_ANSI_END}\n" "disable"
+    fi
+  done
+}
+
+package_install() {
+  echo 123
+}
+
+package_update() {
+  echo 123
+}
+
+package_remove() {
+  echo 123
+}
+
+subcmds=( $(find $LIB_ME_DIR -name 'me-*' -printf "%f\n" | cut -c 4-) )
+subcmds_filter=$(IFS='|'; echo "${subcmds[*]}")
+
+case $1 in
+  -l|--list    ) package_list ;;
+  -i|--install ) package_install ;;
+  -u|--update  ) package_update ;;
+  -r|--remove  ) package_remove ;;
+  info ) shift; printf "${ME_ANSI_BOLD}${ME_ANSI_BLUE}%s${ME_ANSI_END}\n" "$*" ;;
+  warn ) shift; printf "${ME_ANSI_BOLD}${ME_ANSI_YELLOW}%s${ME_ANSI_END}\n" "$*" ;;
+  err  ) shift; printf "${ME_ANSI_BOLD}${ME_ANSI_RED}%s${ME_ANSI_END}\n" "$*"; exit 1 ;;
+  @($subcmds_filter) ) $LIB_ME_DIR/me-$1 ${@:2};;
+  * ) usage ;;
+esac

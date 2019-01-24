@@ -1,4 +1,4 @@
-me() {
+ame() {
   local first=$1
   shift
 

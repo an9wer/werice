@@ -1,3 +1,5 @@
 -   [ ] Backup suckless
 -   [ ] Uninstall suckless
 -   [ ] Hooker for shutdown command
+-   [ ] Log of me-rclone
+-   [ ] Completion of me
