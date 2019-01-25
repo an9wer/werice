@@ -47,22 +47,29 @@ execute() {
 
     unset FROM TO
     source "$cfg_path"
+    [[ -z $FROM ]] && die "Empyt value 'FROM' found in '$cfg.conf'."
+    [[ -z $TO ]] && die "Empty value 'TO' found in '$cfg.conf'."
 
-    if [[ -z $FROM ]]; then
-      die "Empyt value 'FROM' found in '$cfg.conf'."
-    fi
-    if [[ -z $TO ]]; then
-      die "Empty value 'TO' found in '$cfg.conf'."
-    fi
+    # When notify-send is run in cron job, The DBUS_SESSION_BUS_ADDRESS
+    # variable must be set correctly.
+    export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u)/bus
+    { 
+      date=$(date)
+      me info $date
+      me info "Run 'rconle copy $FROM $TO'"
 
-    me info "Run 'rconle copy $FROM $TO' ..."
-    if rclone copy "$FROM" "$TO"; then
-      printf "\e[F"   # Move to previous line
-      me info "Run 'rclone copy $FROM $TO' ...Done"
-    else
-      printf "\e[F"   # Move to previous line
-      die "Run 'rclone copy $FROM $TO' ...Error"
-    fi
+      if rclone copy -P "$FROM" "$TO"; then
+        notify-send \
+          -u low -a me-rclone \
+          "$date" "Succeed to run:\n  'rclone copy $FROM $TO'"
+      else
+        notify-send \
+          -u critical -a me-rclone \
+          "$date" "Error occurs.\nSee file://${RCLONE_LOG}"
+      fi
+
+      echo -e "\n\n"
+    } 2>&1 | tee -a "$RCLONE_LOG"
 
   done
 }
@@ -122,6 +129,7 @@ configure() {
   done
 }
 
+
 # main
 case $1 in
   -l|--list        ) list ;;
@@ -131,5 +139,6 @@ case $1 in
   -v|--view-conf   ) configure -v "$2" ;;
   -e|--edit-conf   ) configure -e "$2" ;;
   -d|--delete-conf ) configure -d "$2" ;;
+  --view-log       ) less -R "$RCLONE_LOG" ;;
   *                ) usage ;;
 esac
