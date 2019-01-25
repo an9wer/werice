@@ -18,25 +18,26 @@ usage() {
     -c, --execute <conf>...   Run specified confs
     -a, --execute-all         Run all confs
     -n, --new-conf            Create a new conf
-    -e, --edit-conf <conf>    Modify an existed conf
-    -d, --delete-conf <conf>  Delete an existed conf
+    -v, --view-conf           Display content of a conf
+    -e, --edit-conf <conf>    Modify a conf
+    -d, --delete-conf <conf>  Delete a conf
 EOF
 }
 
 list() {
-  local cfgs=( 
-    $(find ${RCLONE_CFG_DIR} -type f -name '*.conf' ! -name 'example.conf' \
-      -exec basename -s .conf {} \;)
-  )
-  for cfg in ${cfgs[@]}; do echo ${cfg}; done
+  find "$RCLONE_CFG_DIR" \
+    -type f \
+    -name '*.conf' \
+    ! -name 'example.conf' \
+    -exec basename -s .conf {} \;
 }
 
 execute() {
-  local cfg_path
-
   [[ -z "$*" ]] && die "Missing argument <conf>."
 
-  for cfg in $@; do
+  local cfg_path
+
+  for cfg in "$@"; do
     cfg_path=$RCLONE_CFG_DIR/$cfg.conf
 
     if [[ ! -f $cfg_path ]]; then
@@ -45,12 +46,11 @@ execute() {
     fi
 
     unset FROM TO
-    source $cfg_path
+    source "$cfg_path"
 
     if [[ -z $FROM ]]; then
       die "Empyt value 'FROM' found in '$cfg.conf'."
     fi
-
     if [[ -z $TO ]]; then
       die "Empty value 'TO' found in '$cfg.conf'."
     fi
@@ -69,44 +69,51 @@ execute() {
 
 configure() {
   local mode=$1 cfg=$2
-  local temp=$(mktemp) editor=${EDITOR:-nano} sure
+  local cfg_path sure
+  local temp=$(mktemp) editor=${EDITOR:-nano}
 
-  # Verify variable mode and cfg
-  if [[ $mode == -n ]]; then
-    read -p "Your configuration name: " cfg
-  elif [[ $mode =~ -e|-d ]]; then
+  # Delete mode
+  if [[ $mode == -d ]]; then
     [[ -z $cfg ]] && die "Missing argument <conf>."
+    cfg_path=$RCLONE_CFG_DIR/$cfg.conf
+    [[ ! -f $cfg_path ]] && die "Conf '$cfg' doesn't exist."
+    rm "$cfg_path" && me info "Succeed to remove '$cfg_path'."
+    exit 0
+
+  # New mode
+  elif [[ $mode == -n ]]; then
+    read -p "Your configuration name: " cfg
+    cfg_path=$RCLONE_CFG_DIR/$cfg.conf
+    [[ -f $cfg_path ]] && die "Conf '$cfg' has already been existed."
+    cp -f "$RCLONE_CFG_DIR/example.conf" "$temp"
+
+  # View mode
+  elif [[ $mode == -v ]]; then
+    [[ -z $cfg ]] && die "Missing argument <conf>."
+    cfg_path=$RCLONE_CFG_DIR/$cfg.conf
+    [[ ! -f $cfg_path ]] && die "Conf '$cfg' doesn't exist."
+    cat "$cfg_path"
+    exit 0
+
+  # Edit mode
+  elif [[ $mode == -e ]]; then
+    [[ -z $cfg ]] && die "Missing argument <conf>."
+    cfg_path=$RCLONE_CFG_DIR/$cfg.conf
+    [[ ! -f $cfg_path ]] && die "Conf '$cfg' doesn't exist."
+    cp -f "$cfg_path" "$temp"
+
+  # Unknown mode
   else
     die "Unknown mode"
   fi
 
-  local cfg_path=$RCLONE_CFG_DIR/$cfg.conf
-
-  # Verify existance of cfg file for new mode
-  if [[ $mode == -n && -f $cfg_path ]]; then
-    die "'$cfg' has already been existed."
-  fi
-
-  # Verify existance of cfg file for edit and delete mode
-  if [[ $mode =~ ^-e$|^-d$ && ! -f $cfg_path ]]; then
-    die "'$cfg' doesn't exist."
-  fi
-
-  # Delete mode
-  if [[ $mode == -d ]]; then
-    rm $cfg_path && me info "Succeed to remove '$cfg_path'."
-    exit 0
-  fi
-  
-  # New and edit mode
-  cp -f $RCLONE_CFG_DIR/example.conf $temp
-  $editor $temp
+  "$editor" "$temp"
 
   [[ $mode == -n ]] && local create=create || local create=update
   for ((;;)) ; do
     read -p "Are you sure? [y/n]: " sure
     if [[ $sure =~ [Yy] ]]; then
-      mv $temp "$cfg_path" && me info "Succeed to $create '$cfg_path'."
+      mv "$temp" "$cfg_path" && me info "Succeed to $create '$cfg_path'."
       break
     elif [[ $sure =~ [Nn] ]]; then
       me warn "Ignore your modification."
@@ -118,10 +125,11 @@ configure() {
 # main
 case $1 in
   -l|--list        ) list ;;
-  -c|--execute     ) shift; execute $@ ;;
+  -c|--execute     ) shift; execute "$@" ;;
   -a|--execute-all ) execute $(list) ;;
   -n|--new-conf    ) configure -n ;;
-  -e|--edit-conf   ) configure -e $2 ;;
-  -d|--delete-conf ) configure -d $2 ;;
+  -v|--view-conf   ) configure -v "$2" ;;
+  -e|--edit-conf   ) configure -e "$2" ;;
+  -d|--delete-conf ) configure -d "$2" ;;
   *                ) usage ;;
 esac

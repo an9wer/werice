@@ -2,4 +2,5 @@
 -   [ ] Uninstall suckless
 -   [ ] Hooker for shutdown command
 -   [ ] Log of me-rclone
+-   [ ] Notify of me-rclone
 -   [ ] Completion of me
