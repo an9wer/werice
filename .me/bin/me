@@ -2,45 +2,73 @@
 
 shopt -s extglob
 
+source $ME_UTIL
 LIB_ME_DIR=$ME_LIB_DIR/me
 LIB_PKG_DIR=$ME_LIB_DIR/me-packages
 
-package_list() {
-  for pkg in $(ls $LIB_PKG_DIR); do
-    [[ ! -d $LIB_PKG_DIR/$pkg ]] && continue
+usage() {
+  local subcmd
 
-    printf "%-20s" "${pkg%\.sh}"
-    if [[ -L $ME_BASHRC_DIR/$pkg.sh ]]; then
-      printf "${ME_ANSI_BOLD}${ME_ANSI_BLUE}%s${ME_ANSI_END}\n" "enable"
-    else
-      printf "${ME_ANSI_BOLD}${ME_ANSI_RED}%s${ME_ANSI_END}\n" "disable"
-    fi
+  printf "me <subcommand> [<args>]\n\n"
+  printf "Subcommands:\n"
+  printf "  %-12s%s\n" "list" "List all available packages"
+  printf "  %-12s%s\n" "install" "Install packages"
+  printf "  %-12s%s\n" "update" "Update packages"
+  printf "  %-12s%s\n" "remove" "Remove packages"
+
+  for subcmd in $(find $LIB_ME_DIR -name 'me-*' -printf "%f\n" | cut -c 4-); do
+    printf "  %-12s%s\n" \
+      "$subcmd"  "$(sed -nr '2 s/#\s*(.*)/\1/p' $LIB_ME_DIR/me-$subcmd)"
   done
 }
 
-package_install() {
-  echo 123
+package() {
+  local method=$1 pkg
+  case $method in
+    list )
+      for pkg in $(ls "$LIB_PKG_DIR"); do
+        if [[ -f $ME_BASHRC_DIR/$pkg ]]; then
+          printf "%-12s${ME_ANSI_BOLD}${ME_ANSI_BLUE}%s${ME_ANSI_END}\n" \
+            "${pkg%\.sh}" "enable"
+        else
+          printf "%-12s${ME_ANSI_BOLD}${ME_ANSI_RED}%s${ME_ANSI_END}\n" \
+            "${pkg%\.sh}" "disable"
+        fi
+      done
+      ;;
+
+    install|update|remove )
+      shift
+      for pkg in "$@"; do
+        [[ ! -f $LIB_PKG_DIR/$pkg.sh ]] && _me_die "Unknown package."
+
+        set -e
+        bash "$LIB_PKG_DIR/$pkg.sh" "$method"
+        set +e
+
+        [[ $method =~ ^install$|^update$ ]] &&
+          ln -vsf "$LIB_PKG_DIR/$pkg.sh" "$ME_BASHRC_DIR/$pkg.sh"
+        [[ $method == remove ]] &&
+          rm -vf "$ME_BASHRC_DIR/$pkg.sh"
+
+        _me_info "Please restart bash to make changes effect."
+      done
+      ;;
+
+    * ) _me_die "Unknown method." ;;
+  esac
 }
 
-package_update() {
-  echo 123
-}
-
-package_remove() {
-  echo 123
-}
-
-subcmds=( $(find $LIB_ME_DIR -name 'me-*' -printf "%f\n" | cut -c 4-) )
-subcmds_filter=$(IFS='|'; echo "${subcmds[*]}")
-
+# main
 case $1 in
-  -l|--list    ) package_list ;;
-  -i|--install ) package_install ;;
-  -u|--update  ) package_update ;;
-  -r|--remove  ) package_remove ;;
-  info ) shift; printf "${ME_ANSI_BOLD}${ME_ANSI_BLUE}%s${ME_ANSI_END}\n" "$*" ;;
-  warn ) shift; printf "${ME_ANSI_BOLD}${ME_ANSI_YELLOW}%s${ME_ANSI_END}\n" "$*" ;;
-  err  ) shift; printf "${ME_ANSI_BOLD}${ME_ANSI_RED}%s${ME_ANSI_END}\n" "$*"; exit 1 ;;
-  @($subcmds_filter) ) $LIB_ME_DIR/me-$1 "${@:2}";;
-  * ) usage ;;
+  list    ) package list; exit 0 ;;
+  install ) shift; package install "$@"; exit 0 ;;
+  update  ) shift; package update "$@";  exit 0 ;;
+  remove  ) shift; package remove "$@";  exit 0 ;;
 esac
+
+if find $LIB_ME_DIR -name 'me-*' -printf "%f\n" | grep -E "^me-$1$" &>/dev/null; then
+  "$LIB_ME_DIR/me-$1" "${@:2}"
+else
+  usage
+fi

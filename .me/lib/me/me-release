@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Check system release
+
+set -e
+source $ME_UTIL
+
+if [[ ! $(uname -s) == Linux ]]; then
+  _me_die "Unknown system."
+fi
+
+if command -v lsb_release &>/dev/null; then
+  release=$(lsb_release -si)
+elif [[ -f /etc/os-release ]]; then
+  release=$(awk -F= '$1=="ID"{print $2}' /etc/os-release)
+else
+  _me_die "Unknown release."
+fi
+
+echo ${release,,}

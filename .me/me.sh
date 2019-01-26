@@ -7,6 +7,9 @@ export ME_LIB_DIR=${ME_DIR}/lib
 export ME_LOG_DIR=${ME_DIR}/log
 export ME_CFG_DIR=${ME_DIR}/config
 export ME_BASHRC_DIR=${ME_DIR}/bashrc.d
+
+export ME_UTIL=${ME_DIR}/me-util.sh
+
 # Obsolete:
 export ME_PKG_DIR=${ME_DIR}/pkg
 export ME_JOB_DIR=${ME_DIR}/job
