@@ -8,4 +8,4 @@
 -   [x] Package manager of me
 -   [ ] Install, update and remove options of pacman
 -   [x] Install z from source code
--   [ ] Add base16 into me-packages
+-   [x] Add base16 into me-packages
