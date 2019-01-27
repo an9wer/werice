@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Package manager
+
+source "$ME_UTIL"
+
+release=$(me release)
+
+if [[ $release == arch ]]; then
+  case $1 in
+    install ) shift; sudo pacman -S "$@"; exit "$ME_ES_SUCCESS" ;;
+    update  ) shift; sudo pacman -U "$@"; exit "$ME_ES_SUCCESS" ;;
+    remove  ) shift; sudo pacman -R "$@"; exit "$ME_ES_SUCCESS" ;;
+    *       ) exit "$ME_ES_UNKNOWN_ARGUMENT" ;;
+  esac
+
+else
+  exit "$ME_ES_UNKNOWN_RELEASE"
+fi

@@ -3,7 +3,7 @@
 
 source $ME_UTIL
 RCLONE_LOG=${ME_LOG_DIR}/rclone.log
-RCLONE_CFG_DIR=${ME_CFG_DIR}/me-rclone
+RCLONE_CFG_DIR=${ME_CONFIG_DIR}/me-rclone
 
 
 usage() {
@@ -30,7 +30,7 @@ list() {
 }
 
 execute() {
-  [[ -z "$*" ]] && _me_die "Missing argument <conf>."
+  [[ -z "$*" ]] && _me_die "$ME_ES_UNKNOWN_ARGUMENT" "Missing argument <conf>."
 
   local cfg_path
 
@@ -44,8 +44,10 @@ execute() {
 
     unset FROM TO
     source "$cfg_path"
-    [[ -z $FROM ]] && _me_die "Empyt value 'FROM' found in '$cfg.conf'."
-    [[ -z $TO ]] && _me_die "Empty value 'TO' found in '$cfg.conf'."
+    [[ -z $FROM ]] &&
+      _me_die "$ME_ES_FAILURE" "Empyt value 'FROM' found in '$cfg.conf'."
+    [[ -z $TO ]] &&
+      _me_die "$ME_ES_FAILURE" "Empty value 'TO' found in '$cfg.conf'."
 
     # When notify-send is run in cron job, The DBUS_SESSION_BUS_ADDRESS
     # variable must be set correctly.
@@ -78,9 +80,11 @@ configure() {
 
   # Delete mode
   if [[ $mode == -d ]]; then
-    [[ -z $cfg ]] && _me_die "Missing argument <conf>."
     cfg_path=$RCLONE_CFG_DIR/$cfg.conf
-    [[ ! -f $cfg_path ]] && _me_die "Conf '$cfg' doesn't exist."
+    [[ -z $cfg ]] &&
+      _me_die "$ME_ES_UNKNOWN_ARGUMENT" "Missing argument <conf>."
+    [[ ! -f $cfg_path ]] &&
+      _me_die "$ME_ES_FAILURE" "Conf '$cfg' doesn't exist."
     rm "$cfg_path" && _me_info "Succeed to remove '$cfg_path'."
     exit 0
 
@@ -88,31 +92,37 @@ configure() {
   elif [[ $mode == -n ]]; then
     read -p "Your configuration name: " cfg
     cfg_path=$RCLONE_CFG_DIR/$cfg.conf
-    [[ -f $cfg_path ]] && _me_die "Conf '$cfg' has already been existed."
+    [[ -f $cfg_path ]] &&
+      _me_die "$ME_ES_FAILURE" "Conf '$cfg' has already been existed."
     cp -f "$RCLONE_CFG_DIR/example.conf" "$temp"
 
   # View mode
   elif [[ $mode == -v ]]; then
-    [[ -z $cfg ]] && _me_die "Missing argument <conf>."
     cfg_path=$RCLONE_CFG_DIR/$cfg.conf
-    [[ ! -f $cfg_path ]] && _me_die "Conf '$cfg' doesn't exist."
+    [[ -z $cfg ]] &&
+      _me_die "$ME_ES_UNKNOWN_ARGUMENT" "Missing argument <conf>."
+    [[ ! -f $cfg_path ]] &&
+      _me_die "$ME_ES_FAILURE" "Conf "$cfg" doesn't exist."
     cat "$cfg_path"
     exit 0
 
   # Edit mode
   elif [[ $mode == -e ]]; then
-    [[ -z $cfg ]] && _me_die "Missing argument <conf>."
     cfg_path=$RCLONE_CFG_DIR/$cfg.conf
-    [[ ! -f $cfg_path ]] && _me_die "Conf '$cfg' doesn't exist."
+    [[ -z $cfg ]] &&
+      _me_die "$ME_ES_UNKNOWN_ARGUMENT" "Missing argument <conf>."
+    [[ ! -f $cfg_path ]] &&
+      _me_die "$ME_ES_FAILURE" "Conf '$cfg' doesn't exist."
     cp -f "$cfg_path" "$temp"
 
   # Unknown mode
   else
-    _me_die "Unknown mode"
+    _me_die "$ME_ES_UNKNOWN_ARGUMENT" "Unknown argument <mode>."
   fi
 
   "$editor" "$temp"
 
+  # Save modification
   [[ $mode == -n ]] && local create=create || local create=update
   for ((;;)) ; do
     read -p "Are you sure? [y/n]: " sure

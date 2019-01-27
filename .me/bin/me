@@ -40,7 +40,8 @@ package() {
     install|update|remove )
       shift
       for pkg in "$@"; do
-        [[ ! -f $LIB_PKG_DIR/$pkg.sh ]] && _me_die "Unknown package."
+        [[ ! -f $LIB_PKG_DIR/$pkg.sh ]] &&
+          _me_die "$ME_ES_UNKNOWN_PACKAGE" "Unknown package."
 
         set -e
         bash "$LIB_PKG_DIR/$pkg.sh" "$method"
@@ -55,7 +56,7 @@ package() {
       done
       ;;
 
-    * ) _me_die "Unknown method." ;;
+    * ) _me_die "$ME_ES_UNKNOWN_ARGUMENT" "Unknown argument." ;;
   esac
 }
 

@@ -7,5 +7,5 @@
 -   [ ] Completion of me
 -   [x] Package manager of me
 -   [ ] Install, update and remove options of pacman
--   [ ] Install z from source code
+-   [x] Install z from source code
 -   [ ] Add base16 into me-packages
