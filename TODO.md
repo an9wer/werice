@@ -2,10 +2,9 @@
 -   [ ] Uninstall suckless
 -   [ ] Hooker for shutdown command
 -   [ ] Hooker for slock command
--   [x] Log of me-rclone
--   [x] Notify of me-rclone
 -   [ ] Completion of me
 -   [x] Package manager of me
--   [ ] Install, update and remove options of pacman
+-   [x] Install, update and remove options of pacman
 -   [x] Install z from source code
 -   [x] Add base16 into me-packages
+-   [ ] me-rsync

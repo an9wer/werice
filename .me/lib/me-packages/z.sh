@@ -14,11 +14,12 @@ if [[ $1 == install ]]; then
 
 elif [[ $1 == update ]]; then
   source "$ME_UTIL"
-  [[ ! -d $ME_CACHE_DIR/z ]] &&
-    _me_die "$ME_ES_FAILURE" "Package 'z' hasn't been installed."
-
   me package update z
+
   if (( $? == $ME_ES_UNKNOWN_RELEASE )); then
+    [[ ! -d $ME_CACHE_DIR/z ]] &&
+      _me_die "$ME_ES_FAILURE" "Package 'z' hasn't been installed."
+
     set -e
     cd "$ME_CACHE_DIR/z"
     git pull origin master
