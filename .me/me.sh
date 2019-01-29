@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 export ME_DIR=$(dirname ${BASH_SOURCE[0]})
-export ME_BIN_DIR=${ME_DIR}/bin
-export ME_MAN_DIR=${ME_DIR}/man
-export ME_LIB_DIR=${ME_DIR}/lib
-export ME_LOG_DIR=${ME_DIR}/log
-export ME_CACHE_DIR=${ME_DIR}/cache
-export ME_CONFIG_DIR=${ME_DIR}/config
+export ME_BIN_DIR=${ME_DIR}/usr/bin
+export ME_MAN_DIR=${ME_DIR}/usr/man
+export ME_LIB_DIR=${ME_DIR}/usr/lib
+export ME_SRC_DIR=${ME_DIR}//usr/src
+export ME_LOG_DIR=${ME_DIR}/var/log
+export ME_ETC_DIR=${ME_DIR}/etc
 export ME_BASHRC_DIR=${ME_DIR}/bashrc.d
 
 export ME_UTIL=${ME_DIR}/me-util.sh

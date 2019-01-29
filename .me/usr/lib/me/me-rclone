@@ -15,9 +15,10 @@ usage() {
     -c, --execute <conf>...   Run specified confs
     -a, --execute-all         Run all confs
     -n, --new-conf            Create a new conf
-    -v, --view-conf           Display content of a conf
+    -v, --view-conf           Display content of a specified conf
     -e, --edit-conf <conf>    Modify a conf
     -d, --delete-conf <conf>  Delete a conf
+    --view-log                Display content of log
 EOF
 }
 
