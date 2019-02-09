@@ -1,3 +1,18 @@
+# Wrapping the format code in '\[' and '\]' can avoid prompt issues when
+# scrolling command history.
+# thx: https://superuser.com/a/980982
+# thx: http://tldp.org/HOWTO/Bash-Prompt-HOWTO/nonprintingchars.html
+ME_PROMPT_END='\[\e[0m\]'
+ME_PROMPT_BOLD='\[\e[1m\]'
+ME_PROMPT_RED='\[\e[91m\]'
+ME_PROMPT_GREEN='\[\e[92m\]'
+ME_PROMPT_YELLOW='\[\e[93m\]'
+ME_PROMPT_BLUE='\[\e[94m\]'
+ME_PROMPT_MAGENTA='\[\e[95m\]'
+ME_PROMPT_CYAN='\[\e[96m\]'
+ME_PROMPT_WHITE='\[\e[97m\]'
+
+
 _me_venv_prompt() {
   [[ -n ${VIRTUAL_ENV} ]] && echo "(${VIRTUAL_ENV}) "
 }

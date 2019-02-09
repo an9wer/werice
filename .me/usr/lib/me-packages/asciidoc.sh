@@ -9,6 +9,7 @@ if [[ $1 == install ]]; then
   cd "$ME_SRC_DIR/asciidoc"
   autoconf
   ./configure --prefix="$ME_DIR/usr" --mandir="$ME_MAN_DIR" --sysconfdir="$ME_ETC_DIR"
+  sed -i 's/python3 a2x.py -f manpage $</python3 a2x.py -L -f manpage $</' Makefile
   make
   make install
 
