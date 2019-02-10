@@ -3,7 +3,7 @@
 
 source $ME_UTIL
 RCLONE_LOG=${ME_LOG_DIR}/rclone.log
-RCLONE_CFG_DIR=${ME_CONFIG_DIR}/me-rclone
+RCLONE_CFG_DIR=${ME_ETC_DIR}/me-rclone
 
 
 usage() {
@@ -12,8 +12,9 @@ usage() {
 
   Options:
     -l, --list                List all confs
-    -c, --execute <conf>...   Run specified confs
-    -a, --execute-all         Run all confs
+    -c, --check               Read specified confs and check
+    -u, --upload              Read specified confs and upload
+    -d, --download            Read specified confs and download
     -n, --new-conf            Create a new conf
     -v, --view-conf           Display content of a specified conf
     -e, --edit-conf <conf>    Modify a conf
@@ -31,11 +32,16 @@ list() {
 }
 
 execute() {
-  [[ -z "$*" ]] && _me_die "$ME_ES_UNKNOWN_ARGUMENT" "Missing argument <conf>."
+  local mode=$1
+
+  [[ ! $mode =~ ^download$|^upload$|^check$ ]] && 
+    _me_die "$ME_ES_UNKNOWN_ARGUMENT" "Unknown argument <mode>."
+  [[ -z "${*:2}" ]] && 
+    _me_die "$ME_ES_UNKNOWN_ARGUMENT" "Missing argument <conf>."
 
   local cfg_path
 
-  for cfg in "$@"; do
+  for cfg in "${@:2}"; do
     cfg_path=$RCLONE_CFG_DIR/$cfg.conf
 
     if [[ ! -f $cfg_path ]]; then
@@ -43,12 +49,20 @@ execute() {
       continue
     fi
 
-    unset FROM TO
+    unset LOCAL REMOTE from to
     source "$cfg_path"
-    [[ -z $FROM ]] &&
-      _me_die "$ME_ES_FAILURE" "Empyt value 'FROM' found in '$cfg.conf'."
-    [[ -z $TO ]] &&
-      _me_die "$ME_ES_FAILURE" "Empty value 'TO' found in '$cfg.conf'."
+    [[ -z $LOCAL ]] &&
+      _me_die "$ME_ES_FAILURE" "Empyt value 'LOCAL' found in '$cfg.conf'."
+    [[ -z $REMOTE ]] &&
+      _me_die "$ME_ES_FAILURE" "Empty value 'REMOTE' found in '$cfg.conf'."
+
+    if [[ $mode == check ]]; then
+      local method=check from=$LOCAL to=$REMOTE
+    elif [[ $mode == upload ]]; then
+      local method=copy from=$LOCAL to=$REMOTE
+    elif [[ $mode == download ]]; then
+      local method=copy from=$REMOTE to=$LOCAL
+    fi
 
     # When notify-send is run in cron job, The DBUS_SESSION_BUS_ADDRESS
     # variable must be set correctly.
@@ -56,12 +70,12 @@ execute() {
     { 
       date=$(date)
       _me_info $date
-      _me_info "Run 'rconle copy $FROM $TO'"
+      _me_info "Run 'rconle $method $from $to'"
 
-      if rclone copy -P "$FROM" "$TO"; then
+      if rclone "$method" -P "$from" "$to"; then
         notify-send \
           -u low -a me-rclone \
-          "$date" "Succeed to run:\n  'rclone copy $FROM $TO'"
+          "$date" "Succeed to run:\n  'rclone $method $from $to'"
       else
         notify-send \
           -u critical -a me-rclone \
@@ -80,7 +94,7 @@ configure() {
   local temp=$(mktemp) editor=${EDITOR:-nano}
 
   # Delete mode
-  if [[ $mode == -d ]]; then
+  if [[ $mode == delete ]]; then
     cfg_path=$RCLONE_CFG_DIR/$cfg.conf
     [[ -z $cfg ]] &&
       _me_die "$ME_ES_UNKNOWN_ARGUMENT" "Missing argument <conf>."
@@ -90,7 +104,7 @@ configure() {
     exit 0
 
   # New mode
-  elif [[ $mode == -n ]]; then
+  elif [[ $mode == new ]]; then
     read -p "Your configuration name: " cfg
     cfg_path=$RCLONE_CFG_DIR/$cfg.conf
     [[ -f $cfg_path ]] &&
@@ -98,7 +112,7 @@ configure() {
     cp -f "$RCLONE_CFG_DIR/example.conf" "$temp"
 
   # View mode
-  elif [[ $mode == -v ]]; then
+  elif [[ $mode == view ]]; then
     cfg_path=$RCLONE_CFG_DIR/$cfg.conf
     [[ -z $cfg ]] &&
       _me_die "$ME_ES_UNKNOWN_ARGUMENT" "Missing argument <conf>."
@@ -108,7 +122,7 @@ configure() {
     exit 0
 
   # Edit mode
-  elif [[ $mode == -e ]]; then
+  elif [[ $mode == edit ]]; then
     cfg_path=$RCLONE_CFG_DIR/$cfg.conf
     [[ -z $cfg ]] &&
       _me_die "$ME_ES_UNKNOWN_ARGUMENT" "Missing argument <conf>."
@@ -124,7 +138,7 @@ configure() {
   "$editor" "$temp"
 
   # Save modification
-  [[ $mode == -n ]] && local create=create || local create=update
+  [[ $mode == new ]] && local create=create || local create=update
   for ((;;)) ; do
     read -p "Are you sure? [y/n]: " sure
     if [[ $sure =~ [Yy] ]]; then
@@ -141,12 +155,13 @@ configure() {
 # main
 case $1 in
   -l|--list        ) list ;;
-  -c|--execute     ) shift; execute "$@" ;;
-  -a|--execute-all ) execute $(list) ;;
-  -n|--new-conf    ) configure -n ;;
-  -v|--view-conf   ) configure -v "$2" ;;
-  -e|--edit-conf   ) configure -e "$2" ;;
-  -d|--delete-conf ) configure -d "$2" ;;
+  -c|--check       ) shift; execute check "$@" ;;
+  -u|--upload      ) shift; execute upload "$@" ;;
+  -d|--download    ) shift; execute download "$@" ;;
+  -n|--new-conf    ) configure new ;;
+  -v|--view-conf   ) configure view "$2" ;;
+  -e|--edit-conf   ) configure edit "$2" ;;
+  --delete-conf    ) configure delete "$2" ;;
   --view-log       ) less -R "$RCLONE_LOG" ;;
   *                ) usage ;;
 esac
