@@ -18,6 +18,7 @@ declare -A CONFIG_FUNC=(
   [13]="config_suckless slock"
   [14]="config .config/dunst"
   [15]="config .xinitrc"
+  [16]="config .infokey"
 )
 
 declare -A CONFIG_CB=(
@@ -36,6 +37,7 @@ declare -A CONFIG_CB=(
   [13]=""
   [14]=""
   [15]=""
+  [16]=""
 )
 
 _backup() {
@@ -181,6 +183,7 @@ This script is intend to install configuration files for the following programs.
  13. slock
  14. dunst
  15. xinitrc
+ 16. info
 EOF
 read -p "Which configuration file do you want to install? (0/1/.../${#CONFIG_FUNC[@]}): " choice
 read -p "Do you want to backup your original configurations? (y/n): " backup
