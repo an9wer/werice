@@ -47,8 +47,6 @@ alias fgrep="fgrep --color=auto"
 
 alias diff="diff --color=auto"
 
-alias info="info --vi-keys"
-
 alias sourceb="source ~/.bashrc"
 
 alias vimv="vim ~/.vimrc"
