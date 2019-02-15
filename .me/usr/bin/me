@@ -26,6 +26,7 @@ package() {
   local method=$1 pkg
   case $method in
     list )
+      IFS=$'\n'
       for pkg in $(ls "$LIB_PKG_DIR"); do
         if [[ -f $ME_BASHRC_DIR/$pkg ]]; then
           printf "%-12s${ME_ANSI_BOLD}${ME_ANSI_BLUE}%s${ME_ANSI_END}\n" \
