@@ -107,7 +107,7 @@ config_bash_profile() {
     '# werice start {{{'
     'export GTK_IM_MODULE=fcitx'
     'export QT_IM_MODULE=fcitx'
-    '[[ ! $DISPLAY && $XDG_VTNR -eq 1 ]] && startx"'
+    '[[ ! $DISPLAY && $XDG_VTNR -eq 1 ]] && startx'
     '# }}} werice end'
   )
 
@@ -141,6 +141,7 @@ config_suckless() {
   local MOD_DIR=${DIR}/suckless/$1
   git submodule update --init $MOD_DIR
 
+  set -i
   cd ${MOD_DIR}
   git stash
   patch -b -o config.h config.def.h \
