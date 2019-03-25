@@ -1,13 +1,3 @@
-# Installation
-# -----------------------------------------------------------------------------
-me_unset_ssh() {
-  unset -f me_unset_ssh sshh
-}
-
-
-# The hack way
-# -----------------------------------------------------------------------------
-
 export SSH_AGENT_RC=~/.ssh/.ssh-agent.rc
 if [[ -z "$SSH_AGENT_PID" ]]; then
   if [[ -f $SSH_AGENT_RC &&
@@ -23,3 +13,4 @@ fi
 sshh() {
   grep -wi "Host" ~/.ssh/config | grep -wv "\*" | sed 's/Host//'
 }
+
