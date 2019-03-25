@@ -133,6 +133,10 @@ config_suckless() {
   # $1: which suckless module to config
 
   [[ -h ~/.suckless ]] || ln -sf ${DIR}/suckless ~/.suckless
+  [[ $(hostname) =~ ^peace|cheese$ ]] || {
+    echo "Unkonwn host (only support peace or cheese)."
+    exit 1
+  }
 
   local MOD_DIR=${DIR}/suckless/$1
   git submodule update --init $MOD_DIR
