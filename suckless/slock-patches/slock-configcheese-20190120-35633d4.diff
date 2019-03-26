@@ -1,0 +1,10 @@
+--- slock/config.def.h	2019-01-20 11:17:23.103246011 +0800
++++ slock/config.h	2019-01-20 11:19:05.783242547 +0800
+@@ -1,6 +1,6 @@
+ /* user and group to drop privileges to */
+ static const char *user  = "nobody";
+-static const char *group = "nogroup";
++static const char *group = "nobody";
+ 
+ static const char *colorname[NUMCOLS] = {
+ 	[INIT] =   "black",     /* after initialization */
