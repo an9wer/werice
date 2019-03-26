@@ -30,8 +30,21 @@ _me_err() {
 }
 
 _me_die() {
-  # $1: Exit status
-  # ${@:2}: Exit messages
+  # :param $1: Exit status
+  # :param ${@:2}: Exit messages
   _me_err "${@:2}"
   exit "$1"
+}
+
+_me_package_installed() {
+  # :param $1: package name
+  [[ -d $ME_SRC_DIR/$1 ]] && {
+    _me_die "$ME_ES_FAILURE" "Package '$1' has already been installed."
+  }
+}
+
+_me_package_uninstalled() {
+  # :param $1: package name
+  [[ ! -d $ME_SRC_DIR/$1 ]] &&
+    _me_die "$ME_ES_FAILURE" "Package '$1' has't been installed."
 }

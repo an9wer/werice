@@ -29,6 +29,7 @@ elif [[ $1 == update ]]; then
 elif [[ $1 == remove ]]; then
   cd  "$ME_SRC_DIR/asciidoc"
   make uninstall
+  cd -
   rm -rf  "$ME_SRC_DIR/asciidoc"
 
 fi

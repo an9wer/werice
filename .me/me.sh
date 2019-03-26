@@ -1,8 +1,10 @@
 export ME_DIR=$(dirname ${BASH_SOURCE[0]})
-export ME_BIN_DIR=${ME_DIR}/usr/bin
-export ME_MAN_DIR=${ME_DIR}/usr/man
-export ME_LIB_DIR=${ME_DIR}/usr/lib
-export ME_SRC_DIR=${ME_DIR}//usr/src
+export ME_USR_DIR=${ME_DIR}/usr
+export ME_BIN_DIR=${ME_USR_DIR}/bin
+export ME_MAN_DIR=${ME_USR_DIR}/man
+export ME_LIB_DIR=${ME_USR_DIR}/lib
+export ME_SRC_DIR=${ME_USR_DIR}/src
+export ME_SHR_DIR=${ME_USR_DIR}/share
 export ME_LOG_DIR=${ME_DIR}/var/log
 export ME_ETC_DIR=${ME_DIR}/etc
 export ME_BASHRC_DIR=${ME_DIR}/bashrc.d
