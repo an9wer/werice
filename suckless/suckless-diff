@@ -17,7 +17,7 @@ date=$(date +%Y%m%d)
 sha1=$(git rev-parse --short HEAD)
 
 # Exit status of 'diff' is 0 if inputs are the same, 1 if different.
-temp=$(mktemp "suckless-$1-config.XXXXXX")
+temp=$(mktemp -p /tmp "suckless-$1-config.XXXXXX")
 diff -up config.def.h config.h > "$temp"
 if (( $? == 1 )); then
   rm -f $patches_dir/$1-config$hostname-*.diff
@@ -28,7 +28,7 @@ else
 fi
 
 # Exit status of 'git diff' is 0 if inputs are the same, 1 if different.
-temp=$(mktemp "suckless-$1-custom.XXXXXX")
+temp=$(mktemp -p /tmp "suckless-$1-custom.XXXXXX")
 git diff --exit-code > "$temp"
 if (( $? == 1 )); then
     rm -f "$patches_dir/$1-custom-*.diff"
