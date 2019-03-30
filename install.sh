@@ -41,7 +41,7 @@ declare -A CONFIG_CB=(
 )
 
 _backup() {
-  # $1: file to backup
+  # :param $1: file to be backed up
 
   [[ -e "${1}" ]] || return
   [[ -h "${1}" ]] && rm -vf "$1" && return
@@ -62,7 +62,8 @@ _backup() {
 }
 
 _read_cmdlines() {
-  # $1: file to read cmdlines
+  # :param $1: file to be paresed to find cmdlines
+
   cmdlines=()
   cmdlines_old=()
   local pass=""
@@ -76,7 +77,7 @@ _read_cmdlines() {
 }
 
 _write_cmdlines() {
-  # $1: file to write cmdlines
+  # :param $1: file to be written with cmdlines
 
   for line in "${cmdlines[@]}"; do
     echo "${line}"
@@ -118,19 +119,21 @@ config_bash_profile() {
 config_xmodmap() {
   local choice
   cat <<EOF
-1. HP EliteBook 8470p
-2. Rapoo V500
+1. Rapoo V500
+2. HP EliteBook 8470p
+3. ACER TravelMate TX50
 EOF
   read -p "Which keyboard do you want to set? (1/2): " choice
   case $choice in
-    1) ln -sf ${DIR}/xmodmap/HP_EliteBook_8470p.Xmodmap ~/.Xmodmap ;;
-    2) ln -sf ${DIR}/xmodmap/Rapoo_V500.Xmodmap ~/.Xmodmap ;;
-    *) echo "Unknown keyboard :(" ;;
+    1) ln -sf ${DIR}/xmodmap/Rapoo_V500.Xmodmap ~/.Xmodmap ;;
+    2) ln -sf ${DIR}/xmodmap/HP_EliteBook_8470p.Xmodmap ~/.Xmodmap ;;
+    3) ln -sf ${DIR}/xmodmap/ACER_TravelMate_TX50.Xmodmap ~/.Xmodmap ;;
+    *) echo "Unknown option." ;;
   esac
 }
 
 config_suckless() {
-  # $1: which suckless module to config
+  # :param $1: suckless module to be installed
 
   [[ -h ~/.suckless ]] || ln -sf ${DIR}/suckless ~/.suckless
   [[ $(hostname) =~ ^peace|cheese$ ]] || {
@@ -153,9 +156,8 @@ config_suckless() {
 }
 
 config() {
-  # $1 ... ${n-1}: which configuration file to install
+  # :param $@: configuration file to be installed
 
-  #for file in ${@:1:${#@}-1}; do
   for file in ${@}; do
     mkdir -pv $(dirname ${file})
     [[ ${backup} =~ [Nn] ]] || _backup ~/${file}
@@ -168,7 +170,8 @@ callback_vim() {
   vim -e -c "call Bundle('install') | visual | qa"
 }
 
-# main
+
+# Main
 cat <<EOF
                        === rice installation ===
 This script is intend to install configuration files for the following programs.
@@ -209,3 +212,4 @@ case ${choice} in
       exit 1
     fi ;;
 esac
+

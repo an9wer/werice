@@ -1,6 +1,6 @@
 trash() {
   local trash
-  local trash_dir=~/.trash
+  local trash_dir=~/Trash
 
   local -i ctime
   local -i now=$(date +%s)
