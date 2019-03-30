@@ -16,10 +16,24 @@ hostname=$(hostname)
 date=$(date +%Y%m%d)
 sha1=$(git rev-parse --short HEAD)
 
-diff -up config.def.h config.h > \
-  $patches_dir/$1-config$hostname-$date-$sha1.diff
+# Exit status of 'diff' is 0 if inputs are the same, 1 if different.
+temp=$(mktemp "suckless-$1-config.XXXXXX")
+diff -up config.def.h config.h > "$temp"
+if (( $? == 1 )); then
+  rm -f $patches_dir/$1-config$hostname-*.diff
+  cp "$temp" "$patches_dir/$1-config$hostname-$date-$sha1.diff"
+  echo "G. $patches_dir/$1-config$hostname-$date-$sha1.diff"
+else
+  echo Doesn\'t find any difference between config.h and config.def.h
+fi
 
-if [[ -n $(git diff) ]]; then
-  git diff > \
-    $patches_dir/$1-custom-$date-$sha1.diff
+# Exit status of 'git diff' is 0 if inputs are the same, 1 if different.
+temp=$(mktemp "suckless-$1-custom.XXXXXX")
+git diff --exit-code > "$temp"
+if (( $? == 1 )); then
+    rm -f "$patches_dir/$1-custom-*.diff"
+    cp "$temp" "$patches_dir/$1-custom-$date-$sha1.diff"
+    echo "G. $patches_dir/$1-custom-$date-$sha1.diff"
+else
+  echo Doesn\'t find any changes in \"$1\"
 fi
