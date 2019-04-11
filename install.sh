@@ -19,6 +19,7 @@ declare -A CONFIG_FUNC=(
   [14]="config .config/dunst"
   [15]="config .xinitrc"
   [16]="config .infokey"
+  [17]="config_pam_environment"
 )
 
 declare -A CONFIG_CB=(
@@ -43,7 +44,7 @@ declare -A CONFIG_CB=(
 _backup() {
   # :param $1: file to be backed up
 
-  [[ -e "${1}" ]] || return
+  [[ -e "${1}" ]] || { echo "Create new file '$1'"; return; }
   [[ -h "${1}" ]] && rm -vf "$1" && return
 
   local dotbak
@@ -66,6 +67,9 @@ _read_cmdlines() {
 
   cmdlines=()
   cmdlines_old=()
+
+  [[ -f $1 ]] || return
+
   local pass=""
   while IFS='' read -r line || [[ -n "${line}" ]]; do
     cmdlines_old+=("$line")
@@ -114,6 +118,21 @@ config_bash_profile() {
 
   [[ ${backup} =~ [Nn] ]] || _backup ~/.bash_profile
   _write_cmdlines ~/.bash_profile
+}
+
+config_pam_environment() {
+  _read_cmdlines ~/.pam_environment
+
+  cmdlines+=(
+    '# werice start {{{'
+    'GTK_IM_MODULE=fcitx'
+    'QT_IM_MODULE=fcitx'
+    'XMODIFIERS=@im=fcitx'
+    '# }}} werice end'
+  )
+
+  [[ ${backup} =~ [Nn] ]] || _backup ~/.pam_environment
+  _write_cmdlines ~/.pam_environment
 }
 
 config_xmodmap() {
@@ -192,6 +211,7 @@ This script is intend to install configuration files for the following programs.
  14. dunst
  15. xinitrc
  16. info
+ 17. pam_environment
 EOF
 read -p "Which configuration file do you want to install? (0/1/.../${#CONFIG_FUNC[@]}): " choice
 read -p "Do you want to backup your original configurations? (y/n): " backup

@@ -50,6 +50,12 @@ unconfig_bash_profile() {
     _write_cmdlines ~/.bash_profile
 }
 
+unconfig_pam_environment() {
+  _read_cmdlines ~/.pam_environment
+  [[ "${cmdlines[*]}" != "${cmdlines_old[*]}" ]] &&
+    _write_cmdlines ~/.pam_environment
+}
+
 UNCONFIG_FUNC=(
   [1]="unconfig_bashrc"
   [2]="unconfig_bash_profile"
@@ -59,6 +65,7 @@ UNCONFIG_FUNC=(
   [6]="unconfig ~/.Xmodmap"
   [7]="unconfig ~/.gnupg/gpg.conf ~/.gnupg/dirmngr.conf ~/.gnupg/sks-keyserver.netCA.pem"
   [8]="unconfig ~/.w3m/keymap"
+  [9]="unconfig_pam_environment"
 )
 
 declare -A CONFIG_CB=(
@@ -70,6 +77,7 @@ declare -A CONFIG_CB=(
   [6]=""
   [7]=""
   [8]=""
+  [9]=""
 )
 
 # main
@@ -85,6 +93,7 @@ This script is intend to uninstall configuration files for the following program
   6. xmodmap
   7. gpg
   8. w3m
+  9. pam_environment
 EOF
 read -p "Which configuration file do you want to uninstall? (0/1/.../${#UNCONFIG_FUNC[@]}): " choice
 echo ""
