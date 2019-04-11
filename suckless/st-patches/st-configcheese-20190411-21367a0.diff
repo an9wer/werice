@@ -1,20 +1,21 @@
---- st/config.def.h	2019-01-19 20:40:19.488007907 +0800
-+++ st/config.h	2019-01-19 20:40:19.512007921 +0800
-@@ -5,8 +5,12 @@
+--- config.def.h	2019-04-11 09:42:46.149937530 +0800
++++ config.h	2019-04-11 09:26:49.899960907 +0800
+@@ -5,8 +5,13 @@
   *
   * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
   */
 -static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
-+static char *font = "Ubuntu Mono:pixelsize=18";
++static char *font = "Ubuntu Mono:pixelsize=20";
  static int borderpx = 2;
 +/*
 + * or:
 + * static char *font = "Source Code Pro:pixelsize=16";
 + */
++
  
  /*
   * What program is execed by st depends of these precedence rules:
-@@ -170,9 +174,9 @@ static Shortcut shortcuts[] = {
+@@ -170,9 +175,9 @@ static Shortcut shortcuts[] = {
  	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
  	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
  	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
