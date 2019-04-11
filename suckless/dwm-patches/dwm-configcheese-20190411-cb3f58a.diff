@@ -1,5 +1,5 @@
---- dwm/config.def.h	2019-01-19 20:36:38.783922325 +0800
-+++ dwm/config.h	2019-01-19 20:36:38.791922326 +0800
+--- config.def.h	2019-03-25 16:18:50.319977699 +0800
++++ config.h	2019-03-25 16:27:56.839999360 +0800
 @@ -4,7 +4,7 @@
  static const unsigned int borderpx  = 1;        /* border pixel of windows */
  static const unsigned int snap      = 32;       /* snap pixel */
