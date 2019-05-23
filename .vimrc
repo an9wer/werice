@@ -61,33 +61,6 @@ nnoremap <Leader>fb :Buffers<CR>
 let g:vimwiki_list = [{
  \    'path': '~/Documents/notes',
  \    'path_html': '~/Documents/notes_html'
- \  },
- \  {
- \    'path': '~/Documents/an9wer.github.io/wiki/blog',
- \    'path_html': '~/Documents/an9wer.github.io/html/blog',
- \    'template_path': '~/Documents/an9wer.github.io/html/templates',
- \    'template_default': 'blog',
- \    'template_ext': '.html',
- \    'css_name': '../statics/css/style.css',
- \    'auto_export': 1,
- \  },
- \  {
- \    'path': '~/Documents/an9wer.github.io/wiki/notes',
- \    'path_html': '~/Documents/an9wer.github.io/html/notes',
- \    'template_path': '~/Documents/an9wer.github.io/html/templates',
- \    'template_default': 'notes',
- \    'template_ext': '.html',
- \    'css_name': '../statics/css/style.css',
- \    'auto_export': 1,
- \  },
- \  {
- \    'path': '~/Documents/an9wer.github.io/wiki/tweet',
- \    'path_html': '~/Documents/an9wer.github.io/html/tweet',
- \    'template_path': '~/Documents/an9wer.github.io/html/templates',
- \    'template_default': 'tweet',
- \    'template_ext': '.html',
- \    'css_name': '../statics/css/style.css',
- \    'auto_export': 1,
  \  }]
 
 let g:vimwiki_url_maxsave = 0
