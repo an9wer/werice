@@ -63,7 +63,7 @@ let g:vimwiki_list = [{
  \    'path_html': '~/Documents/notes_html'
  \  }]
 
-let g:vimwiki_url_maxsave = 0
+"let g:vimwiki_url_maxsave = 0
 
 " vimwiki header color
 highlight VimwikiHeader1 ctermfg=Black ctermbg=DarkRed

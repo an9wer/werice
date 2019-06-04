@@ -93,7 +93,7 @@ config_bashrc() {
 
   cmdlines+=(
     '# werice start {{{'
-    '[[ -d ~/.me ]] && . ~/.me/me.sh'
+    '[[ -f ~/.me/merc ]] && . ~/.me/merc'
     '# }}} werice end'
   )
 
