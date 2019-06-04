@@ -29,16 +29,24 @@ _me_git_prompt() {
     local status="${ME_PROMPT_GREEN}:)" ||
     local status="${ME_PROMPT_RED}:("
 
-  echo "G ${ME_PROMPT_BOLD}${branch} ${status}${ME_PROMPT_END}"
+  echo "G ${ME_PROMPT_BOLD}${branch} ${status}${ME_PROMPT_END} "
 }
 
 _me_ps1() {
+  local ES=$?
   PS1="${ME_PROMPT_BOLD}${ME_PROMPT_YELLOW}.--==${ME_PROMPT_END} "
   PS1+="$(_me_venv_prompt)"
-  PS1+="${ME_PROMPT_BOLD}${ME_PROMPT_GREEN}\u@\h${ME_PROMPT_END} "
+  PS1+="${ME_PROMPT_BOLD}${ME_PROMPT_GREEN}\u@${HOSTNAME}${ME_PROMPT_END} "
   PS1+="at ${ME_PROMPT_BOLD}${ME_PROMPT_RED}\t${ME_PROMPT_END} "
   PS1+="in ${ME_PROMPT_BOLD}${ME_PROMPT_BLUE}\w${ME_PROMPT_END} "
-  PS1+="$(_me_git_prompt)\n"
+  PS1+="JB ${ME_PROMPT_YELLOW}\j${ME_PROMPT_END} "
+  if (( $ES == 0 )); then
+    PS1+="ES ${ME_PROMPT_GREEN}$ES${ME_PROMPT_END} "
+  else
+    PS1+="ES ${ME_PROMPT_RED}$ES${ME_PROMPT_END} "
+  fi
+  PS1+="$(_me_git_prompt) "
+  PS1+="\n"
   PS1+="${ME_PROMPT_BOLD}${ME_PROMPT_YELLOW}\\\`--== \$ ${ME_PROMPT_END}"
 }
 
@@ -47,3 +55,4 @@ PROMPT_COMMAND=$PROMPT_COMMAND$'\n'"_me_ps1;"
 
 # ps2
 PS2="${ME_PROMPT_BOLD}${ME_PROMPT_YELLOW}\\\`--== > ${ME_PROMPT_END}"
+
