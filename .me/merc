@@ -46,4 +46,7 @@ for bashrc in $(find ${ME_BASHRC_DIR} -name "*.sh"); do
 done
 
 # Say hello
-command -v neofetch &> /dev/null && neofetch
+if command -v neofetch &> /dev/null; then
+  neofetch
+fi
+
