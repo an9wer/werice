@@ -28,6 +28,7 @@ alias vimv="vim ~/.vimrc"
 alias vimm="vim ~/.me/merc"
 alias vimb="vim ~/.me/bashrc"
 alias vimt="vim ~/.tmux.conf"
+alias vimE="vim -c Explore"
 alias vimtest="vim --noplugin -N -u"
 
 alias todo="vim ~/Documents/notes/todo.wiki"
