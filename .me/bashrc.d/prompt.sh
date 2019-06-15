@@ -39,8 +39,7 @@ _me_ps1() {
   local ES=$?
   local psline
   psline=$(pstree -s $$)
-  # Need to add '---bash' here for this command is ran in subshell
-  psline=$(echo "$psline" | sed -e 's/---bash---pstree$//' -e 's/---/ -> /g')
+  psline=$(echo "$psline" | sed -e 's/---pstree$//' -e 's/---/ -> /g')
 
   PS1=""
   PS1+="${ME_PROMPT_BOLD}.--==${ME_PROMPT_END} "
@@ -63,5 +62,5 @@ _me_ps1() {
 PROMPT_COMMAND=$PROMPT_COMMAND$'\n'"_me_ps1;"
 
 # ps2
-PS2="${ME_PROMPT_BOLD}${ME_PROMPT_YELLOW}\\\`--== > ${ME_PROMPT_END}"
+PS2="${ME_PROMPT_BOLD}${ME_PROMPT_YELLOW}\\\`--=== > ${ME_PROMPT_END}"
 
