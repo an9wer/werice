@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+
+source "$(dirname $BASH_SOURCE[0])/libs/base.sh"
+
+CAMDICT_DIR=$HOME/.camdict
+SAVED_FILE=$CAMDICT_DIR/.saved
+CAMDICT_URL="https://dictionary.cambridge.org/dictionary/english"
+
+# Main
+while (( ${#@} > 0 )); do
+  case "$1" in
+    -l|--long   ) long=true ;;
+    -s|--save   ) save=true ;;
+    -r|--review ) review=true ;;
+    --no-cache  ) nocache=true ;;
+    *           ) [[ -z $word ]] && word=$1 || _die $_ES_UNKNOWN_ARGUMENT "Only support one word at a time" ;;
+  esac
+  shift
+done
+
+[[ ! -d "$CAMDICT_DIR" ]] && mkdir -p "$CAMDICT_DIR"
+[[ ! -f "$SAVED_FILE" ]]  && touch "$SAVED_FILE"
+
+if [[ "x$review" == xtrue ]]; then
+  deltax=0
+  deltay=1
+  today_date=$(date +"%Y/%m/%d")
+  today_date_s=$(date -d $today_date +"%s")
+  earliest_date=$(cat "$SAVED_FILE" | sort | head -n1 | cut -d' ' -f1)
+  earliest_date_s=$(date -d $earliest_date +"%s")
+  review_date_s=$today_date_s
+
+  while (( $review_date_s >= $earliest_date_s )); do
+    review_date=$(date -d @$review_date_s +"%Y/%m/%d")
+    cat "$SAVED_FILE" | grep -E "^$review_date"
+    deltaz=$deltax
+    deltax=$(( deltax + deltay ))
+    deltay=$deltaz
+    review_date_s=$(( $today_date_s - ($deltax + $deltay) * 60 * 60 * 24 ))
+
+  done
+
+  exit $_ES_SUCCESS
+fi
+
+if [[ "x$nocache" == xtrue || ! -f $CAMDICT_DIR/$word ]]; then
+  temp=$(mktemp --tmpdir $word.XXX)
+  if links -dump -width $(tput cols) "$CAMDICT_URL/$word" | tee "$temp" | grep -Eq "^$word"; then
+    mv "$temp" "$CAMDICT_DIR/$word"
+  else
+    _die $_ES_FAILURE "Unknown word: $word"
+  fi
+fi
+
+if ! grep -q "$word" "$SAVED_FILE"; then 
+  echo $(date +"%Y/%m/%d") $word >> "$SAVED_FILE"
+fi
+
+cat "$CAMDICT_DIR/$word" |
+
+if [[ "x$long" == xtrue ]]; then
+  sed -e "/^$word/,\$!d"                               \
+      -e '/^Translations of/,$d'                       \
+      -e '/^   More examples/,/^   See more results/d' \
+      -e '/^   Thesaurus: synonyms and related words/,/^   See more results/d' \
+      -e '/^   (Definition of/d'                       \
+      -e '/^   You can also find related words, phrases, and synonyms in the topics:/,+2d'
+else
+  sed -e "/^$word/,\$!d"                               \
+      -e '/^   (Definition of/,$d'                     \
+      -e '/^   More examples/,/^   See more results/d' \
+      -e '/^   Thesaurus: synonyms and related words/,/^   See more results/d' \
+      -e '/^   You can also find related words, phrases, and synonyms in the topics:/,+2d' \
+      -e '/^  Related word/,+2d'
+
+fi |
+
+cat -s
