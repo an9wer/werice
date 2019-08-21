@@ -7,25 +7,23 @@ else
   execute pathogen#infect()
 endif
 
+" netrw
+" -----------------------------------------------------------------------------
+let g:netrw_keepdir = 0
+let g:netrw_winsize = 25
+
+
+" gundo.vim
+" -----------------------------------------------------------------------------
 let g:gundo_prefer_python3 = 1
 nnoremap <F1> :GundoToggle<CR>
 
-" NERDTree
-" -----------------------------------------------------------------------------
-map <Leader>n :NERDTreeToggleOrFind<CR>
-command! NERDTreeToggleOrFind call <SID>NERDTreeToggleOrFind()
 
-function! s:NERDTreeToggleOrFind()
-  if exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1
-    execute ":NERDTreeClose"
-  else
-    if expand("%:t") != '' && glob("%") != ''
-      execute ":NERDTreeFind"
-    else
-      execute ":NERDTreeToggle"
-    endif
-  endif
-endfunction
+" vim-system-copy
+" -----------------------------------------------------------------------------
+"set showtabline=2
+let g:system_copy#copy_command='xclip -sel clipboard'
+let g:system_copy#paste_command='xclip -sel clipboard -o'
 
 
 " fzf
@@ -154,13 +152,19 @@ set background=dark     " When set to 'dark', Vim will try to use colors that
 
 set directory=~/.vim/swap   " list of directory names for the swap file
 
-" key map (see h: key-notation)
+
+" Abbreviation (see :h abbreviation)
+" -----------------------------------------------------------------------------
+iabbrev <expr> dt strftime("%Y/%m/%d")
+
+
+" Key map (see :h key-notation)
 " -----------------------------------------------------------------------------
 
-" fix meta-keys <M-A> ... <M-Z> which generate <Esc>a ... <Esc>z
-" thx: http://vim.wikia.com/wiki/VimTip738
-" thx: https://stackoverflow.com/a/10216459
-" thx: http://vim.wikia.com/wiki/Get_Alt_key_to_work_in_terminal
+" Fix meta-keys <M-A> ... <M-Z> which generate <Esc>a ... <Esc>z
+" Thx: http://vim.wikia.com/wiki/VimTip738
+" Thx: https://stackoverflow.com/a/10216459
+" Thx: http://vim.wikia.com/wiki/Get_Alt_key_to_work_in_terminal
 let s:alpha = 'a'
 while s:alpha <= 'z'
   execute "set <M-" . toupper(s:alpha) . ">=\e" . s:alpha
@@ -169,38 +173,58 @@ while s:alpha <= 'z'
 endwhile
 unlet s:alpha
 
-" redefine commandline editing key (see h: cmdline-editing)
-" move cursor to the begining/end
+" Re-define commandline editing key (see h: cmdline-editing)
+" Move cursor to the begining/end
 cnoremap <C-A> <Home>
 cnoremap <C-E> <End>
-" move cursor left/right
+" Move cursor left/right
 cnoremap <C-B> <Left>
 cnoremap <C-F> <Right>
-" move cursor one word left/right
+" Move cursor one word left/right
 cnoremap <M-B> <S-Left>
 cnoremap <M-F> <S-Right>
 
-" redefine insert special key (see h: ins-special-key)
-" move cursor to the begining/end
+" Re-define insert special key (see h: ins-special-key)
+" Move cursor to the begining/end
 inoremap <C-A> <Home>
 inoremap <C-E> <End>
-" move cursor left/right
+" Move cursor left/right
 inoremap <C-B> <Left>
 inoremap <C-F> <Right>
-" move cursor one word left/right
+" Move cursor one word left/right
 inoremap <M-B> <S-Left>
 inoremap <M-F> <S-Right>
 
+" Navigate tabs
+nnoremap <leader>1 1gt
+nnoremap <leader>2 2gt
+nnoremap <leader>3 3gt
+nnoremap <leader>4 4gt
+nnoremap <leader>5 5gt
+nnoremap <leader>6 6gt
+nnoremap <leader>7 7gt
+nnoremap <leader>8 8gt
+nnoremap <leader>9 9gt
+" Or even more ...
+"nnoremap <leader>10 10gt
+"nnoremap <leader>11 11gt
 
-" color
+
+" Color
 " -----------------------------------------------------------------------------
-" tab bar
+" Tab bar
 highlight TabLineFill ctermfg=DarkGray
-highlight TabLine ctermbg=Gray
-highlight TabLineSel ctermbg=DarkBlue
+highlight TabLine ctermbg=Gray ctermfg=Black
+highlight TabLineSel ctermbg=DarkBlue ctermfg=White
+
+" Matched parenthesis
+highlight MatchParen ctermbg=DarkGray
+
+" Status line
+highlight StatusLine ctermfg=DarkGreen
 
 
-" load customized config
+" Load customized config
 " -----------------------------------------------------------------------------
 packadd! config   " The extra '!' is so that the plugin isn't loaded if Vim was
                   " started with '-noplugin'
