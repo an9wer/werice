@@ -1,0 +1,3 @@
+patch:
+    switches/@0/reset: 1    # English mode
+    switches/@2/reset: 1    # Simplified Chinese
