@@ -6,6 +6,21 @@ CAMDICT_DIR=$HOME/.camdict
 SAVED_FILE=$CAMDICT_DIR/.saved
 CAMDICT_URL="https://dictionary.cambridge.org/dictionary/english"
 
+usage() {
+  cat <<EOF
+Usage:
+  camdict [-h|--help] [-l|--long] [-s|--save] [-r|--review] [--no-cache] word
+
+Options:
+  -h,--help     display this help
+  -l,--long     display long (brief by default) definition of word
+  -s,--save     save word to search history
+  -r,--review   review words from search history
+  --nocache     search word without cache
+  word          which word to search
+EOF
+}
+
 # Main
 while (( ${#@} > 0 )); do
   case "$1" in
@@ -13,6 +28,7 @@ while (( ${#@} > 0 )); do
     -s|--save   ) save=true ;;
     -r|--review ) review=true ;;
     --no-cache  ) nocache=true ;;
+    -h|--help   ) usage; exit $_ES_SUCCESS ;;
     *           ) [[ -z $word ]] && word=$1 || _die $_ES_UNKNOWN_ARGUMENT "Only support one word at a time" ;;
   esac
   shift
@@ -21,7 +37,7 @@ done
 [[ ! -d "$CAMDICT_DIR" ]] && mkdir -p "$CAMDICT_DIR"
 [[ ! -f "$SAVED_FILE" ]]  && touch "$SAVED_FILE"
 
-if [[ "x$review" == xtrue ]]; then
+if [[ $review == true ]]; then
   deltax=0
   deltay=1
   today_date=$(date +"%Y/%m/%d")
@@ -37,13 +53,16 @@ if [[ "x$review" == xtrue ]]; then
     deltax=$(( deltax + deltay ))
     deltay=$deltaz
     review_date_s=$(( $today_date_s - ($deltax + $deltay) * 60 * 60 * 24 ))
-
   done
 
   exit $_ES_SUCCESS
 fi
 
-if [[ "x$nocache" == xtrue || ! -f $CAMDICT_DIR/$word ]]; then
+if [[ -z $word ]]; then
+  _die $_ES_UNKNOWN_ARGUMENT "Require one word to search"
+fi
+
+if [[ $nocache == true || ! -f $CAMDICT_DIR/$word ]]; then
   temp=$(mktemp --tmpdir $word.XXX)
   if links -dump -width $(tput cols) "$CAMDICT_URL/$word" | tee "$temp" | grep -Eq "^$word"; then
     mv "$temp" "$CAMDICT_DIR/$word"
@@ -58,7 +77,7 @@ fi
 
 cat "$CAMDICT_DIR/$word" |
 
-if [[ "x$long" == xtrue ]]; then
+if [[ $long == true ]]; then
   sed -e "/^$word/,\$!d"                               \
       -e '/^Translations of/,$d'                       \
       -e '/^   More examples/,/^   See more results/d' \
@@ -72,7 +91,6 @@ else
       -e '/^   Thesaurus: synonyms and related words/,/^   See more results/d' \
       -e '/^   You can also find related words, phrases, and synonyms in the topics:/,+2d' \
       -e '/^  Related word/,+2d'
-
 fi |
 
 cat -s
