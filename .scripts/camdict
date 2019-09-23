@@ -9,15 +9,17 @@ CAMDICT_URL="https://dictionary.cambridge.org/dictionary/english"
 usage() {
   cat <<EOF
 Usage:
-  camdict [-h|--help] [-l|--long] [-s|--save] [-r|--review] [--no-cache] word
+  camdict [-h|--help] [-l|--long] [-s|--save] [-r|--review]
+          [-L|--less] [--no-cache] [word]
 
 Options:
   -h,--help     display this help
   -l,--long     display long (brief by default) definition of word
   -s,--save     save word to search history
   -r,--review   review words from search history
+  -L,--less     use command less (cat by default) to view output
   --nocache     search word without cache
-  word          which word to search
+  word          which word to search, by default, search from primary
 EOF
 }
 
@@ -27,9 +29,10 @@ while (( ${#@} > 0 )); do
     -l|--long   ) long=true ;;
     -s|--save   ) save=true ;;
     -r|--review ) review=true ;;
+    -L|--less   ) less=true ;;
     --no-cache  ) nocache=true ;;
     -h|--help   ) usage; exit $_ES_SUCCESS ;;
-    *           ) [[ -z $word ]] && word=$1 || _die $_ES_UNKNOWN_ARGUMENT "Only support one word at a time" ;;
+    *           ) [[ -z $word ]] && word=${1,,} || _die $_ES_UNKNOWN_ARGUMENT "Only support one word at a time" ;;
   esac
   shift
 done
@@ -59,11 +62,14 @@ if [[ $review == true ]]; then
 fi
 
 if [[ -z $word ]]; then
-  _die $_ES_UNKNOWN_ARGUMENT "Require one word to search"
+  word=$(xclip -r -o -selection primary | tr '[:upper:]' '[:lower:]')
+  if [[ -z $word ]]; then
+    _die $_ES_UNKNOWN_ARGUMENT "Clipboard is empty"
+  fi
 fi
 
 if [[ $nocache == true || ! -f $CAMDICT_DIR/$word ]]; then
-  temp=$(mktemp --tmpdir $word.XXX)
+  temp=$(mktemp --tmpdir "$word.XXX")
   if links -dump -width $(tput cols) "$CAMDICT_URL/$word" | tee "$temp" | grep -Eq "^$word"; then
     mv "$temp" "$CAMDICT_DIR/$word"
   else
@@ -83,14 +89,20 @@ if [[ $long == true ]]; then
       -e '/^   More examples/,/^   See more results/d' \
       -e '/^   Thesaurus: synonyms and related words/,/^   See more results/d' \
       -e '/^   (Definition of/d'                       \
-      -e '/^   You can also find related words, phrases, and synonyms in the topics:/,+2d'
+      -e '/^   You can also find related words, phrases, and synonyms in the topics:/,+2d' \
+      -e "/^   Your browser doesn't support HTML5 audio/d"
 else
   sed -e "/^$word/,\$!d"                               \
       -e '/^   (Definition of/,$d'                     \
       -e '/^   More examples/,/^   See more results/d' \
       -e '/^   Thesaurus: synonyms and related words/,/^   See more results/d' \
       -e '/^   You can also find related words, phrases, and synonyms in the topics:/,+2d' \
-      -e '/^  Related word/,+2d'
+      -e '/^  Related word/,+2d'                       \
+      -e "/^   Your browser doesn't support HTML5 audio/d"
 fi |
 
-cat -s
+if [[ $less == true ]]; then
+  less -R
+else
+  cat -s
+fi
