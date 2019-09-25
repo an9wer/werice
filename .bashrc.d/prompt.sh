@@ -25,7 +25,7 @@ _me_git_prompt() {
   git rev-parse --is-inside-work-tree &> /dev/null || return
 
   git symbolic-ref --short HEAD &>/dev/null &&
-    local branch="${ME_PROMPT_MAGENTA}$(git symbolic-ref --short HEAD)" ||
+    local branch="${ME_PROMPT_GREEN}$(git symbolic-ref --short HEAD)" ||
     local branch="HEAD detached at ${ME_PROMPT_MAGENTA}$(git rev-parse --short HEAD)" 
 
   (( $(git status -s -uno | wc -l) == 0 )) &&
@@ -44,9 +44,9 @@ _me_ps1() {
   PS1=""
   PS1+="${ME_PROMPT_BOLD}.--==${ME_PROMPT_END} "
   PS1+="$(_me_venv_prompt)"
-  PS1+="${ME_PROMPT_BOLD}${ME_PROMPT_GREEN}\u@${HOSTNAME}${ME_PROMPT_END} "
-  PS1+="at ${ME_PROMPT_BOLD}${ME_PROMPT_RED}\t${ME_PROMPT_END} "
-  PS1+="in ${ME_PROMPT_BOLD}${ME_PROMPT_BLUE}\w${ME_PROMPT_END} "
+  PS1+="${ME_PROMPT_BOLD}${ME_PROMPT_RED}\u@${HOSTNAME}${ME_PROMPT_END} "
+  PS1+="at ${ME_PROMPT_BOLD}${ME_PROMPT_BLUE}\t${ME_PROMPT_END} "
+  PS1+="in ${ME_PROMPT_BOLD}${ME_PROMPT_YELLOW}\w${ME_PROMPT_END} "
   PS1+="JB ${ME_PROMPT_CYAN}\j${ME_PROMPT_END} "
   if (( $ES == 0 )); then
     PS1+="ES ${ME_PROMPT_GREEN}$ES${ME_PROMPT_END} "
@@ -55,12 +55,11 @@ _me_ps1() {
   fi
   PS1+="$(_me_git_prompt) \n"
   PS1+="${ME_PROMPT_BOLD}·     ${ME_PROMPT_END} ${ME_PROMPT_BOLD}${ME_PROMPT_BLACK}${psline}${ME_PROMPT_END}\n"
-  PS1+=" ${ME_PROMPT_BOLD}\\\`--=== ${ME_PROMPT_YELLOW}\$ ${ME_PROMPT_END}"
+  PS1+=" ${ME_PROMPT_BOLD}\\\`--===${ME_PROMPT_END} ${ME_PROMPT_GREEN}\$${ME_PROMPT_END} "
 }
 
 # ps1
 PROMPT_COMMAND=$PROMPT_COMMAND$'\n'"_me_ps1;"
 
 # ps2
-PS2="${ME_PROMPT_BOLD}${ME_PROMPT_YELLOW}\\\`--=== > ${ME_PROMPT_END}"
-
+PS2="${ME_PROMPT_BOLD}${ME_PROMPT_YELLOW} \\\`--=== > ${ME_PROMPT_END}"
