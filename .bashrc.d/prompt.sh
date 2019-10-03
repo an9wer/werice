@@ -59,7 +59,7 @@ _me_ps1() {
 }
 
 # ps1
-PROMPT_COMMAND=$PROMPT_COMMAND$'\n'"_me_ps1;"
+PROMPT_COMMAND="_me_ps1"$'\n'$PROMPT_COMMAND
 
 # ps2
 PS2="${ME_PROMPT_BOLD}${ME_PROMPT_YELLOW} \\\`--=== > ${ME_PROMPT_END}"
