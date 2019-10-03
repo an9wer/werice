@@ -39,7 +39,7 @@ _me_ps1() {
   local ES=$?
   local psline
   psline=$(pstree -s $$)
-  psline=$(echo "$psline" | sed -e 's/---pstree$//' -e 's/---/ -> /g')
+  psline=$(echo "$psline" | head -n1 | sed -e 's/-[-+]-pstree$//' -e 's/---/ -> /g')
 
   PS1=""
   PS1+="${ME_PROMPT_BOLD}.--==${ME_PROMPT_END} "
