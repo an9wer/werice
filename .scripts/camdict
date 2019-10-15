@@ -2,23 +2,17 @@
 
 source "$(dirname $BASH_SOURCE[0])/libs/base.sh"
 
-CAMDICT_DIR=$HOME/.camdict
-SAVED_FILE=$CAMDICT_DIR/.saved
+CAMDICT_HISTORY=$HOME/.camdict_history
 CAMDICT_URL="https://dictionary.cambridge.org/dictionary/english"
 
 usage() {
   cat <<EOF
 Usage:
-  camdict [-h|--help] [-l|--long] [-s|--save] [-r|--review]
-          [-L|--less] [--no-cache] [word]
+  camdict [-h|--help] [-r|--review] [word]
 
 Options:
   -h,--help     display this help
-  -l,--long     display long (brief by default) definition of word
-  -s,--save     save word to search history
   -r,--review   review words from search history
-  -L,--less     use command less (cat by default) to view output
-  --nocache     search word without cache
   word          which word to search, by default, search from primary
 EOF
 }
@@ -26,32 +20,27 @@ EOF
 # Main
 while (( ${#@} > 0 )); do
   case "$1" in
-    -l|--long   ) long=true ;;
-    -s|--save   ) save=true ;;
     -r|--review ) review=true ;;
-    -L|--less   ) less=true ;;
-    --no-cache  ) nocache=true ;;
     -h|--help   ) usage; exit $_ES_SUCCESS ;;
     *           ) [[ -z $word ]] && word=${1,,} || _die $_ES_UNKNOWN_ARGUMENT "Only support one word at a time" ;;
   esac
   shift
 done
 
-[[ ! -d "$CAMDICT_DIR" ]] && mkdir -p "$CAMDICT_DIR"
-[[ ! -f "$SAVED_FILE" ]]  && touch "$SAVED_FILE"
+[[ ! -f $CAMDICT_HISTORY ]]  && touch "$CAMDICT_HISTORY"
 
 if [[ $review == true ]]; then
   deltax=0
   deltay=1
   today_date=$(date +"%Y/%m/%d")
   today_date_s=$(date -d $today_date +"%s")
-  earliest_date=$(cat "$SAVED_FILE" | sort | head -n1 | cut -d' ' -f1)
+  earliest_date=$(cat "$CAMDICT_HISTORY" | sort | head -n1 | cut -d' ' -f1)
   earliest_date_s=$(date -d $earliest_date +"%s")
   review_date_s=$today_date_s
 
   while (( $review_date_s >= $earliest_date_s )); do
     review_date=$(date -d @$review_date_s +"%Y/%m/%d")
-    cat "$SAVED_FILE" | grep -E "^$review_date"
+    cat "$CAMDICT_HISTORY" | grep -E "^$review_date"
     deltaz=$deltax
     deltax=$(( deltax + deltay ))
     deltay=$deltaz
@@ -68,41 +57,8 @@ if [[ -z $word ]]; then
   fi
 fi
 
-if [[ $nocache == true || ! -f $CAMDICT_DIR/$word ]]; then
-  temp=$(mktemp --tmpdir "$word.XXX")
-  if links -dump -width $(tput cols) "$CAMDICT_URL/$word" | tee "$temp" | grep -Eq "^$word"; then
-    mv "$temp" "$CAMDICT_DIR/$word"
-  else
-    _die $_ES_FAILURE "Unknown word: $word"
-  fi
+if ! grep -q "$word" "$CAMDICT_HISTORY"; then 
+    echo $(date +"%Y/%m/%d") $word >> "$CAMDICT_HISTORY"
 fi
 
-if ! grep -q "$word" "$SAVED_FILE"; then 
-  echo $(date +"%Y/%m/%d") $word >> "$SAVED_FILE"
-fi
-
-cat "$CAMDICT_DIR/$word" |
-
-if [[ $long == true ]]; then
-  sed -e "/^$word/,\$!d"                               \
-      -e '/^Translations of/,$d'                       \
-      -e '/^   More examples/,/^   See more results/d' \
-      -e '/^   Thesaurus: synonyms and related words/,/^   See more results/d' \
-      -e '/^   (Definition of/d'                       \
-      -e '/^   You can also find related words, phrases, and synonyms in the topics:/,+2d' \
-      -e "/^   Your browser doesn't support HTML5 audio/d"
-else
-  sed -e "/^$word/,\$!d"                               \
-      -e '/^   (Definition of/,$d'                     \
-      -e '/^   More examples/,/^   See more results/d' \
-      -e '/^   Thesaurus: synonyms and related words/,/^   See more results/d' \
-      -e '/^   You can also find related words, phrases, and synonyms in the topics:/,+2d' \
-      -e '/^  Related word/,+2d'                       \
-      -e "/^   Your browser doesn't support HTML5 audio/d"
-fi |
-
-if [[ $less == true ]]; then
-  less -R
-else
-  cat -s
-fi
+surf "$CAMDICT_URL/$word" &> /dev/null &
