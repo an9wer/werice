@@ -1,0 +1,36 @@
+#!/usr/bin/env python3
+
+import argparse
+
+def from_type(f):
+    if f in ["hex", "16"]: return 16
+    elif f in ["dec", "10"]: return 10
+    elif f in ["oct", "8"]: return 8
+    elif f in ["bin", "2"]: return 2
+    else: raise ValueError("Invalid value of 'from'")
+
+def to_type(t):
+    if t in ["hex", "16"]: return hex
+    elif t in ["dec", "10"]: return int
+    elif t in ["oct", "8"]: return oct
+    elif t in ["bin", "2"]: return bin
+    else: raise ValueError("Invalid value of 'to'")
+
+parser = argparse.ArgumentParser(
+    description="Convert number to bin, oct, dec or hex representation")
+parser.add_argument(
+    "-f", "--from", type=from_type, required=True, dest="f", metavar="FROM",
+    help="from which representation, supported values are bin/2, oct/8, dec/10 and hex/16")
+parser.add_argument(
+    "-t", "--to", type=to_type, required=True, dest="t", metavar="TO",
+    help="to which representation, supported values are bin/2, oct/8, dec/10, and hex/16")
+parser.add_argument(
+    "x", metavar="X",
+    help="number to be converted")
+
+args = parser.parse_args()
+x = args.x
+f = args.f
+t = args.t
+
+print(t(int(x, f)))
