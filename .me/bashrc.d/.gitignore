@@ -3,4 +3,5 @@
 !trash.sh
 !prompt.sh
 !ssh.sh
+!tmux.sh
 !.gitignore
