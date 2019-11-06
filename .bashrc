@@ -1,6 +1,7 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+
 # Virtual console
 # -----------------------------------------------------------------------------
 [[ $(tty) =~ /dev/tty ]] && {
@@ -8,16 +9,19 @@
   setterm --blength 0
 }
 
+
 # Load custom bashrc
 # -----------------------------------------------------------------------------
-for rc in $(find ${ME_BASHRC_DIR} -name "*.sh"); do
+for rc in $(ls $HOME/.bashrc.d/*.sh); do
   source "$rc"
 done; unset rc
+
 
 # Load scripts
 # -----------------------------------------------------------------------------
 [[ ! "$PATH" =~ "$HOME/scripts" ]] && export PATH="$HOME/.scripts:$PATH"
 [[ ! "$PATH" =~ "$HOME/.git-extensions" ]] && export PATH="$HOME/.git-extensions:$PATH"
+
 
 # Say hello
 # -----------------------------------------------------------------------------
