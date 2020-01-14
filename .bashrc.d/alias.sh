@@ -30,8 +30,10 @@ alias dtw="date '+%Y/%m/%d %a'"
 # xclip
 alias xcp="xclip -r -selection clipboard"
 
-# doc
-alias todoo="vim ~/Documents/notes/todo.wiki"
-alias todo="vim ~/Documents/an9wer.github.io/TODO.txt"
-alias funny="vim ~/Documents/an9wer.github.io/funny.txt"
-alias dict="vim ~/.config/ibus/rime/an9wer.dict.yaml"
+# Open files
+alias vitodoo="vim ~/Documents/notes/todo.wiki"
+alias vitodo="vim ~/Documents/daily-business/TODO.txt"
+alias viledger="vim ~/Documents/daily-business/ledger.dat"
+alias vifunny="vim ~/Documents/daily-business/funny.txt"
+alias viblog="vim ~/Documents/blog/bookmark.txt"
+alias vidict="vim ~/.config/ibus/rime/an9wer.dict.yaml"
