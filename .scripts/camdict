@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
-source "$(dirname $BASH_SOURCE[0])/libs/base.sh"
-
 CAMDICT_HISTORY=$HOME/.camdict_history
 CAMDICT_URL="https://dictionary.cambridge.org/dictionary/english"
+
+die() {
+  echo "$@"; exit 1
+}
 
 usage() {
   cat <<EOF
@@ -21,8 +23,8 @@ EOF
 while (( ${#@} > 0 )); do
   case "$1" in
     -r|--review ) review=true ;;
-    -h|--help   ) usage; exit $_ES_SUCCESS ;;
-    *           ) [[ -z $word ]] && word=${1,,} || _die $_ES_UNKNOWN_ARGUMENT "Only support one word at a time" ;;
+    -h|--help   ) usage; exit 0 ;;
+    *           ) [[ -z $word ]] && word=${1,,} || die "Only support one word at a time" ;;
   esac
   shift
 done
@@ -47,18 +49,20 @@ if [[ $review == true ]]; then
     review_date_s=$(( $today_date_s - ($deltax + $deltay) * 60 * 60 * 24 ))
   done
 
-  exit $_ES_SUCCESS
+  exit 0
 fi
 
 if [[ -z $word ]]; then
   word=$(xclip -r -o -selection primary | tr '[:upper:]' '[:lower:]')
   if [[ -z $word ]]; then
-    _die $_ES_UNKNOWN_ARGUMENT "Clipboard is empty"
+    die "Clipboard is empty"
   fi
 fi
 
 if ! grep -q "$word" "$CAMDICT_HISTORY"; then 
-    echo $(date +"%Y/%m/%d") $word >> "$CAMDICT_HISTORY"
+  echo $(date +"%Y/%m/%d") $word >> "$CAMDICT_HISTORY"
 fi
 
-surf "$CAMDICT_URL/$word" &> /dev/null &
+temp=$(mktemp /tmp/camdict.XXXXX)
+echo "Write log into '$temp'"
+surf "$CAMDICT_URL/$word" &> "$temp" &
