@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+dmenu_pass | dmenu "$@" | ${SHELL:-"/bin/sh"} &
