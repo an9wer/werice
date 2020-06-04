@@ -1,9 +1,6 @@
 [submodule "suckless/dwm"]
 	path = suckless/dwm
 	url = https://git.suckless.org/dwm
-[submodule "suckless/slstatus"]
-	path = suckless/slstatus
-	url = https://git.suckless.org/slstatus
 [submodule "suckless/dmenu"]
 	path = suckless/dmenu
 	url = https://git.suckless.org/dmenu
