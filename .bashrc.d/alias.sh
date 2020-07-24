@@ -26,9 +26,11 @@ alias diff="diff --color=auto"
 # date
 alias dt="date '+%Y/%m/%d'"
 alias dtw="date '+%Y/%m/%d %a'"
+alias dts="date '+%s'"
 
 # xclip
 alias xcp="xclip -r -selection clipboard"
+alias xcplc="fc -ln -1 | tee $(tty) | xargs | xclip -r -selection clipboard"
 
 # Open files
 alias vitodoo="vim ~/Documents/notes/todo.wiki"
