@@ -1,32 +1,17 @@
-# If not running interactively, don't do anything
+# This file is sourced by all *interactive* bash shells on startup,
+# if not running interactively, don't do anything.
 [[ $- != *i* ]] && return
 
-
-# Virtual console
-# -----------------------------------------------------------------------------
-[[ $(tty) =~ /dev/tty ]] && {
-  setfont Tamsyn10x20r &> /dev/null
-  setterm --blength 0
-}
-
-
 # Load custom bashrc
-# -----------------------------------------------------------------------------
-for rc in $(ls $HOME/.bashrc.d/*.sh); do
-  source "$rc"
-done; unset rc
-
+if [[ -d $HOME/.bashrc.d ]]; then
+  for rc in $(ls $HOME/.bashrc.d/*.sh); do
+    source "$rc"
+  done; unset rc
+fi
 
 # Load scripts
-# -----------------------------------------------------------------------------
-[[ ! "$PATH" =~ "$HOME/scripts" ]] && export PATH="$HOME/.scripts:$PATH"
-[[ ! "$PATH" =~ "$HOME/.git-extensions" ]] && export PATH="$HOME/.git-extensions:$PATH"
-
-
-# Say hello
-# -----------------------------------------------------------------------------
-if command -v neofetch &> /dev/null; then
-  neofetch
+if [[ -d $HOME/.scripts && ! "$PATH" =~ "$HOME/scripts" ]]; then
+  export PATH="$HOME/.scripts:$PATH"
 fi
 
 # vim: set filetype=sh:

@@ -1,5 +1,0 @@
-<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/" xmlns:moz="http://www.mozilla.org/2006/browser/search/">
-<ShortName>百度搜索</ShortName>
-<Image width="16" height="16">https://www.baidu.com/favicon.ico</Image>
-<Url type="text/html" template="https://www.baidu.com/s?wd={searchTerms}"/>
-</OpenSearchDescription>

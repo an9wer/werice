@@ -1,10 +1,8 @@
 alias sourceb="source ~/.bashrc"
 
 # vim
-alias vimv="vim ~/.vimrc"
-alias vimb="vim ~/bashrc"
-alias vimt="vim ~/.tmux.conf"
 alias vimtest="vim --noplugin -N -u"
+alias viblog="vim ~/Documents/blog/bookmark.txt"
 
 # ls
 alias ls="ls --color=auto"
@@ -31,11 +29,3 @@ alias dts="date '+%s'"
 # xclip
 alias xcp="xclip -r -selection clipboard"
 alias xcplc="fc -ln -1 | tee $(tty) | xargs | xclip -r -selection clipboard"
-
-# Open files
-alias vitodoo="vim ~/Documents/notes/todo.wiki"
-alias vitodo="vim ~/Documents/daily-business/TODO.txt"
-alias viledger="vim ~/Documents/daily-business/ledger.dat"
-alias vifunny="vim ~/Documents/daily-business/funny.txt"
-alias viblog="vim ~/Documents/blog/bookmark.txt"
-alias vidict="vim ~/.config/ibus/rime/an9wer.dict.yaml"

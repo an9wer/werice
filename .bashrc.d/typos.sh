@@ -3,7 +3,7 @@ alias sduo=sudo
 alias suod=sudo
 alias lsbkl=lsblk
 
-# Wrapper to fix typos
+# Wrapper of git to fix typos
 git() {
   if [[ $1 == stauts ]]; then
     command git status "${@:2}"
