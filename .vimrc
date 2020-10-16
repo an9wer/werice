@@ -11,6 +11,9 @@ endif
 " -----------------------------------------------------------------------------
 let g:netrw_keepdir = 0
 let g:netrw_winsize = 25
+let g:netrw_list_hide = '^\..*'   " Hide files whose name starts with dot (.)
+let g:netrw_hide = 1              " Show non-hidden files
+let g:netrw_banner = 0            " Suppress banner
 
 
 " gundo.vim
@@ -22,7 +25,7 @@ nnoremap <F1> :GundoToggle<CR>
 " vim-system-copy
 " -----------------------------------------------------------------------------
 "set showtabline=2
-let g:system_copy#copy_command='xclip -sel clipboard'
+let g:system_copy#copy_command='xclip -sel clipboard -r'
 let g:system_copy#paste_command='xclip -sel clipboard -o'
 
 
@@ -134,28 +137,39 @@ set suffixes+=.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
 " vulnerabilities -- disable by default, even when 'nocompatible' is set
 " set nomodeline
 
-set number              " print the line number in front of each line
-"set relativenumber      " show the line number relative to the line with
-"                        " the cursor in front of each line
-set numberwidth=5       " minimal number of columns to use for the line number
+set number              " Print the line number in front of each line
+"set relativenumber     " Show the line number relative to the line with
+"                       " the cursor in front of each line
+set numberwidth=5       " Minimal number of columns to use for the line number
 
-set colorcolumn=80      " a comma separated list of screen columns
-set scrolloff=999       " the cursor line will always be in the middle of the
+set colorcolumn=80      " A comma separated list of screen columns
+"set scrolloff=999       " The cursor line will always be in the middle of the
                         " window
 
 set hidden              " a buffer becomes hidden when it is abandoned
 
-set background=dark     " When set to 'dark', Vim will try to use colors that
-                        " look good on a dark background.  When set to 'light',
-                        " Vim will try to use colors that look good on a light
-                        " background.
+set background=dark     " Try to use colors that look good on a dark background
 
-set directory=~/.vim/swap   " list of directory names for the swap file
+set cryptmethod=blowfish2   " Method used for encryption when the buffer is
+                            " written to a file
+
+set directory=~/.vim/swap   " List of directory names for the swap file
+
+set autochdir           " Change the current working directory whenever you
+                        " open a file, switch buffers, delete a buffer or
+                        " open/close a window
 
 
 " Abbreviation (see :h abbreviation)
 " -----------------------------------------------------------------------------
-iabbrev <expr> dt strftime("%Y/%m/%d")
+iabbrev <expr> dt  strftime("%Y/%m/%d")
+iabbrev <expr> dtw strftime("%Y/%m/%d %a")
+
+
+" Commonly misspelled words
+" -----------------------------------------------------------------------------
+iabbrev teh the
+iabbrev hte the
 
 
 " Key map (see :h key-notation)
