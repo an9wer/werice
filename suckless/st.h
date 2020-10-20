@@ -100,25 +100,34 @@ unsigned int tabspaces = 8;
 
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
+	/* Color: see https://github.com/chriskempson/base16-shell/blob/master/scripts/base16-spacemacs.sh */
+
 	/* 8 normal colors */
-	"black",
-	"red3",
-	"green3",
-	"yellow3",
-	"blue2",
-	"magenta3",
-	"cyan3",
-	"gray90",
+	"#1f2022", // Base 00 - Black
+	"#f2241f", // Base 08 - Red
+	"#67b11d", // Base 0B - Green
+	"#b1951d", // Base 0A - Yellow
+	"#4f97d7", // Base 0D - Blue
+	"#a31db1", // Base 0E - Magenta
+	"#2d9574", // Base 0C - Cyan
+	"#a3a3a3", // Base 05 - White
 
 	/* 8 bright colors */
-	"gray50",
-	"red",
-	"green",
-	"yellow",
-	"#5c5cff",
-	"magenta",
-	"cyan",
-	"white",
+	"#585858", // Base 03 - Bright Black
+	"#f2241f", // Base 08 - Bright Red
+	"#67b11d", // Base 0B - Bright Green
+	"#b1951d", // Base 0A - Bright Yellow
+	"#4f97d7", // Base 0D - Bright Blue
+	"#a31db1", // Base 0E - Bright Magenta
+	"#2d9574", // Base 0C - Bright Cyan
+	"#f8f8f8", // Base 07 - Bright White
+
+	"#ffa500", // Base 09
+	"#b03060", // Base 0F
+	"#282828", // Base 01
+	"#444155", // Base 02
+	"#b8b8b8", // Base 04
+	"#e8e8e8", // Base 06
 
 	[255] = 0,
 
