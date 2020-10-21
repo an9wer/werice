@@ -18,5 +18,4 @@ keysym Menu = BackSpace BackSpace BackSpace BackSpace
 ! unbind Control_R key in modifier 'Control'
 remove Control = Control_R
 ! turn Control_R key to Backspace key
-keysym Control_R = Escape NoSymbol Escape
-
+keysym Control_R = Delete NoSymbol Delete
