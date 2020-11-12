@@ -1,8 +1,8 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 if [[ -d ~/.password-store ]]; then
   IFS=$'\n'
-  for pass in $(find ~/.password-store -type f -path '*.gpg' -printf "%P\n"); do
-    echo "pass show -c ${pass%%.gpg}"
+  for pass in $(find -L ~/.password-store -type f -path '*.gpg' -printf "%P\n"); do
+    echo "${pass%%.gpg}"
   done
 fi

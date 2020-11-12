@@ -53,6 +53,10 @@ rices_to_install=(
   .bashrc.d/typos.sh
   .bashrc.d/less.sh
   .bashrc.d/cd.sh
+  .scripts/camdict
+  .scripts/dmenu_pass
+  .scripts/dmenu_pass_run
+  .scripts/numconvert
   .config/ibus/rime/default.custom.yaml
   .config/ibus/rime/double_pinyin.custom.yaml
   .config/dunst/dunstrc
