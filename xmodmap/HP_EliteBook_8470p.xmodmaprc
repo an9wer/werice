@@ -9,11 +9,11 @@ keysym Caps_Lock = Return NoSymbol Return
 
 ! unbind Alt_R key in modifier 'mod1'
 remove mod1 = Alt_R
-! turn Alt_R key to backslash
-keysym Alt_R = backslash bar backslash bar
+! turn Alt_R key to backspace key
+keysym Alt_R = BackSpace BackSpace BackSpace BackSpace
 
-! turn Menu key to Escake key
-keysym Menu = BackSpace BackSpace BackSpace BackSpace
+! turn Menu key to backslash key
+keysym Menu = backslash bar backslash bar
 
 ! unbind Control_R key in modifier 'Control'
 remove Control = Control_R
