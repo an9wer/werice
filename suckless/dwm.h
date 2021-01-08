@@ -65,6 +65,7 @@ static const char *termcmd[]  = { "st", NULL };
 static const char *dictcmd[]  = { "camdict", NULL };
 static const char *aupcmd[]   = { "amixer", "set", "Master", "2%+", NULL };
 static const char *adowncmd[] = { "amixer", "set", "Master", "2%-", NULL };
+static const char *screenshotcmd[]  = { "flameshot", "gui", NULL };
 
 /* X11 key map: https://www.cl.cam.ac.uk/~mgk25/ucs/keysymdef.h */
 static Key keys[] = {
@@ -75,6 +76,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_equal,  spawn,          {.v = aupcmd } },
 	{ MODKEY,                       XK_minus,  spawn,          {.v = adowncmd } },
 	{ MODKEY|ShiftMask,             XK_d,      spawn,          {.v = dictcmd } },
+	{ MODKEY|ShiftMask,             XK_s,      spawn,          {.v = screenshotcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
