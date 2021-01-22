@@ -60,11 +60,16 @@ rices_to_install=(
   .config/ibus/rime/default.custom.yaml
   .config/ibus/rime/double_pinyin.custom.yaml
   .config/dunst/dunstrc
+  .vim/plugin/tabline.vim
+  .vim/ftplugin/python.vim
+  .vim/ftplugin/rst.vim
+  .vim/ftplugin/sh.vim
+  .vim/bundle/vim-system-copy
 )
 
 for rice in "${rices_to_install[@]}"; do
-  if [[ ! -f $rice ]]; then
-    echo "Install error: '$rice' is not a file."
+  if [[ ! -f $rice ]] && [[ ! -d $rice ]]; then
+    echo "Install error: '$rice' is not a file or directory."
     return 1
   fi
 
