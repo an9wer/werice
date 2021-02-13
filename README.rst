@@ -6,4 +6,8 @@ My dotfiles.
 Setup
 -----
 
-Run ``./setup.sh`` command to play with.
+::
+
+    $ git submodule init
+
+Then run ``./setup.sh`` command to play with.
