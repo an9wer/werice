@@ -66,7 +66,7 @@ static const char unknown_str[] = "n/a";
 static const struct arg args[] = {
     /* function         format          argument */
     { cpu_freq,         "  %5sHz ",    NULL },
-    { temp,             "%2s°C ",       "/sys/class/thermal/thermal_zone6/temp" },
+    { temp,             "%2s°C ",       "/sys/class/thermal/thermal_zone2/temp" },
     { load_avg,         " %s | ",       NULL },
     { ram_used,         " %3sB ",      NULL },
     { ram_perc,         "%2s%% | ",     NULL },
@@ -75,12 +75,9 @@ static const struct arg args[] = {
     { disk_used,        " %3sB ",      "/"  },
     { disk_perc,        "%2s%% | ",     "/"  },
     { run_command,      " %2s | ",     "amixer get Master | awk -F'[][]' 'END{ print $4 \" \" $2 }'" },
-    { battery_perc,     " %2s%% ",     "BAT0" },
-    { battery_remaining,"%6s | ",       "BAT0" },
-    { wifi_essid,       " %s ",        "wlo1" },
-    { wifi_perc,        "%3s%% | ",     "wlo1" },
-    { netspeed_rx,      "RX: %8s ",     "wlo1" },
-    { netspeed_tx,      "TX: %8s | ",   "wlo1" },
+    { num_files,        " %s | ",  "/home/an9wer" },
+    { netspeed_rx,      "RX: %8s ",     "enp2s0" },
+    { netspeed_tx,      "TX: %8s | ",   "enp2s0" },
     { datetime,         "%s",           "%F %T %a" },
 };
 
