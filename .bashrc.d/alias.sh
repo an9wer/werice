@@ -4,6 +4,7 @@ alias sourceb="source ~/.bashrc"
 alias vimtest="vim --noplugin -N -u"
 alias viblog="vim $(readlink -e ~/.blog)"
 alias vitodo="vim $(readlink -e ~/.todo)"
+alias vicmd="vim $(readlink -e ~/.cmd)"
 
 # ls
 alias ls="ls --color=auto"
