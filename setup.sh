@@ -56,6 +56,8 @@ rices_to_install=(
   .scripts/camdict
   .scripts/dmenu_pass
   .scripts/dmenu_pass_run
+  .scripts/dmenu_blog
+  .scripts/dmenu_blog_run
   .scripts/numconvert
   .config/ibus/rime/default.custom.yaml
   .config/ibus/rime/double_pinyin.custom.yaml
