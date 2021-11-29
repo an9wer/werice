@@ -7,9 +7,10 @@ if [[ ! -d $trashdir ]]; then
   mkdir -p "$trashdir"
 fi
 
+IFS=$'\n'
+
 # Clean expired trash files
 now=$(date +%s)
-IFS=$'\n'
 for trashfile in $(ls "$trashdir"); do
   ctime=$(stat --format=%Z "$trashdir/$trashfile")
   if (( $now - $ctime > $interval )); then
