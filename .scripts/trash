@@ -1,0 +1,28 @@
+#!/bin/sh
+
+trashdir=~/Trash
+interval=30*24*60*60   # expire in 30 days
+
+if [[ ! -d $trashdir ]]; then
+  mkdir -p "$trashdir"
+fi
+
+# Clean expired trash files
+now=$(date +%s)
+IFS=$'\n'
+for trashfile in $(ls "$trashdir"); do
+  ctime=$(stat --format=%Z "$trashdir/$trashfile")
+  if (( $now - $ctime > $interval )); then
+    rm -rf "$trashdir/$trashfile"
+  fi
+done
+
+# Move files to trash directory
+for file in "$@"; do
+  declare -i prefixnum=0
+  while [[ -e $trashdir/$(printf "%03d_%s" "${prefixnum}" "$file") ]]; do
+    prefixnum+=1
+  done
+  trashfile=$(printf "%03d_%s" "${prefixnum}" "$file")
+  mv "$file" "$trashdir/$trashfile"
+done
