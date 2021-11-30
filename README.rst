@@ -9,15 +9,15 @@ Introduction
 List of my current/favorite used hardwares/softwares:
 
 - Laptop: HP EliteBook 8470p
-- OS: Gentoo amd64
+- Operating System: Gentoo amd64
 - Window Manager: dwm
 - Application Launcher: dmenu
 - Status Bar: slstatus
 - Terminal: st
 - Shell: bash
-- Web Browser: firefox/qutebrowser
-- File Manager: vifm
 - Editor: vim
+- File Manager: vifm
+- Web Browser: firefox/qutebrowser
 - PDF Reader: zathura
 - Media Player: mpv
 - Input Method: ibus
