@@ -19,11 +19,15 @@ for trashfile in $(ls "$trashdir"); do
 done
 
 # Move files to trash directory
-for file in "$@"; do
-  declare -i prefixnum=0
-  while [[ -e $trashdir/$(printf "%03d_%s" "${prefixnum}" "$file") ]]; do
-    prefixnum+=1
-  done
-  trashfile=$(printf "%03d_%s" "${prefixnum}" "$file")
-  mv "$file" "$trashdir/$trashfile"
+for path in "$@"; do
+  if [[ -e $path ]]; then
+    filename=$(basename "$path")
+    declare -i prefixnum=0
+    while [[ -e $trashdir/$(printf "%03d_%s" "${prefixnum}" "$filename") ]]; do
+      prefixnum+=1
+    done
+    trashfile=$(printf "%03d_%s" "${prefixnum}" "$filename")
+    mv "$path" "$trashdir/$trashfile"
+    printf "%q\n->\t%q\n" "$path" "$trashdir/$trashfile"
+  fi
 done
