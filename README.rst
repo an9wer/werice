@@ -3,11 +3,35 @@ werice
 
 My dotfiles.
 
-Setup
+Introduction
+------------
+
+List of my current/favorite used hardwares/softwares:
+
+- Laptop: HP EliteBook 8470p
+- OS: Gentoo amd64
+- Window Manager: dwm
+- Application Launcher: dmenu
+- Status Bar: slstatus
+- Terminal: st
+- Shell: bash
+- Web Browser: firefox/qutebrowser
+- File Manager: vifm
+- Editor: vim
+- PDF Reader: zathura
+- Media Player: mpv
+- Input Method: ibus
+- Input Method Engine: rime
+
+Usage
 -----
 
-Clone submodule first: ::
+First clone submodule: ::
 
     $ git submodule update
 
-Then run ``./setup.sh`` command to play with.
+Install config files: ::
+
+    $ ./setup.sh
+
+Then have fun to play with :)
