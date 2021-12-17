@@ -1,4 +1,4 @@
-/* 5.0-0-g1a13d04 */
+/* 5.0-4-gd78ff08 */
 
 /* See LICENSE file for copyright and license details. */
 /* Default settings; can be overriden by command line. */
