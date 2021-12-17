@@ -1,4 +1,4 @@
-/* b14e039 */
+/* 84a2f11 */
 
 /* See LICENSE file for copyright and license details. */
 
@@ -47,6 +47,7 @@ static const char unknown_str[] = "n/a";
  * ram_total           total memory size in GB         NULL
  * ram_used            used memory in GB               NULL
  * run_command         custom shell command            command (echo foo)
+ * separator           string to echo                  NULL
  * swap_free           free swap in GB                 NULL
  * swap_perc           swap usage in percent           NULL
  * swap_total          total swap size in GB           NULL
@@ -60,27 +61,37 @@ static const char unknown_str[] = "n/a";
  * uptime              system uptime                   NULL
  * username            username of current user        NULL
  * vol_perc            OSS/ALSA volume in percent      mixer file (/dev/mixer)
+ *                                                     NULL on OpenBSD
  * wifi_perc           WiFi signal in percent          interface name (wlan0)
  * wifi_essid          WiFi ESSID                      interface name (wlan0)
  */
 static const struct arg args[] = {
     /* function         format          argument */
-    { cpu_freq,         "  %5sHz ",    NULL },
+    { separator,        " ",            NULL },
+    { cpu_freq,         " %5sHz ",     NULL },
     { temp,             "%2s°C ",       "/sys/class/thermal/thermal_zone6/temp" },
-    { load_avg,         " %s | ",       NULL },
+    { load_avg,         "%s ",          NULL },
+    { separator,         "| ",          NULL },
     { ram_used,         " %3sB ",      NULL },
-    { ram_perc,         "%2s%% | ",     NULL },
+    { ram_perc,         "%2s%% ",       NULL },
+    { separator,        "| ",           NULL },
     { swap_used,        " %sB ",       NULL },
-    { swap_perc,        "%2s%% | ",     NULL },
+    { swap_perc,        "%2s%% ",       NULL },
+    { separator,         "| ",          NULL },
     { disk_used,        " %3sB ",      "/"  },
-    { disk_perc,        "%2s%% | ",     "/"  },
-    { run_command,      " %2s | ",     "amixer get Master | awk -F'[][]' 'END{ print $4 \" \" $2 }'" },
+    { disk_perc,        "%2s%% ",       "/"  },
+    { separator,         "| ",          NULL },
+    { run_command,      " %2s ",       "amixer get Master | awk -F'[][]' 'END{ print $4 \" \" $2 }'" },
+    { separator,         "| ",          NULL },
     { battery_perc,     " %2s%% ",     "BAT0" },
-    { battery_remaining,"%6s | ",       "BAT0" },
+    { battery_remaining,"%6s ",         "BAT0" },
+    { separator,         "| ",          NULL },
     { wifi_essid,       " %s ",        "wlo1" },
-    { wifi_perc,        "%3s%% | ",     "wlo1" },
+    { wifi_perc,        "%3s%% ",       "wlo1" },
+    { separator,         "| ",          NULL },
     { netspeed_rx,      "RX: %8s ",     "wlo1" },
-    { netspeed_tx,      "TX: %8s | ",   "wlo1" },
+    { netspeed_tx,      "TX: %8s ",     "wlo1" },
+    { separator,         "| ",          NULL },
     { datetime,         "%s",           "%F %T %a" },
 };
 
