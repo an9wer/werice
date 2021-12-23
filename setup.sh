@@ -59,6 +59,7 @@ rices_to_install=(
   .scripts/dmenu_blog_run
   .scripts/numconvert
   .scripts/trash
+  .gnupg/gpg-agent.conf
   .config/ibus/rime/default.custom.yaml
   .config/ibus/rime/double_pinyin.custom.yaml
   .config/dunst/dunstrc
