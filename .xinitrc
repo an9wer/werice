@@ -28,4 +28,4 @@ if has_command ibus-daemon; then
   ibus-daemon --xim --replace --daemonize
 fi
 
-ssh-agent dwm
+ssh-agent -t $(( 12 * 60 * 60)) dwm
