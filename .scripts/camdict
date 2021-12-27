@@ -11,36 +11,36 @@ die() {
 usage() {
   cat <<EOF
 Usage:
-  camdict [-h|--help] [-a,--all] [-c,--cambridge] [-o,--oxford] [word]
+  camdict [-h|--help] [-a,--all] [-c,--cambridge] [-o,--oxford] [-P,--primary] [-C,--clipboard] [word]
 
 Options:
+  -h,--help         display this help
   -a,--all          search the word in all supported dictionaries
   -c,--cambridge    use cambridge dictionary instead, default is macmillan dictionary
   -o,--oxford       use oxford dictionary instead, default is macmillan dictionary
-  -h,--help         display this help
-  word              what word to search, if no word supplied, search from primary selection
+  -P,--primary      search word from pimary selection
+  -C,--clipboard    search word from clipboard selection
+  word              search word from command line argument
 EOF
 }
 
+# Default dictionary
 dict_urls=("$MACMILLAN_DICT_URL")
 
 while (( ${#@} > 0 )); do
   case "$1" in
+    -h|--help      ) usage; exit 0 ;;
     -a|--all       ) dict_urls=("$MACMILLAN_DICT_URL" "$OXFORD_DICT_URL" "$CAMBRIDGE_DICT_URL");;
     -c|--cambridge ) dict_urls=("$CAMBRIDGE_DICT_URL") ;;
     -o|--oxford    ) dict_urls=("$OXFORD_DICT_URL") ;;
-    -h|--help      ) usage; exit 0 ;;
+    -P|--primary   ) [[ -z $word ]] && word=$(xclip -r -o -selection primary | tr '[:upper:]' '[:lower:]') || die "Support only one word at one time" ;;
+    -C|--clipboard ) [[ -z $word ]] && word=$(xclip -r -o -selection clipboard | tr '[:upper:]' '[:lower:]') || die "Support only one word at one time" ;;
     *              ) [[ -z $word ]] && word=${1,,} || die "Support only one word at one time" ;;
   esac
   shift
 done
 
-if [[ -z $word ]]; then
-  word=$(xclip -r -o -selection primary | tr '[:upper:]' '[:lower:]')
-  if [[ -z $word ]]; then
-    die "No words to search"
-  fi
-fi
+[[ -z $word ]] && die "No word to search" 
 
 for dict_url in "${dict_urls[@]}"; do
   qutebrowser --target tab "$dict_url/$word" &> /dev/null &
