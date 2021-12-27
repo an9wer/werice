@@ -1,7 +1,5 @@
 #!/bin/bash
 
-CAMDICT_HISTORY=$HOME/.camdict_history
-
 MACMILLAN_DICT_URL="https://www.macmillandictionary.com/us/dictionary/american"
 OXFORD_DICT_URL="https://www.lexico.com/en/definition"
 CAMBRIDGE_DICT_URL="https://dictionary.cambridge.org/dictionary/english"
@@ -13,11 +11,10 @@ die() {
 usage() {
   cat <<EOF
 Usage:
-  camdict [-h|--help] [-r|--review] [word]
+  camdict [-h|--help] [word]
 
 Options:
   -h,--help     display this help
-  -r,--review   review words from search history
   word          which word to search, by default, search from primary
 EOF
 }
@@ -25,7 +22,6 @@ EOF
 # Main
 while (( ${#@} > 0 )); do
   case "$1" in
-    -r|--review ) review=true ;;
     -h|--help   ) usage; exit 0 ;;
     --debug     ) debug=true ;;
     *           ) [[ -z $word ]] && word=${1,,} || die "Only support one word at a time" ;;
@@ -33,44 +29,11 @@ while (( ${#@} > 0 )); do
   shift
 done
 
-[[ ! -f $CAMDICT_HISTORY ]]  && touch "$CAMDICT_HISTORY"
-
-if [[ $review == true ]]; then
-  deltax=0
-  deltay=1
-  today_date=$(date +"%Y/%m/%d")
-  today_date_s=$(date -d $today_date +"%s")
-  earliest_date=$(cat "$CAMDICT_HISTORY" | sort | head -n1 | cut -d' ' -f1)
-  earliest_date_s=$(date -d $earliest_date +"%s")
-  review_date_s=$today_date_s
-
-  while (( $review_date_s >= $earliest_date_s )); do
-    review_date=$(date -d @$review_date_s +"%Y/%m/%d")
-    cat "$CAMDICT_HISTORY" | grep -E "^$review_date"
-    deltaz=$deltax
-    deltax=$(( deltax + deltay ))
-    deltay=$deltaz
-    review_date_s=$(( $today_date_s - ($deltax + $deltay) * 60 * 60 * 24 ))
-  done
-
-  exit 0
-fi
-
 if [[ -z $word ]]; then
   word=$(xclip -r -o -selection primary | tr '[:upper:]' '[:lower:]')
   if [[ -z $word ]]; then
-    die "Clipboard is empty"
+    die "No words to find"
   fi
 fi
 
-if ! grep -q "$word" "$CAMDICT_HISTORY"; then 
-  echo $(date +"%Y/%m/%d") $word >> "$CAMDICT_HISTORY"
-fi
-
-if [[ $debug == true ]]; then
-  log_file=$(mktemp /tmp/camdict.XXXXX)
-  echo "Write log into '$log_file'"
-else
-  log_file=/dev/null
-fi
-qutebrowser --target tab "$MACMILLAN_DICT_URL/$word" &> "$log_file" &
+qutebrowser --target tab "$MACMILLAN_DICT_URL/$word" &> /dev/null &
