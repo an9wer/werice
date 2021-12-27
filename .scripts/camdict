@@ -27,6 +27,7 @@ while (( ${#@} > 0 )); do
   case "$1" in
     -r|--review ) review=true ;;
     -h|--help   ) usage; exit 0 ;;
+    --debug     ) debug=true ;;
     *           ) [[ -z $word ]] && word=${1,,} || die "Only support one word at a time" ;;
   esac
   shift
@@ -66,6 +67,10 @@ if ! grep -q "$word" "$CAMDICT_HISTORY"; then
   echo $(date +"%Y/%m/%d") $word >> "$CAMDICT_HISTORY"
 fi
 
-temp=$(mktemp /tmp/camdict.XXXXX)
-echo "Write log into '$temp'"
-qutebrowser --target tab "$MACDICT_URL/$word" &> "$temp" &
+if [[ $debug == true ]]; then
+  log_file=$(mktemp /tmp/camdict.XXXXX)
+  echo "Write log into '$log_file'"
+else
+  log_file=/dev/null
+fi
+qutebrowser --target tab "$MACMILLAN_DICT_URL/$word" &> "$log_file" &
