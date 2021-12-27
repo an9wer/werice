@@ -1,7 +1,10 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 CAMDICT_HISTORY=$HOME/.camdict_history
-CAMDICT_URL="https://dictionary.cambridge.org/dictionary/english"
+
+MACMILLAN_DICT_URL="https://www.macmillandictionary.com/us/dictionary/american"
+OXFORD_DICT_URL="https://www.lexico.com/en/definition"
+CAMBRIDGE_DICT_URL="https://dictionary.cambridge.org/dictionary/english"
 
 die() {
   echo "$@"; exit 1
@@ -65,4 +68,4 @@ fi
 
 temp=$(mktemp /tmp/camdict.XXXXX)
 echo "Write log into '$temp'"
-surf "$CAMDICT_URL/$word" &> "$temp" &
+qutebrowser --target tab "$MACDICT_URL/$word" &> "$temp" &
