@@ -25,10 +25,6 @@ set colorcolumn=80
 " Minimal number of screen lines to keep above and below the cursor
 set scrolloff=5
 
-" Change the current working directory whenever you open a file, switch
-" buffers, delete a buffer or open/close a window
-set autochdir
-
 " List of directory names for the swap file
 set directory=~/.vim/swap
 
