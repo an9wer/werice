@@ -64,6 +64,7 @@ rices_to_install=(
   .config/ibus/rime/double_pinyin.custom.yaml
   .config/dunst/dunstrc
   .config/qutebrowser/config.py
+  .vimrc
   .vim/plugin/tabline.vim
   .vim/ftplugin/python.vim
   .vim/ftplugin/rst.vim
