@@ -9,7 +9,7 @@ Introduction
 List of my current/favorite used hardwares/softwares:
 
 - Laptop: HP EliteBook 8470p
-- Operating System: Gentoo amd64
+- Operating System: Gentoo AMD64
 - Window Manager: dwm
 - Application Launcher: dmenu
 - Status Bar: slstatus
@@ -26,12 +26,12 @@ List of my current/favorite used hardwares/softwares:
 Usage
 -----
 
-First clone submodule: ::
+First, clone submodule: ::
 
     $ git submodule update
 
-Install config files: ::
+Next, install config files: ::
 
     $ ./setup.sh
 
-Then have fun to play with :)
+Then, have fun to play with :)
