@@ -29,9 +29,11 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Firefox",  NULL,       NULL,       1,            0,           -1 },
-	{ "shadowsocks-qt5", NULL,NULL,       1 << 8,       1,           -1 },
+	/* class             instance    title       tags mask     isfloating   monitor */
+	{ "Firefox",         NULL,       NULL,       1,            0,           -1 },
+	{ "qutebrowser",     NULL,       NULL,       1,            0,           -1 },
+	{ "Joplin",          NULL,       NULL,       1 << 6,       0,           -1 },
+	{ "TelegramDesktop", NULL,       NULL,       1 << 7,       0,           -1 },
 };
 
 /* layout(s) */
