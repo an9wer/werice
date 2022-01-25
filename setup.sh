@@ -51,6 +51,7 @@ rices_to_install=(
   .bashrc.d/alias.sh
   .bashrc.d/prompt.sh
   .bashrc.d/typos.sh
+  .bashrc.d/stty.sh
   .bashrc.d/cd.sh
   .scripts/camdict
   .scripts/dmenu_pass
