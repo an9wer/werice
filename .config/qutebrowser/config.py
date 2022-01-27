@@ -15,3 +15,8 @@ config.set('colors.tabs.odd.bg', 'grey')
 config.set('colors.tabs.even.bg', 'grey')
 config.set('colors.tabs.pinned.odd.bg', 'darkseagreen')
 config.set('colors.tabs.pinned.even.bg', 'darkseagreen')
+
+# Bind f key to open links in current tab
+config.bind('f', 'hint links current', mode='normal')
+# Bind F key to open links in new tab
+config.bind('F', 'hint links tab-fg', mode='normal')
