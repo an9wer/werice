@@ -23,3 +23,13 @@ config.set('content.javascript.can_access_clipboard', True)
 config.bind('f', 'hint links current', mode='normal')
 # Bind F key to open links in new tab
 config.bind('F', 'hint links tab-fg', mode='normal')
+
+# Bind D key to close current tab
+config.bind('D', 'tab-close', mode='normal')
+# Bind d key to scroll half page down
+config.bind('d', 'scroll-page 0 0.5', mode='normal')
+
+# Bind U key to restore last closed tab
+config.bind('U', 'undo', mode='normal')
+# Bind u key to scroll half page up
+config.bind('u', 'scroll-page 0 -0.5', mode='normal')
