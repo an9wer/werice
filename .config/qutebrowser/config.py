@@ -33,3 +33,8 @@ config.bind('d', 'scroll-page 0 0.5', mode='normal')
 config.bind('U', 'undo', mode='normal')
 # Bind u key to scroll half page up
 config.bind('u', 'scroll-page 0 -0.5', mode='normal')
+
+# Bind Alt-9 key to focus the 9th tab
+config.bind('<Alt-9>', 'tab-focus 9', mode='normal')
+# Bind Alt-0 key to focus the last tab
+config.bind('<Alt-0>', 'tab-focus -1', mode='normal')
