@@ -38,3 +38,13 @@ config.bind('u', 'scroll-page 0 -0.5', mode='normal')
 config.bind('<Alt-9>', 'tab-focus 9', mode='normal')
 # Bind Alt-0 key to focus the last tab
 config.bind('<Alt-0>', 'tab-focus -1', mode='normal')
+
+# Bind Tab to switch to previous tab in stack
+config.bind('<Tab>', 'tab-focus stack-prev', mode='normal')
+# Bind Alt-Tab to switch to next tab in stack
+config.bind('<Alt-Tab>', 'tab-focus stack-next', mode='normal')
+
+# Bind Tab key to choose next item from all completions
+config.bind('<Tab>', 'completion-item-focus next', mode='command')
+# Bind Tab key to choose previous item from all completions
+config.bind('<Alt-Tab>', 'completion-item-focus prev', mode='command')
