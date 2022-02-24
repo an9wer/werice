@@ -19,6 +19,11 @@ config.set('colors.tabs.pinned.even.bg', 'darkseagreen')
 # Allow javascript copy links to clipboard
 config.set('content.javascript.can_access_clipboard', True)
 
+# Dary mode
+config.set('colors.webpage.preferred_color_scheme', 'dark')
+config.set('colors.webpage.darkmode.enabled', True)
+config.set('colors.webpage.bg', '#202124')
+
 # Bind f key to open links in current tab
 config.bind('f', 'hint links current', mode='normal')
 # Bind F key to open links in new tab
