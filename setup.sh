@@ -17,10 +17,10 @@ backup-origin() {
   fi
 }
 
-install-file() {
-  local target=$(readlink -e "$1")
+install-rice() {
   local link=$HOME/$1
   local linkdir=$(dirname "$link")
+  local target=$(readlink -e "$1")
 
   mkdir -p "$linkdir"
 
@@ -39,46 +39,57 @@ install-file() {
 }
 
 
-rices_to_install=(
-  .xinitrc
-  .Xmodmap
-  .tmux.conf
-  .gitconfig
-  .bash_profile
-  .bashrc
-  .bashrc.d/shopt.sh
-  .bashrc.d/history.sh
-  .bashrc.d/alias.sh
-  .bashrc.d/prompt.sh
-  .bashrc.d/typos.sh
-  .bashrc.d/stty.sh
-  .bashrc.d/cd.sh
-  .scripts/camdict
-  .scripts/dmenu_pass
-  .scripts/dmenu_pass_run
-  .scripts/dmenu_blog
-  .scripts/dmenu_blog_run
-  .scripts/numconvert
-  .scripts/trash
-  .gnupg/gpg-agent.conf
-  .config/ibus/rime/default.custom.yaml
-  .config/ibus/rime/double_pinyin.custom.yaml
-  .config/dunst/dunstrc
-  .config/qutebrowser/config.py
-  .vimrc
-  .vim/plugin/tabline.vim
-  .vim/ftplugin/python.vim
-  .vim/ftplugin/rst.vim
-  .vim/ftplugin/sh.vim
-  .vim/bundle/vim-system-copy
-)
+case $USER in
+  root )
+    HOME=/etc
+    rices=(
+      portage/package.use/temporary-confilcts
+    )
+    ;;
 
-for rice in "${rices_to_install[@]}"; do
+  * )
+    rices=(
+      .xinitrc
+      .Xmodmap
+      .tmux.conf
+      .gitconfig
+      .bash_profile
+      .bashrc
+      .bashrc.d/shopt.sh
+      .bashrc.d/history.sh
+      .bashrc.d/alias.sh
+      .bashrc.d/prompt.sh
+      .bashrc.d/typos.sh
+      .bashrc.d/stty.sh
+      .bashrc.d/cd.sh
+      .scripts/camdict
+      .scripts/dmenu_pass
+      .scripts/dmenu_pass_run
+      .scripts/dmenu_blog
+      .scripts/dmenu_blog_run
+      .scripts/numconvert
+      .scripts/trash
+      .gnupg/gpg-agent.conf
+      .config/ibus/rime/default.custom.yaml
+      .config/ibus/rime/double_pinyin.custom.yaml
+      .config/dunst/dunstrc
+      .config/qutebrowser/config.py
+      .vimrc
+      .vim/plugin/tabline.vim
+      .vim/ftplugin/python.vim
+      .vim/ftplugin/rst.vim
+      .vim/ftplugin/sh.vim
+      .vim/bundle/vim-system-copy
+    )
+    ;;
+esac
+
+for rice in "${rices[@]}"; do
   if [[ ! -f $rice ]] && [[ ! -d $rice ]]; then
     echo "Install error: '$rice' is not a file or directory."
     return 1
   fi
 
   backup-origin "$rice"
-  install-file "$rice"
+  install-rice "$rice"
 done

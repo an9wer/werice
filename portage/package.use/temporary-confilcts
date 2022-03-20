@@ -1,0 +1,9 @@
+# This file is for handling temporary conflicts caused by Gentoo rolling
+# upgrading, which may be reovled by Gentoo package maintainers a future
+# version.
+
+# png flag is newly added into qrencode, but conflicted with pass in its
+# RDEPEND definition. See these links:
+# -  https://github.com/gentoo/gentoo/commit/7a34377e3277a6a0e2eedd40e90452a44c55f1e6
+# -  https://github.com/gentoo/gentoo/commit/ccfd53afd435e73c4d4a754a2e006b7860d93246
+>=media-gfx/qrencode-4.1.1 png
