@@ -1,0 +1,4 @@
+=x11-misc/slstatus-9999::an9wer **
+app-i18n/ibus-rime ~amd64
+net-firewall/fwknop ~amd64
+net-im/zoom ~amd64
