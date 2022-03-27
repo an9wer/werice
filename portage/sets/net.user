@@ -1,0 +1,43 @@
+# wireless
+net-wireless/wpa_supplicant
+
+# NTP
+net-misc/chrony
+
+# DHCP
+net-misc/dhcp
+net-misc/dhcpcd
+
+# FTP
+net-ftp/ftp
+
+# NFS
+net-fs/nfs-utils
+
+# sshfs
+net-fs/sshfs
+
+# DNS
+net-dns/dnscrypt-proxy
+
+# proxy
+net-proxy/v2ray-bin
+
+# firewall
+net-firewall/fwknop
+net-firewall/ipset
+
+# network analysis tools
+net-misc/whois
+net-libs/ldns
+net-dns/bind-tools
+net-analyzer/mtr
+net-analyzer/netcat
+net-analyzer/nmap
+net-analyzer/tcpdump
+net-analyzer/vnstat
+net-misc/ipcalc
+
+# network benchmark tools
+net-misc/iperf
+app-admin/apache-tools

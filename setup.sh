@@ -43,6 +43,14 @@ case $USER in
   root )
     HOME=/etc
     rices=(
+      portage/package.accept_keywords
+      portage/sets/portage.user
+      portage/sets/system.user
+      portage/sets/net.user
+      portage/sets/x11.user
+      portage/sets/fonts.user
+      portage/sets/apps.user
+      portage/package.mask/x11.user
       portage/package.use/temporary-confilcts
     )
     ;;

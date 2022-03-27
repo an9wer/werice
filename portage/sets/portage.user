@@ -1,0 +1,9 @@
+app-portage/eix
+app-portage/gentoolkit
+app-portage/pfl
+app-portage/repoman
+
+sys-kernel/genkernel
+app-admin/eclean-kernel
+
+app-eselect/eselect-repository
