@@ -45,9 +45,9 @@ config.bind('<Alt-9>', 'tab-focus 9', mode='normal')
 config.bind('<Alt-0>', 'tab-focus -1', mode='normal')
 
 # Bind Tab to switch to previous tab in stack
-config.bind('<Tab>', 'tab-focus stack-prev', mode='normal')
+config.bind('<Ctrl-Tab>', 'tab-focus --no-last last', mode='normal')
 # Bind Alt-Tab to switch to next tab in stack
-config.bind('<Alt-Tab>', 'tab-focus stack-next', mode='normal')
+config.bind('<Alt-Tab>', 'tab-focus stack-prev', mode='normal')
 
 # Bind Tab key to choose next item from all completions
 config.bind('<Tab>', 'completion-item-focus next', mode='command')
