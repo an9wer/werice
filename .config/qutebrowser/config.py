@@ -49,6 +49,11 @@ config.bind('<Ctrl-Tab>', 'tab-focus --no-last last', mode='normal')
 # Bind Alt-Tab to switch to next tab in stack
 config.bind('<Alt-Tab>', 'tab-focus stack-prev', mode='normal')
 
+# Bind O key to open url in the next tab of current one
+config.bind('O', 'set-cmd-text -s :open -r -t', mode='normal')
+# Bint Ctrl-T key to open url in the last tab
+config.bind('<Ctrl-T>', 'set-cmd-text -s :open -t', mode='normal')
+
 # Bind Tab key to choose next item from all completions
 config.bind('<Tab>', 'completion-item-focus next', mode='command')
 # Bind Tab key to choose previous item from all completions
