@@ -15,51 +15,45 @@ PS_PROMPT_MAGENTA='\[\e[95m\]'
 PS_PROMPT_CYAN='\[\e[96m\]'
 PS_PROMPT_WHITE='\[\e[97m\]'
 
-
-_ps1_venv_prompt() {
+# tell venv not to set bash prompt
+export VIRTUAL_ENV_DISABLE_PROMPT='true'
+# let me set bash prompt for venv instead
+__venv_ps1() {
   [[ -n ${VIRTUAL_ENV} ]] && echo "(${VIRTUAL_ENV}) "
 }
 
-_ps1_git_prompt() {
-  which git &> /dev/null || return
-  git rev-parse --is-inside-work-tree &> /dev/null || return
+if [[ -f /usr/share/git/git-prompt.sh ]]; then
+  source /usr/share/git/git-prompt.sh
+  # show staged and unstaged changes
+  GIT_PS1_SHOWDIRTYSTATE='true'
+  # show untracked files
+  GIT_PS1_SHOWUNTRACKEDFILES='true'
+  # show stash state
+  GIT_PS1_SHOWSTASHSTATE='true'
+  # show verbose information when checking out as a detached HEAD
+  GIT_PS1_DESCRIBE_STYLE='branch'
+else
+  __git_ps1() {
+    # check the existence of git command
+    command -v git &> /dev/null || return
+    # check current working directory is inside git work tree
+    git rev-parse --is-inside-work-tree &> /dev/null || return
+    # get current branch or detached HEAD commit
+    branch=$(git branch | sed -e 's/\* (HEAD detached at \(.*\))/* \1/' -n -e 's/\* \(.*\)/\1/p')
+    # get state of current git repo
+    git diff --no-ext-diff --quiet || state='*'
+    echo "[${branch} ${state}]"
+  }
+fi
 
-  git symbolic-ref --short HEAD &>/dev/null &&
-    local branch="${PS_PROMPT_GREEN}$(git symbolic-ref --short HEAD)" ||
-    local branch="HEAD detached at ${PS_PROMPT_MAGENTA}$(git rev-parse --short HEAD)" 
+PS1=""
+PS1+="${PS_PROMPT_BOLD}.--==${PS_PROMPT_END} "
+PS1+='$(__venv_ps1)'
+PS1+="${PS_PROMPT_BOLD}${PS_PROMPT_RED}\u@\h${PS_PROMPT_END} "
+PS1+="at ${PS_PROMPT_BOLD}${PS_PROMPT_BLUE}\t${PS_PROMPT_END} "
+PS1+="in ${PS_PROMPT_BOLD}${PS_PROMPT_YELLOW}\w${PS_PROMPT_END} "
+PS1+='$(__git_ps1)\n'
+PS1+="${PS_PROMPT_BOLD}·     ${PS_PROMPT_END} ${PS_PROMPT_BOLD}${PS_PROMPT_BLACK}$(tty) | exit $? | history No.\! | command No.\# | job No.\j${PS_PROMPT_END}\n"
+PS1+=" ${PS_PROMPT_BOLD}\\\`--===${PS_PROMPT_END} ${PS_PROMPT_GREEN}\$${PS_PROMPT_END} "
 
-  (( $(git status -s -uno | wc -l) == 0 )) &&
-    local status="${PS_PROMPT_GREEN}:)" ||
-    local status="${PS_PROMPT_RED}:("
-
-  echo "G ${PS_PROMPT_BOLD}${branch} ${status}${PS_PROMPT_END} "
-}
-
-_ps1() {
-  local ES=$?
-  local psline
-  psline=$(pstree -s $$)
-  psline=$(echo "$psline" | head -n1 | sed -e 's/-[-+]-pstree$//' -e 's/---/ -> /g')
-
-  PS1=""
-  PS1+="${PS_PROMPT_BOLD}.--==${PS_PROMPT_END} "
-  PS1+="$(_ps1_venv_prompt)"
-  PS1+="${PS_PROMPT_BOLD}${PS_PROMPT_RED}\u@\h${PS_PROMPT_END} "
-  PS1+="at ${PS_PROMPT_BOLD}${PS_PROMPT_BLUE}\t${PS_PROMPT_END} "
-  PS1+="in ${PS_PROMPT_BOLD}${PS_PROMPT_YELLOW}\w${PS_PROMPT_END} "
-  PS1+="JB ${PS_PROMPT_CYAN}\j${PS_PROMPT_END} "
-  if (( $ES == 0 )); then
-    PS1+="ES ${PS_PROMPT_GREEN}$ES${PS_PROMPT_END} "
-  else
-    PS1+="ES ${PS_PROMPT_RED}$ES${PS_PROMPT_END} "
-  fi
-  PS1+="$(_ps1_git_prompt) \n"
-  PS1+="${PS_PROMPT_BOLD}·     ${PS_PROMPT_END} ${PS_PROMPT_BOLD}${PS_PROMPT_BLACK}${psline}${PS_PROMPT_END}\n"
-  PS1+=" ${PS_PROMPT_BOLD}\\\`--===${PS_PROMPT_END} ${PS_PROMPT_GREEN}\$${PS_PROMPT_END} "
-}
-
-# ps1
-PROMPT_COMMAND="_ps1"$'\n'$PROMPT_COMMAND
-
-# ps2
 PS2="${PS_PROMPT_BOLD} \\\`--=== ${PS_PROMPT_GREEN}> ${PS_PROMPT_END}"
