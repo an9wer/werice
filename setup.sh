@@ -83,10 +83,12 @@ case $USER in
       .config/dunst/dunstrc
       .config/qutebrowser/config.py
       .vimrc
+      .vim/after/ftplugin/c.vim
+      .vim/after/ftplugin/python.vim
+      .vim/after/ftplugin/rst.vim
+      .vim/after/ftplugin/sh.vim
+      .vim/after/ftplugin/vim.vim
       .vim/plugin/tabline.vim
-      .vim/ftplugin/python.vim
-      .vim/ftplugin/rst.vim
-      .vim/ftplugin/sh.vim
       .vim/bundle/vim-system-copy
     )
     ;;
