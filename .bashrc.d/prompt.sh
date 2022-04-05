@@ -1,3 +1,5 @@
+declare -xi BASH_INTERACTIVE_STACKS+=1
+
 # Wrapping the format code in '\[' and '\]' can avoid prompt issues when
 # scrolling command history.
 # thx: https://superuser.com/a/980982
@@ -53,7 +55,7 @@ PS1+="${PS_PROMPT_BOLD}${PS_PROMPT_RED}\u@\h${PS_PROMPT_END} "
 PS1+="at ${PS_PROMPT_BOLD}${PS_PROMPT_BLUE}\t${PS_PROMPT_END} "
 PS1+="in ${PS_PROMPT_BOLD}${PS_PROMPT_YELLOW}\w${PS_PROMPT_END} "
 PS1+='$(__git_ps1)\n'
-PS1+="${PS_PROMPT_BOLD}·     ${PS_PROMPT_END} ${PS_PROMPT_BOLD}${PS_PROMPT_BLACK}$(tty) | exit $? | history No.\! | command No.\# | job No.\j${PS_PROMPT_END}\n"
+PS1+="${PS_PROMPT_BOLD}·     ${PS_PROMPT_END} ${PS_PROMPT_BOLD}${PS_PROMPT_BLACK}$(tty) | bash ${BASH_INTERACTIVE_STACKS} | exit $? | history No.\! | command No.\# | job No.\j${PS_PROMPT_END}\n"
 PS1+=" ${PS_PROMPT_BOLD}\\\`--===${PS_PROMPT_END} ${PS_PROMPT_GREEN}\$${PS_PROMPT_END} "
 
 PS2="${PS_PROMPT_BOLD} \\\`--=== ${PS_PROMPT_GREEN}> ${PS_PROMPT_END}"
