@@ -2,6 +2,8 @@
 
 /* See LICENSE file for copyright and license details. */
 
+#include <X11/XF86keysym.h>
+
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
@@ -65,11 +67,11 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_magenta, "-sf", col_gray4, NULL };
 static const char *dmenupasscmd[] = { "dmenu_pass_run", "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_magenta, "-sf", col_gray4, NULL };
 static const char *dmenublogcmd[] = { "dmenu_blog_run", "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_magenta, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "tabbed", "-c", "-r", "2", "st", "-w", "''", "-e", "tmux", NULL };
-static const char *dictcmd[]  = { "camdict", "-P", NULL };
-static const char *aupcmd[]   = { "amixer", "set", "Master", "2%+", NULL };
-static const char *adowncmd[] = { "amixer", "set", "Master", "2%-", NULL };
-static const char *screenshotcmd[]  = { "flameshot", "gui", NULL };
+static const char *termcmd[] = { "tabbed", "-c", "-r", "2", "st", "-w", "''", "-e", "tmux", NULL };
+static const char *dictcmd[] = { "camdict", "-P", NULL };
+static const char *audioraisecmd[] = { "amixer", "set", "Master", "2%+", NULL };
+static const char *audiolowercmd[] = { "amixer", "set", "Master", "2%-", NULL };
+static const char *screenshotcmd[] = { "flameshot", "gui", NULL };
 
 /* X11 key map: https://www.cl.cam.ac.uk/~mgk25/ucs/keysymdef.h */
 static Key keys[] = {
@@ -77,8 +79,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = dmenupasscmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_equal,  spawn,          {.v = aupcmd } },
-	{ MODKEY,                       XK_minus,  spawn,          {.v = adowncmd } },
+	{ MODKEY,                       XK_equal,  spawn,          {.v = audioraisecmd } },
+	{ MODKEY,                       XK_minus,  spawn,          {.v = audiolowercmd } },
 	{ MODKEY|ShiftMask,             XK_d,      spawn,          {.v = dictcmd } },
 	{ MODKEY|ShiftMask,             XK_s,      spawn,          {.v = screenshotcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
@@ -114,6 +116,8 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	{ 0,                            XF86XK_AudioRaiseVolume, spawn, {.v = audioraisecmd } },
+	{ 0,                            XF86XK_AudioLowerVolume, spawn, {.v = audiolowercmd } },
 };
 
 /* button definitions */
