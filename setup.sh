@@ -52,6 +52,11 @@ case $USER in
       portage/sets/apps.user
       portage/package.mask/x11.user
       portage/package.use/temporary-confilcts
+      portage/savedconfig/x11-wm/dwm-6.2-r12
+      portage/savedconfig/x11-terms/st-0.8.4-r7
+      portage/savedconfig/x11-misc/dmenu-5.0-r4
+      portage/savedconfig/x11-misc/slstatus-9999
+      portage/savedconfig/x11-misc/tabbed-0.6-r36
     )
     ;;
 
