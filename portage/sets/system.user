@@ -1,5 +1,5 @@
 # kernel
-sys-kernel/gentoo-sources
+#sys-kernel/gentoo-sources
 
 # boot
 sys-boot/grub:2
