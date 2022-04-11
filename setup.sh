@@ -51,6 +51,7 @@ case $USER in
       portage/sets/fonts.user
       portage/sets/apps.user
       portage/package.mask/x11.user
+      portage/package.mask/apps.user
       portage/package.use/temporary-confilcts
       portage/savedconfig/x11-wm/dwm-6.2-r12
       portage/savedconfig/x11-terms/st-0.8.4-r7
