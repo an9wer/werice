@@ -48,14 +48,22 @@ else
   }
 fi
 
-PS1=""
-PS1+="${PS_PROMPT_BOLD}.--==${PS_PROMPT_END} "
-PS1+='$(__venv_ps1)'
-PS1+="${PS_PROMPT_BOLD}${PS_PROMPT_RED}\u@\h${PS_PROMPT_END} "
-PS1+="at ${PS_PROMPT_BOLD}${PS_PROMPT_BLUE}\t${PS_PROMPT_END} "
-PS1+="in ${PS_PROMPT_BOLD}${PS_PROMPT_YELLOW}\w${PS_PROMPT_END} "
-PS1+='$(__git_ps1)\n'
-PS1+="${PS_PROMPT_BOLD}·     ${PS_PROMPT_END} ${PS_PROMPT_BOLD}${PS_PROMPT_BLACK}$(tty) | bash ${BASH_INTERACTIVE_STACKS} | exit $? | history No.\! | command No.\# | job No.\j${PS_PROMPT_END}\n"
-PS1+=" ${PS_PROMPT_BOLD}\\\`--===${PS_PROMPT_END} ${PS_PROMPT_GREEN}\$${PS_PROMPT_END} "
+__ps1() {
+  local ES=$?
 
+  PS1=""
+  PS1+="${PS_PROMPT_BOLD}.--==${PS_PROMPT_END} "
+  PS1+="$(__venv_ps1)"
+  PS1+="${PS_PROMPT_BOLD}${PS_PROMPT_RED}\u@\h${PS_PROMPT_END} "
+  PS1+="at ${PS_PROMPT_BOLD}${PS_PROMPT_BLUE}\t${PS_PROMPT_END} "
+  PS1+="in ${PS_PROMPT_BOLD}${PS_PROMPT_YELLOW}\w${PS_PROMPT_END} "
+  PS1+="${PS_PROMPT_GREEN}$(__git_ps1)${PS_PROMPT_END}\n"
+  PS1+="${PS_PROMPT_BOLD}·     ${PS_PROMPT_END} ${PS_PROMPT_BOLD}${PS_PROMPT_BLACK}$(tty) | bash ${BASH_INTERACTIVE_STACKS} | exit ${ES} | history No.\! | command No.\# | job No.\j${PS_PROMPT_END}\n"
+  PS1+=" ${PS_PROMPT_BOLD}\\\`--===${PS_PROMPT_END} ${PS_PROMPT_GREEN}\$${PS_PROMPT_END} "
+}
+
+# PS1
+PROMPT_COMMAND="__ps1"$'\n'$PROMPT_COMMAND
+
+# PS2
 PS2="${PS_PROMPT_BOLD} \\\`--=== ${PS_PROMPT_GREEN}> ${PS_PROMPT_END}"
