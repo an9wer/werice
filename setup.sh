@@ -77,10 +77,6 @@ case $USER in
       .bashrc.d/stty.sh
       .bashrc.d/cd.sh
       .scripts/camdict
-      .scripts/dmenu_pass
-      .scripts/dmenu_pass_run
-      .scripts/dmenu_blog
-      .scripts/dmenu_blog_run
       .scripts/numconvert
       .scripts/trash
       .gnupg/gpg-agent.conf

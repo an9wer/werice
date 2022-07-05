@@ -1,9 +1,0 @@
-#!/bin/bash
-
-pass_name=$(dmenu_pass | dmenu "$@")
-
-[[ -n $pass_name ]] && {
-  pass show "$pass_name" |
-  perl -pe 'chomp if eof' |               # Remove last new line
-  xdotool type --clearmodifiers --file -  # Send keystrokes to current window
-}

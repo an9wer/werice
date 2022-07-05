@@ -1,8 +1,0 @@
-#!/bin/bash
-
-pass_name=$(dmenu_blog | dmenu "$@")
-
-[[ -n $pass_name ]] && {
-  blog_dir="$(dirname "$(readlink ~/.blog)")"
-  st less "$blog_dir/reStructuredText/$pass_name.rst"
-}
