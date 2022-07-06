@@ -1,39 +1,46 @@
 #!/bin/bash -e
 
+# backup original files if needed
 backup-origin() {
   local origin=$HOME/$1
 
-  # $origin does not exist or is a symbolic link
+  # the original file does not exist or is a symbolic link
   if [[ ! -a $origin || -h $origin ]]; then
     return
   fi
 
-  # $origin.orig does not exist
-  if [[ ! -f $origin.orig ]]; then
+  # the backup file does not exist
+  if [[ ! -a $origin.orig ]]; then
     mv "$origin" "$origin".orig
   else
-    echo "Backup error: '$origin.orig' already exists."
+    echo "Error: '$origin.orig' already exists."
     return 1
   fi
 }
 
+# link rice file to target path
 install-rice() {
-  local link=$HOME/$1
-  local linkdir=$(dirname "$link")
-  local target=$(readlink -e "$1")
+  local target=$HOME/$1
+  local rice=$(readlink -e "$1")
 
-  mkdir -p "$linkdir"
+  # make sure the parent directory of target file existed
+  mkdir -p "$(dirname "$target")"
 
-  # $link does not exist
-  if [[ ! -a $link ]]; then
-    ln -sfv "$target" "$link"
-  # $link exists and is a symnolic link
-  elif [[ -h $link ]]; then
-    if [[ $(readlink -e "$link") != $target ]]; then
-      ln -sfv "$target" "$link"
+  # the target file does not exist
+  if [[ ! -a $target ]]; then
+    ln -sfv "$rice" "$target"
+  # the target path exists and is a symnolic link
+  elif [[ -h $target ]]; then
+    # the target file links to another file that is not as expected
+    if [[ $(readlink -e "$target") != $rice ]]; then
+      echo "Error: '$target' is already a symbolic link," \
+           "which targets to '$(readlink -e "$target")'."
+      return 1
     fi
+  # the target path exists but is not a regular file or a symbolic link,
+  # instead, it might be a directory, a block special file, etc.
   else
-    echo "Install error: '$link' already exists and isn't a symbolic link."
+    echo "Error: '$link' already exists and is not a symbolic link."
     return 1
   fi
 }
@@ -98,7 +105,7 @@ esac
 
 for rice in "${rices[@]}"; do
   if [[ ! -f $rice ]] && [[ ! -d $rice ]]; then
-    echo "Install error: '$rice' is not a file or directory."
+    echo "Error: '$rice' is not a file or a directory."
     return 1
   fi
 
