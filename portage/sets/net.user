@@ -22,6 +22,7 @@ net-dns/dnscrypt-proxy
 
 # proxy
 net-proxy/v2ray-bin
+net-vpn/wireguard-tools
 
 # firewall
 net-firewall/fwknop
@@ -32,8 +33,7 @@ net-misc/whois
 net-libs/ldns
 net-dns/bind-tools
 net-analyzer/mtr
-net-analyzer/netcat
-net-analyzer/nmap
+net-analyzer/openbsd-netcat
 net-analyzer/tcpdump
 net-analyzer/vnstat
 net-misc/ipcalc

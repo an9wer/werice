@@ -47,6 +47,7 @@ media-gfx/imagemagick
 # pdf reader
 app-text/zathura
 app-text/zathura-meta
+app-text/calibre
 
 # downloader
 net-misc/youtube-dl
@@ -82,9 +83,6 @@ media-gfx/qrencode
 # im
 net-im/telegram-desktop
 
-# notebook
-app-misc/joplin-bin
-
 # office
 app-office/libreoffice
 
@@ -99,3 +97,4 @@ dev-util/ctags
 dev-util/strace
 sys-process/parallel
 app-shells/bash-completion
+sys-apps/flatpak

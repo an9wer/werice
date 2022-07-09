@@ -1,5 +1,5 @@
 # kernel
-#sys-kernel/gentoo-sources
+sys-kernel/gentoo-sources
 
 # boot
 sys-boot/grub:2
@@ -8,7 +8,6 @@ sys-boot/grub:2
 sys-fs/lvm2
 sys-fs/fuse-exfat
 sys-fs/dosfstools
-sys-fs/android-file-transfer-linux
 
 # basic tools
 app-admin/sudo

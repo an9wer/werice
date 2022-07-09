@@ -3,6 +3,8 @@ app-portage/gentoolkit
 app-portage/pfl
 app-portage/repoman
 
+sys-devel/distcc
+
 sys-kernel/genkernel
 app-admin/eclean-kernel
 
