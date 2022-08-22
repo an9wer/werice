@@ -8,7 +8,7 @@ Introduction
 
 List of my current/favorite used hardwares/softwares:
 
-- Laptop: HP EliteBook 8470p
+- Laptop: ThinkPad T14 Gen2
 - Operating System: Gentoo AMD64
 - Window Manager: dwm
 - Application Launcher: dmenu

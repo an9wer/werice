@@ -1,0 +1,18 @@
+! unbind Caps_Lock key in modifier 'Lock'
+remove Lock = Caps_Lock
+! set Caps_Lock key to Return key
+keysym Caps_Lock = Return NoSymbol Return
+
+! unbind Control_R key in modifier 'Control'
+remove Control = Control_R
+! turn Control_R key to Backspace key
+keysym Control_R = backslash bar backslash bar
+
+keysym a = a A a A Left Left
+keysym d = d D d D Right Right
+keysym w = w W w W Up Up
+keysym s = s S s S Down Down
+keysym q = q Q q Q Home Home
+keysym e = e E e E End End
+keysym f = f F f F Delete Delete
+keysym h = h H h H BackSpace BackSpace
