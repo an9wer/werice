@@ -1,5 +1,8 @@
 alias sourceb="source ~/.bashrc"
 
+# info
+alias info="info --vi-keys"
+
 # vim
 alias vimtest="vim --noplugin -N -u"
 alias viblog="vim $(readlink -e ~/.blog)"
