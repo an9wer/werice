@@ -31,6 +31,9 @@ set directory=~/.vim/swap
 " Keycode delay time (which is required for mapping alt key below)
 set ttimeoutlen=50
 
+" Diff mode option settings
+set diffopt+=vertical
+
 " Enable loading filetype plugin
 filetype plugin on
 
