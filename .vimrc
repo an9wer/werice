@@ -8,7 +8,7 @@ let g:system_copy#paste_command='xclip -sel clipboard -o'
 
 " netrw
 " -----------------------------------------------------------------------------
-let g:netrw_keepdir = 0
+"let g:netrw_keepdir = 0
 
 
 " options
@@ -25,17 +25,17 @@ set colorcolumn=80
 " Minimal number of screen lines to keep above and below the cursor
 set scrolloff=5
 
-" List of directory names for the swap file
+" List of directories for the swap file
 set directory=~/.vim/swap
 
-" Enable filetype detection
-filetype on
+" Keycode delay time (which is required for mapping alt key below)
+set ttimeoutlen=50
 
 " Enable loading filetype plugin
 filetype plugin on
 
 
-" Abbreviation (see :h abbreviation)
+" Abbreviation (see `:h abbreviation`)
 " -----------------------------------------------------------------------------
 iabbrev <expr> dt  strftime("%Y/%m/%d")
 iabbrev <expr> dtw strftime("%Y/%m/%d %a")
@@ -45,6 +45,23 @@ iabbrev <expr> dtw strftime("%Y/%m/%d %a")
 " -----------------------------------------------------------------------------
 iabbrev teh the
 iabbrev hte the
+
+
+" Set new keycode for some key or override keycode from termcap/terminfo
+" (see `:h set-termcap` and `:h map-alt-keys`)
+" -----------------------------------------------------------------------------
+set <M-b>=b
+set <M-f>=f
+
+
+" Key maps in command line mode
+" -----------------------------------------------------------------------------
+cnoremap <C-b> <Left>
+cnoremap <C-f> <Right>
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+cnoremap <M-b> <S-Left>
+cnoremap <M-f> <S-Right>
 
 
 " Color
