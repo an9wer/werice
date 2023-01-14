@@ -1,8 +1,0 @@
-sys-apps/flatpak X
-net-misc/remmina rdp
-media-video/ffmpeg x264
-x11-misc/redshift geoclue
-media-gfx/imagemagick X jpeg png xml
-
-dev-qt/qtgui ibus dbus
-app-i18n/rime-data extra
