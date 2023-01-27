@@ -1,6 +1,7 @@
-set expandtab
-set tabstop=8
-set softtabstop=4
-set shiftwidth=4
+setlocal expandtab
+setlocal tabstop=8
+setlocal softtabstop=4
+setlocal shiftwidth=4
 
-set keywordprg=man\ -s=2,3    " program to use for the K command
+" Program bound to the 'K' key in normal mode
+setlocal keywordprg=man\ -s=2,3

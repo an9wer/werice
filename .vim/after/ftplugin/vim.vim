@@ -1,6 +1,7 @@
-set expandtab
-set tabstop=8
-set softtabstop=2
-set shiftwidth=2
+setlocal expandtab
+setlocal tabstop=8
+setlocal softtabstop=2
+setlocal shiftwidth=2
 
-set keywordprg=:tab\ help   " program to use for the K command
+" Program bound to the 'K' key in normal mode
+setlocal keywordprg=:tab\ help
