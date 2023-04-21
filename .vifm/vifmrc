@@ -2,3 +2,10 @@ set vimhelp
 
 set trash
 set trashdir=~/.Trash
+
+
+" PDF
+filextype {*.pdf},<application/pdf>
+	\ zathura %c %i
+fileviewer {*.pdf},<application/pdf>
+	\ pdftotext -nopgbrk %c -
