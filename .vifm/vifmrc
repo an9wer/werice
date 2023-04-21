@@ -1,2 +1,4 @@
+set vimhelp
+
 set trash
 set trashdir=~/.Trash
