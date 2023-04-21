@@ -17,7 +17,7 @@ List of my current/favorite used hardwares/softwares:
 - Shell: bash
 - Editor: vim
 - File Manager: vifm
-- Web Browser: firefox/qutebrowser
+- Web Browser: firefox
 - PDF Reader: zathura
 - Media Player: mpv
 - Input Method: ibus
