@@ -9,3 +9,16 @@ filextype {*.pdf},<application/pdf>
 	\ zathura %c %i
 fileviewer {*.pdf},<application/pdf>
 	\ pdftotext -nopgbrk %c -
+
+" Video
+filextype {*.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
+	\*.fl[icv],*.m2v,*.mov,*.webm,*.ts,*.mts,*.m4v,*.r[am],*.qt,*.divx,
+	\*.as[fx]},
+	\<video/*>
+	\ {View using mpv}
+	\ mpv %c %i &,
+fileviewer {*.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
+	\*.fl[icv],*.m2v,*.mov,*.webm,*.ts,*.mts,*.m4v,*.r[am],*.qt,*.divx,
+	\*.as[fx]},
+	\<video/*>
+	\ ffprobe -pretty -hide_banner %c 2>&1,
