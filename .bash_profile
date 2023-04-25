@@ -8,6 +8,6 @@ if shopt -q login_shell; then
 
   # else source bashrc file
   if [[ -f ~/.bashrc ]]; then
-    . ~/.bashrc
+    source ~/.bashrc
   fi
 fi
