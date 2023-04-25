@@ -1,0 +1,6 @@
+#!/bin/bash
+
+if [[ $1 == period-changed ]]; then
+  #source ~/.dbus/session-bus/*-0 && export DBUS_SESSION_BUS_ADDRESS=$DBUS_SESSION_BUS_ADDRESS
+  notify-send -u normal -a Redshift " " "Period changed from $2 to $3"
+fi
