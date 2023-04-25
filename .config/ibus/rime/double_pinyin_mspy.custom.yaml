@@ -1,5 +1,6 @@
 patch:
     switches/@0/reset: 1    # English mode
     switches/@2/reset: 1    # Simplified Chinese
+    #translator/dictionary: an9wer
     'speller/algebra/@after 0': derive/([aei])n$/$1ng/   # en => eng, in => ing, an => ang
     'speller/algebra/@after 1': derive/([aei])ng$/$1n/   # eng => en, ing => in, ang => an

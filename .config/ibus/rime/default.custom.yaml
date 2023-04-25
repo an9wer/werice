@@ -1,7 +1,8 @@
 patch:
   schema_list:
-    - schema: double_pinyin
+    - schema: double_pinyin_mspy
   switcher/hotkeys: F4
+  menu/page_size: 9
 
   key_binder:
     bindings:
