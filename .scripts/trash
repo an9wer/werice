@@ -1,6 +1,6 @@
 #!/bin/sh
 
-trashdir=~/Trash
+trashdir=~/.Trash
 interval=30*24*60*60   # expire in 30 days
 
 if [[ ! -d $trashdir ]]; then
