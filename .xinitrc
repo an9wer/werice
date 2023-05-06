@@ -15,9 +15,9 @@ if has_command slstatus; then
   slstatus &
 fi
 
-#if has_command dunst; then
-#  dunst -verbosity crit --startup_notification &
-#fi
+if has_command dunst; then
+  dunst -verbosity crit --startup_notification &
+fi
 
 if has_command redshift; then
   /usr/libexec/geoclue-2.0/demos/agent &
