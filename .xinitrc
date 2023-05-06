@@ -1,6 +1,6 @@
 #!/bin/bash
 
-exec dbus-run-session -- bash -c '
+dbus-launch --exit-with-session -- bash -c '
 has_command() {
   command -v "$1" &> /dev/null
   return $?
