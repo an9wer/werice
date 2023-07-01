@@ -3,6 +3,8 @@ set vimhelp
 set trash
 set trashdir=~/.Trash
 
+set sortnumbers
+
 
 " PDF
 filextype {*.pdf},<application/pdf>
@@ -22,3 +24,14 @@ fileviewer {*.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
 	\*.as[fx]},
 	\<video/*>
 	\ ffprobe -pretty -hide_banner %c 2>&1,
+
+" Image
+filextype {*.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm},<image/*>
+	\ {View in sxiv}
+	\ sxiv %f,
+fileviewer {*.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm},<image/*>
+	\ identify %f,
+
+" Others
+filextype *
+	\ less %c,
