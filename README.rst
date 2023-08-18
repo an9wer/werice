@@ -15,7 +15,7 @@ List of my current/favorite used hardwares/softwares:
 - Status Bar: slstatus
 - Terminal: st
 - Shell: bash
-- Editor: vim
+- Editor: vim/emacs
 - File Manager: vifm
 - Web Browser: firefox
 - PDF Reader: zathura
