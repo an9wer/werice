@@ -1,32 +1,5 @@
-# command to generate this config
-# -----------------------------------------------------------------------------
-# [user]
-#   git config --global user.name an9wer
-#   git config --global user.email an9wer@gmail.com
-# [core]
-#   git config --global core.editor "vim"
-# [pull]
-#   git config --global pull.rebase true
-# [format]
-#   git config --global format.pretty "format:%C(yellow)%h %Cblue%>(12)%ad %Cgreen%<(7)%aN%Cred%d %Creset%s"
-# [alias]
-#   git config --global alias.lg "log --graph --pretty=format:'%C(yellow)%d%Creset %C(cyan)%h%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=short --all"
-#   git config --global alias.sb "show-branch --more=12"
-
 [user]
-	name = an9wer
+	name = Runney Wu
 	email = an9wer@gmail.com
 [core]
 	editor = vim
-[pull]
-	rebase = true
-[format]
-	pretty = format:%C(yellow)%h %Cblue%>(12)%ad %Cgreen%<(7)%aN%Cred%d %Creset%s
-[alias]
-	lg = log --graph --pretty=format:'%C(yellow)%d%Creset %C(cyan)%h%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=short --all
-	sb = show-branch --more=12
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
