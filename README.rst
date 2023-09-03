@@ -17,6 +17,7 @@ List of my current/favorite used hardwares/softwares:
 - Shell: bash
 - Editor: vim/emacs
 - File Manager: vifm
+- Note Taking: joplin
 - Web Browser: firefox
 - PDF Reader: zathura
 - Media Player: mpv
