@@ -1,12 +1,13 @@
 declare -xi BASH_INTERACTIVE_STACKS+=1
 
-# Wrapping the format code in '\[' and '\]' can avoid prompt issues when
-# scrolling command history.
-# thx: https://superuser.com/a/980982
-# thx: http://tldp.org/HOWTO/Bash-Prompt-HOWTO/nonprintingchars.html
+# Wrapping the format code within '\[' and '\]' to avoid prompt issues
+# when scrolling command history. Find more:
+#  - https://superuser.com/a/980982
+#  - http://tldp.org/HOWTO/Bash-Prompt-HOWTO/nonprintingchars.html
 PS_PROMPT_END='\[\e[0m\]'
 PS_PROMPT_BOLD='\[\e[1m\]'
 PS_PROMPT_ITALIC='\[\e[3m\]'
+PS_PROMPT_REVERSE='\[\e[7m\]'
 PS_PROMPT_BLACK='\[\e[90m\]'
 PS_PROMPT_RED='\[\e[91m\]'
 PS_PROMPT_GREEN='\[\e[92m\]'
@@ -52,13 +53,35 @@ __ps1() {
   local ES=$?
 
   PS1=""
+
+  # line 1
   PS1+="${PS_PROMPT_BOLD}.--==${PS_PROMPT_END} "
   PS1+="$(__venv_ps1)"
   PS1+="${PS_PROMPT_BOLD}${PS_PROMPT_RED}\u@\h${PS_PROMPT_END} "
   PS1+="at ${PS_PROMPT_BOLD}${PS_PROMPT_BLUE}\t${PS_PROMPT_END} "
   PS1+="in ${PS_PROMPT_BOLD}${PS_PROMPT_YELLOW}\w${PS_PROMPT_END} "
-  PS1+="${PS_PROMPT_GREEN}$(__git_ps1)${PS_PROMPT_END}\n"
-  PS1+="${PS_PROMPT_BOLD}·     ${PS_PROMPT_END} ${PS_PROMPT_BOLD}${PS_PROMPT_BLACK}$(tty) | bash ${BASH_INTERACTIVE_STACKS} | exit ${ES} | history No.\! | command No.\# | job No.\j${PS_PROMPT_END}\n"
+  PS1+="${PS_PROMPT_GREEN}$(__git_ps1)${PS_PROMPT_END}"
+  PS1+="\n"
+
+  # line 2
+  PS1+="${PS_PROMPT_BOLD}·     ${PS_PROMPT_END} "
+  PS1+="${PS_PROMPT_BOLD}${PS_PROMPT_BLACK}$(tty)${PS_PROMPT_END}"
+  PS1+="${PS_PROMPT_BOLD}${PS_PROMPT_BLACK} | exit ${ES}${PS_PROMPT_END}"
+  if (( ${BASH_INTERACTIVE_STACKS} > 1 )); then
+    PS1+="${PS_PROMPT_BOLD}${PS_PROMPT_BLACK} | ${PS_PROMPT_REVERSE}bash ${BASH_INTERACTIVE_STACKS}${PS_PROMPT_END}"
+  else
+    PS1+="${PS_PROMPT_BOLD}${PS_PROMPT_BLACK} | bash ${BASH_INTERACTIVE_STACKS}${PS_PROMPT_END}"
+  fi
+  if (( $(jobs -p | wc -l) > 0 )); then
+    PS1+="${PS_PROMPT_BOLD}${PS_PROMPT_BLACK} | ${PS_PROMPT_REVERSE}job No.\j${PS_PROMPT_END}"
+  else
+    PS1+="${PS_PROMPT_BOLD}${PS_PROMPT_BLACK} | job \j${PS_PROMPT_END}"
+  fi
+  PS1+="${PS_PROMPT_BOLD}${PS_PROMPT_BLACK} | history No.\!${PS_PROMPT_END}"
+  PS1+="${PS_PROMPT_BOLD}${PS_PROMPT_BLACK} | command No.\#${PS_PROMPT_END}"
+  PS1+="\n"
+
+  # line 3
   PS1+=" ${PS_PROMPT_BOLD}\\\`--===${PS_PROMPT_END} ${PS_PROMPT_GREEN}\$${PS_PROMPT_END} "
 }
 
