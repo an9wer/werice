@@ -1,3 +1,5 @@
+shopt -s checkjobs
+
 declare -xi BASH_INTERACTIVE_STACKS+=1
 
 # Wrapping the format code within '\[' and '\]' to avoid prompt issues
