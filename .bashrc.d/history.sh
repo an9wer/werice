@@ -6,3 +6,4 @@ export HISTCONTROL=ignoredups
 export HISTIGNORE="ls:fg:pwd:vim:history:git status:xcplc"
 
 shopt -s histappend
+shopt -s cmdhist
