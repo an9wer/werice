@@ -2,6 +2,7 @@ set vimhelp
 
 set trash
 set trashdir=~/.Trash
+set deleteprg=~/.scripts/trash    " triggered by the 'DD' command
 
 set sortnumbers
 
