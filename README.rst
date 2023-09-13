@@ -6,16 +6,18 @@ My dotfiles.
 Introduction
 ------------
 
-List of my current/favorite used hardwares/softwares:
+The laptop that I am using currently is **Thinkpad T14 Gen2 AMD Ryzen 7 PRO
+5850U**.
 
-- Laptop: ThinkPad T14 Gen2
+Here is a list of the OS and softwares shipped on my laptop:
+
 - Operating System: Gentoo AMD64
 - Window Manager: dwm
 - Application Launcher: dmenu
 - Status Bar: slstatus
 - Terminal: st
 - Shell: bash
-- Editor: vim/emacs
+- Editor: vim
 - File Manager: vifm
 - Note Taking: joplin
 - Web Browser: firefox
@@ -27,11 +29,8 @@ List of my current/favorite used hardwares/softwares:
 Usage
 -----
 
-First, clone submodule: ::
-
-    $ git submodule update
-
-Next, install config files: ::
+Simply run the setup command to install all configuration files to the home
+directory. ::
 
     $ ./setup.sh
 
