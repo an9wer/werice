@@ -5,7 +5,7 @@ remove Shift = Shift_L
 remove Mod1 = Alt_L Meta_L
 remove Mod5 = ISO_Level3_Shift
 
-keysym Caps_Lock = BackSpace BackSpace BackSpace  BackSpace
+keysym Caps_Lock = BackSpace BackSpace BackSpace BackSpace
 keysym Control_L = ISO_Level3_Shift NoSymbol ISO_Level3_Shift
 keysym Control_R = Print Sys_Req Print Sys_Req
 keysym Shift_L = Delete NoSymbol Delete
