@@ -32,6 +32,13 @@ filextype {*.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm},<image/*>
 fileviewer {*.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm},<image/*>
 	\ identify %f,
 
+" Office
+filextype {*.odt,*.doc,*.docx,*.xls,*.xlsx,*.odp,*.pptx,*.ppt},
+	\<application/vnd.openxmlformats-officedocument.*,
+	\application/msword,
+	\application/vnd.ms-excel>
+	\ libreoffice %f &,
+
 " Others
 filextype *
 	\ less %c,
