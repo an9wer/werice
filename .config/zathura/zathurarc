@@ -1,3 +1,5 @@
+set scroll-hstep 2
+
 set recolor-darkcolor  "#c8c8c8"
 set recolor-lightcolor "#1d2022"
 
