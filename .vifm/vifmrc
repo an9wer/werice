@@ -47,3 +47,5 @@ filextype {*.odt,*.doc,*.docx,*.xls,*.xlsx,*.odp,*.pptx,*.ppt},
 " Others
 filextype *
 	\ less %c,
+fileviewer *
+	\ echo "Unable to view '%c'",
