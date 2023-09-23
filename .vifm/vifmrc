@@ -9,13 +9,13 @@ set sortnumbers
 
 " PDF
 filextype {*.pdf},<application/pdf>
-	\ zathura %c %i
+	\ zathura %c %i,
 fileviewer {*.pdf},<application/pdf>
-	\ pdftotext -nopgbrk %c -
+	\ pdftotext -nopgbrk %c -,
 
 " EPUB
 filextype {*.epub},<application/epub+zip>
-	\ zathura %c %i
+	\ zathura %c %i,
 
 " Video
 filextype {*.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
@@ -33,16 +33,16 @@ fileviewer {*.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
 " Image
 filextype {*.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm},<image/*>
 	\ {View in sxiv}
-	\ sxiv %f,
+	\ sxiv %c,
 fileviewer {*.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm},<image/*>
-	\ identify %f,
+	\ identify %c,
 
 " Office
 filextype {*.odt,*.doc,*.docx,*.xls,*.xlsx,*.odp,*.pptx,*.ppt},
 	\<application/vnd.openxmlformats-officedocument.*,
 	\application/msword,
 	\application/vnd.ms-excel>
-	\ libreoffice %f &,
+	\ libreoffice %c &,
 
 " Others
 filextype *
