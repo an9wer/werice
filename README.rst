@@ -6,18 +6,16 @@ My dotfiles.
 Introduction
 ------------
 
-The laptop that I am using currently is **Thinkpad T14 Gen2 AMD Ryzen 7 PRO
-5850U**.
+My current  daily driver is **Gentoo** on the laptop **Thinkpad T14 Gen2 AMD
+Ryzen 7 PRO 5850U**, and here is a list of tools shipped on it:
 
-Here is a list of the OS and softwares shipped on my laptop:
-
-- Operating System: Gentoo AMD64
 - Window Manager: dwm
+- Compositor: picom
 - Application Launcher: dmenu
 - Status Bar: slstatus
 - Terminal: st
 - Shell: bash
-- Editor: vim
+- Editor: vim/nano
 - File Manager: vifm
 - Note Taking: joplin
 - Web Browser: firefox
@@ -29,9 +27,24 @@ Here is a list of the OS and softwares shipped on my laptop:
 Usage
 -----
 
-Simply run the setup command to install all configuration files to the home
-directory. ::
+Simply run the below script to install all configuration files to the home
+directory, then have fun to play with it: ::
 
     $ ./setup.sh
 
-Then, have fun to play with :)
+
+Other Than That
+---------------
+
+TLDR: after spending time on trying many different "new" and "awesome" tools,
+what I come up with is "old is good, simple is enough".
+
+Laptops
+"""""""
+
+TODO
+
+Editors
+"""""""
+
+TODO
