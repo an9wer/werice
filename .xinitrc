@@ -19,6 +19,14 @@ if has_command dunst; then
   dunst -verbosity crit --startup_notification &
 fi
 
+if has_command picom; then
+  picom --daemon
+fi
+
+if has_command unclutter; then
+  unclutter --timeout 5 --ignore-scrolling --jitter 50 --fork
+fi
+
 if has_command redshift; then
   /usr/libexec/geoclue-2.0/demos/agent &
   redshift &
