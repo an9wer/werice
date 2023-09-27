@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-# backup original files if needed
+# backup the original file if existed
 backup-origin() {
   local origin=$HOME/$1
 
@@ -18,7 +18,7 @@ backup-origin() {
   fi
 }
 
-# link rice file to target path
+# link the rice file to the target path
 install-rice() {
   local target=$HOME/$1
   local rice=$(readlink -e "$1")
@@ -46,71 +46,55 @@ install-rice() {
 }
 
 
-case $USER in
-  root )
-    HOME=/etc
-    rices=(
-      portage/package.accept_keywords
-      portage/sets/portage.user
-      portage/sets/system.user
-      portage/sets/net.user
-      portage/sets/x11.user
-      portage/sets/fonts.user
-      portage/sets/apps.user
-      portage/package.mask/x11.user
-      portage/package.mask/apps.user
-      portage/package.use/x11.user
-      portage/package.use/apps.user
-      portage/package.use/temporary-confilcts
-      portage/savedconfig/x11-wm/dwm-6.2-r12
-      portage/savedconfig/x11-terms/st-0.8.4-r7
-      portage/savedconfig/x11-misc/dmenu-5.0-r4
-      portage/savedconfig/x11-misc/slstatus-9999
-      portage/savedconfig/x11-misc/tabbed-0.6-r36
-    )
-    ;;
-
-  * )
-    rices=(
-      .xinitrc
-      .Xmodmap
-      .tmux.conf
-      .gitconfig
-      .bash_profile
-      .bashrc
-      .bashrc.d/shopt.sh
-      .bashrc.d/history.sh
-      .bashrc.d/alias.sh
-      .bashrc.d/prompt.sh
-      .bashrc.d/typos.sh
-      .bashrc.d/stty.sh
-      .bashrc.d/cd.sh
-      .scripts/camdict
-      .scripts/numconvert
-      .scripts/trash
-      .gnupg/gpg-agent.conf
-      .config/ibus/rime/default.custom.yaml
-      .config/ibus/rime/double_pinyin.custom.yaml
-      .config/dunst/dunstrc
-      .config/qutebrowser/config.py
-      .vimrc
-      .vim/after/ftplugin/c.vim
-      .vim/after/ftplugin/python.vim
-      .vim/after/ftplugin/rst.vim
-      .vim/after/ftplugin/sh.vim
-      .vim/after/ftplugin/vim.vim
-      .vim/plugin/tabline.vim
-      .vim/bundle/vim-system-copy
-    )
-    ;;
-esac
+rices=(
+  .xinitrc
+  .Xmodmap
+  .tmux.conf
+  .gitconfig
+  .bash_profile
+  .bashrc
+  .bashrc.d/history.sh
+  .bashrc.d/alias.sh
+  .bashrc.d/prompt.sh
+  .bashrc.d/typos.sh
+  .bashrc.d/stty.sh
+  .bashrc.d/cdf.sh
+  .scripts/camdict
+  .scripts/numconvert
+  .scripts/trash
+  .gnupg/gpg-agent.conf
+  .config/picom.conf
+  .config/ibus/rime/default.custom.yaml
+  .config/ibus/rime/double_pinyin_mspy.custom.yaml
+  .config/dunst/dunstrc
+  .config/dunst/dunstrc.d/99-custom.conf
+  .config/redshift.conf
+  .config/redshift/hooks/alert
+  .config/zathura/zathurarc
+  .vimrc
+  .vim/swap/
+  .vim/after/ftplugin/c.vim
+  .vim/after/ftplugin/sh.vim
+  .vim/after/ftplugin/awk.vim
+  .vim/after/ftplugin/rst.vim
+  .vim/after/ftplugin/vim.vim
+  .vim/after/ftplugin/ebuild.vim
+  .vim/after/ftplugin/python.vim
+  .vim/bundle/vim-system-copy
+  .vifm/vifmrc
+  .nanorc
+  .emacs.d/init.el
+  .Trash/
+)
 
 for rice in "${rices[@]}"; do
-  if [[ ! -f $rice ]] && [[ ! -d $rice ]]; then
-    echo "Error: '$rice' is not a file or a directory."
-    return 1
+  if [[ $rice =~ /$ ]]; then
+    mkdir -pv "$HOME/$rice"
+  elif [[ -f $rice || -d $rice ]]; then
+    backup-origin "$rice"
+    install-rice  "$rice"
+  else
+    echo "Error: unknown '$rice'"
+    exit 1
   fi
-
-  backup-origin "$rice"
-  install-rice "$rice"
 done
