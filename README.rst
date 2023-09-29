@@ -48,14 +48,15 @@ Editors
 """""""
 
 I have been a vim user for several years, and my perferred way of using vim as
-an editor doesn't rely on a lot of plugins (actually I only installed one
-plugin for those years, which was `vim-system-copy`_ that provides key mappings
-for copying text into clipboard), because I don't like to customize it to work
-like an IDE, with a lot of "useful" functions that can be done in a shell as
-well, like running git commands, searching files or words, or compiling
-programs. In my mind, vim is strong enough that provides an effective way to
-handle most of editing tasks, such as word completion increasing or decreasing
-numerical characters, modifing multiple lines at the same time, recording macros
-for repeated jobs, and so on.
+an editor doesn't rely on a lot of plugins (actually I had only one plugin
+installed for those years, which was `vim-system-copy`_ that provides key
+mappings for copying text into clipboard), because I don't like to customize it
+to become an IDE, by integrating with a lot of "useful" functions like running
+git commands, searching for files, or compiling programs. I mean I can achieve
+the same results simply by opening another terminal or hitting `Ctrl-Z` to
+suspend vim for doing other tasks. In my mind, vim is strong enough that offers
+an effective way to handle most of editing tasks, such as word completion
+increasing or decreasing numerical characters, modifing multiple lines at the
+same time, recording macros for repeated jobs, and so on.
 
 .. _vim-system-copy: https://github.com/christoomey/vim-system-copy
