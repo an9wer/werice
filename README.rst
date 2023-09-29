@@ -53,9 +53,9 @@ installed for those years, which was `vim-system-copy`_ that provides key
 mappings for copying text into clipboard), because I don't like to customize it
 to become an IDE, by integrating with a lot of "useful" functions like running
 git commands, searching for files, or compiling programs. I mean I can achieve
-the same results simply by opening another terminal or hitting `Ctrl-Z` to
+the same results simply by opening another terminal or hitting ``Ctrl-Z`` to
 suspend vim for doing other tasks. In my mind, vim is strong enough that offers
-an effective way to handle most of editing tasks, such as word completion
+an effective way to handle most of editing tasks, such as completing words,
 increasing or decreasing numerical characters, modifing multiple lines at the
 same time, recording macros for repeated jobs, and so on.
 
