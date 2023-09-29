@@ -7,7 +7,7 @@ Introduction
 ------------
 
 My current  daily driver is **Gentoo** on the laptop **Thinkpad T14 Gen2 AMD
-Ryzen 7 PRO 5850U**, and here is a list of tools shipped on it:
+Ryzen 7 PRO 5850U**, and here is a list of utilties shipped on it:
 
 - Window Manager: dwm
 - Compositor: picom
@@ -47,4 +47,15 @@ TODO
 Editors
 """""""
 
-TODO
+I have been a vim user for several years, and my perferred way of using vim as
+an editor doesn't rely on a lot of plugins (actually I only installed one
+plugin for those years, which was `vim-system-copy`_ that provides key mappings
+for copying text into clipboard), because I don't like to customize it to work
+like an IDE, with a lot of "useful" functions that can be done in a shell as
+well, like running git commands, searching files or words, or compiling
+programs. In my mind, vim is strong enough that provides an effective way to
+handle most of editing tasks, such as word completion increasing or decreasing
+numerical characters, modifing multiple lines at the same time, recording macros
+for repeated jobs, and so on.
+
+.. _vim-system-copy: https://github.com/christoomey/vim-system-copy
