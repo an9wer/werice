@@ -3,18 +3,37 @@ werice
 
 My dotfiles.
 
-Introduction
-------------
+Usage
+-----
 
-My current  daily driver is **Gentoo** on the laptop **Thinkpad T14 Gen2 AMD
-Ryzen 7 PRO 5850U**, and here is a list of utilties shipped on it:
+A shell script is provided to install all dotfiles into the ``$HOME`` directory: ::
 
+    $ ./setup
+
+Note that:
+- the setup script is POSIX compliant, which means it be executed by various
+shells, such as bash and ksh.
+- the setup script installs dotfiles by creating a symbolic link for each of
+them.
+- the setup script will not delete any existed dotfiles, instead it will backup
+them first by adding a ``.orig`` suffix.
+
+Introduction to my Workflow
+---------------------------
+
+Summary: After investing time in exploring various "new" and "awesome" tools,
+what I have concluded is that simplicity is sufficient, which also matches `the
+philosophy of suckless <https://suckless.org/philosophy/>`_. Thus, the tools
+of my choice should be simple, minimal and usable, and here is a list of
+them that align with my preferences:
+
+- Operating System: Gentoo/OpenBSD
 - Window Manager: dwm
 - Compositor: picom
 - Application Launcher: dmenu
 - Status Bar: slstatus
 - Terminal: st
-- Shell: bash
+- Shell: bash/ksh
 - Editor: vim/nano
 - File Manager: vifm
 - Note Taking: joplin
@@ -24,25 +43,10 @@ Ryzen 7 PRO 5850U**, and here is a list of utilties shipped on it:
 - Input Method: ibus
 - Input Method Engine: rime
 
-Usage
------
-
-Simply run the below script to install all configuration files to the home
-directory, then have fun to play with it: ::
-
-    $ ./setup.sh
-
-
-Other Than That
----------------
-
-TLDR: after spending time on trying many different "new" and "awesome" tools,
-what I come up with is "old is good, simple is enough".
-
 Laptops
 """""""
 
-TODO
+As of now, I am using a Thinkpad laptop - T14 Gen2 AMD Ryzen 7 PRO 5850U.
 
 Editors
 """""""
