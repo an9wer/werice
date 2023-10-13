@@ -3,3 +3,4 @@
 	email = an9wer@gmail.com
 [core]
 	editor = vim
+	quotepath = off
