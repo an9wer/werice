@@ -8,15 +8,16 @@ Usage
 
 A shell script is provided to install all dotfiles into the ``$HOME`` directory: ::
 
-    $ ./setup
+	$ ./setup
 
 Note that:
+
 - the setup script is POSIX compliant, which means it be executed by various
-shells, such as bash and ksh.
+  shells, such as bash and ksh.
 - the setup script installs dotfiles by creating a symbolic link for each of
-them.
+  them.
 - the setup script will not delete any existed dotfiles, instead it will backup
-them first by adding a ``.orig`` suffix.
+  them first by adding a ``.orig`` suffix.
 
 Introduction to my Workflow
 ---------------------------
