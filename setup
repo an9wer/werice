@@ -1,0 +1,26 @@
+#!/bin/sh
+
+backup() {
+	local f=$HOME/$1 o=$HOME/$1.orig
+	if [ -e "$f" -a  ! -h "$f" -a ! -e "$o" ]; then
+		mv "$f" "$o" && echo "B $f"
+	fi
+}
+
+install() {
+	local f=$HOME/$1 o=$PWD/$1
+	if [ ! -h "$f" ]; then
+		mkdir -p "$(dirname "$f")"
+		ln -s "$o" "$f" && echo "I $f"
+	fi
+}
+
+set --	.profile	\
+	.kshrc		\
+	.gitconfig
+
+
+for f in "$@"; do
+	backup  "$f"
+	install "$f"
+done
