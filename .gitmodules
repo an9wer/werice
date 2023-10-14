@@ -1,3 +1,0 @@
-[submodule ".vim/bundle/vim-system-copy"]
-	path = .vim/bundle/vim-system-copy
-	url = https://github.com/christoomey/vim-system-copy.git
