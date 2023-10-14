@@ -35,7 +35,7 @@ them that align with my preferences:
 - Status Bar: slstatus
 - Terminal: st
 - Shell: b̶a̶s̶h̶ ksh
-- Editor: vim/nano
+- Editor: v̶i̶m̶ nano
 - File Manager: vifm
 - Note Taking: joplin
 - Web Browser: firefox
