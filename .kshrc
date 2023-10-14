@@ -6,6 +6,11 @@ export __SH_INTERACTIVE_STACKS=$(($__SH_INTERACTIVE_STACKS + 1))
 # disable python virtual environment's default prompt
 export VIRTUAL_ENV_DISABLE_PROMPT=true
 
+if [[ $TERM == st-256color ]]; then
+	# Ctrl-Delete
+	bind '^[[3;5~'=delete-word-forward
+fi
+
 __ps() {
 	local es=$?
 	# wrap the format code within '\[' and '\]' to avoid prompt issues
