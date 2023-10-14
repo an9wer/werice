@@ -34,7 +34,7 @@ them that align with my preferences:
 - Application Launcher: dmenu
 - Status Bar: slstatus
 - Terminal: st
-- Shell: bash/ksh
+- Shell: b̶a̶s̶h̶ ksh
 - Editor: vim/nano
 - File Manager: vifm
 - Note Taking: joplin
