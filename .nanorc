@@ -1,0 +1,20 @@
+set fill 80		# set the column width for hard-wrapping
+set softwrap		# display lines over multiple screen lines
+set trimblanks		# snip trailing whitespace from the wrapped line
+set autoindent		# indent a new line automatially
+set stateflags		# show state flags on the top-right corner
+set multibuffer		# create a new buffer when reading a file
+set linenumbers		# display line numbers in front of the text
+set constantshow	# constantly display the cursor position
+set rawsequences	# interpret escape sequences directly
+set whitespace "» "	# indicate the presence of tabs and spaces
+
+# file handling
+bind ^z suspend main
+
+# moving around
+bind M-b prevword main
+bind M-f nextword main
+
+# Loading syntax files
+include "~/.nanorc.d/default.nanorc"
