@@ -34,6 +34,7 @@ them that align with my preferences:
 - Application Launcher: dmenu
 - Status Bar: slstatus
 - Terminal: st
+- Terminal Multiplexer: t̶m̶u̶x̶ screen
 - Shell: b̶a̶s̶h̶ ksh
 - Editor: v̶i̶m̶ nano
 - File Manager: vifm
