@@ -1,16 +1,26 @@
+# ksh variables
+# ----------------------------------------------------------------------------
 PATH=~/.scripts:$PATH
 HISTFILE=~/.ksh_history
 
+# environment variables
+# ----------------------------------------------------------------------------
+# indicate charact encoding
+export LC_ALL=C.UTF-8
 # count the number of sh stacks in PS1
 export __SH_INTERACTIVE_STACKS=$(($__SH_INTERACTIVE_STACKS + 1))
 # disable python virtual environment's default prompt
 export VIRTUAL_ENV_DISABLE_PROMPT=true
 
+# key bindings
+# ----------------------------------------------------------------------------
 if [[ $TERM == st-256color ]]; then
 	# Ctrl-Delete
 	bind '^[[3;5~'=delete-word-forward
 fi
 
+# prompts
+# ----------------------------------------------------------------------------
 __ps() {
 	local es=$?
 	# wrap the format code within '\[' and '\]' to avoid prompt issues
