@@ -7,10 +7,6 @@ HISTFILE=~/.ksh_history
 # ----------------------------------------------------------------------------
 # indicate charact encoding
 export LC_ALL=C.UTF-8
-# count the number of sh stacks in PS1
-export __SH_INTERACTIVE_STACKS=$(($__SH_INTERACTIVE_STACKS + 1))
-# disable python virtual environment's default prompt
-export VIRTUAL_ENV_DISABLE_PROMPT=true
 
 # key bindings
 # ----------------------------------------------------------------------------
@@ -21,6 +17,11 @@ fi
 
 # prompts
 # ----------------------------------------------------------------------------
+# disable python virtual environment's default prompt
+export VIRTUAL_ENV_DISABLE_PROMPT=true
+# count the number of sh stacks in PS1
+export __SH_INTERACTIVE_STACKS=$(($__SH_INTERACTIVE_STACKS + 1))
+
 __ps() {
 	local es=$?
 	# wrap the format code within '\[' and '\]' to avoid prompt issues
@@ -81,3 +82,11 @@ __ps() {
 
 PS1='$(__ps 1)'
 PS2=$(__ps 2)
+
+# customized settings across different systems
+# ----------------------------------------------------------------------------
+case $(uname) in
+Linux   )	;;
+OpenBSD )	[[ -d $HOME/.venv ]] && . $HOME/.venv/bin/activate
+		;;
+esac
