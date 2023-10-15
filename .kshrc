@@ -1,12 +1,16 @@
 # ksh variables
 # ----------------------------------------------------------------------------
 PATH=~/.scripts:$PATH
+
 HISTFILE=~/.ksh_history
+HISTCONTROL=ignoredups:ignorespace
+
 
 # environment variables
 # ----------------------------------------------------------------------------
 # indicate charact encoding
 export LC_ALL=C.UTF-8
+
 
 # key bindings
 # ----------------------------------------------------------------------------
@@ -14,6 +18,7 @@ if [[ $TERM == st-256color ]]; then
 	# Ctrl-Delete
 	bind '^[[3;5~'=delete-word-forward
 fi
+
 
 # alias
 # ----------------------------------------------------------------------------
@@ -27,6 +32,7 @@ alias 7='fg %7'
 alias 8='fg %8'
 alias 9='fg %9'
 alias 0='fg %-'
+
 
 # prompts
 # ----------------------------------------------------------------------------
@@ -95,6 +101,7 @@ __ps() {
 
 PS1='$(__ps 1)'
 PS2=$(__ps 2)
+
 
 # customized settings across different systems
 # ----------------------------------------------------------------------------
