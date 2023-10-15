@@ -2,8 +2,13 @@
 # ----------------------------------------------------------------------------
 PATH=~/.scripts:$PATH
 
+# history
 HISTFILE=~/.ksh_history
 HISTCONTROL=ignoredups:ignorespace
+
+# editor
+export VISUAL=nano
+export EDITOR=nano
 
 
 # environment variables
