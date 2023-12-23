@@ -1,38 +1,35 @@
-#!/bin/bash
+#!/bin/sh
 
-dbus-launch --exit-with-session -- bash -c '
-has_command() {
-  command -v "$1" &> /dev/null
-  return $?
-}
+dbus-launch --exit-with-session -- sh -c '
+COMMAND="command -v "
 
-if has_command xmodmap && [[ -f ~/.Xmodmap ]]; then
-  setxkbmap -variant altgr-intl
-  xmodmap ~/.Xmodmap
+if $COMMAND xmodmap && $COMMAND setxkbmap && [ -f ~/.Xmodmap ]; then
+	setxkbmap -variant altgr-intl
+	xmodmap ~/.Xmodmap
 fi
 
-if has_command slstatus; then
+if $COMMAND slstatus; then
   slstatus &
 fi
 
-if has_command dunst; then
+if $COMMAND dunst; then
   dunst -verbosity crit --startup_notification &
 fi
 
-if has_command picom; then
+if $COMMAND picom; then
   picom --daemon
 fi
 
-if has_command unclutter; then
-  unclutter --timeout 5 --ignore-scrolling --jitter 5 --fork
+if $COMMAND unclutter; then
+  unclutter --timeout 5 --ignore-scrolling --jitter 50 --fork
 fi
 
-if has_command redshift; then
+if $COMMAND redshift; then
   /usr/libexec/geoclue-2.0/demos/agent &
   redshift &
 fi
 
-if has_command ibus-daemon; then
+if $COMMAND ibus-daemon; then
   export XMODIFIERS=@im=ibus
   export GTK_IM_MODULE=ibus
   export QT_IM_MODULE=ibus
