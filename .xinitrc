@@ -24,7 +24,7 @@ if has_command picom; then
 fi
 
 if has_command unclutter; then
-  unclutter --timeout 5 --ignore-scrolling --jitter 50 --fork
+  unclutter --timeout 5 --ignore-scrolling --jitter 5 --fork
 fi
 
 if has_command redshift; then
