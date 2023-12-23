@@ -1,21 +1,27 @@
-! unbind Caps_Lock key in modifier 'Lock'
 remove Lock = Caps_Lock
-! turn Caps_Lock key to Return key
-keysym Caps_Lock = Return NoSymbol Return
+remove Control = Control_L Control_R
+remove Shift = Shift_L
+remove Mod1 = Alt_L Meta_L
+remove Mod5 = ISO_Level3_Shift
 
-! turn Caps_Lock key to modifier 'Control'
-!keysym Caps_Lock = Control_L NoSymbol Control_L
-!add Control = Control_L
+keysym Caps_Lock = BackSpace BackSpace BackSpace BackSpace
+keysym Control_L = ISO_Level3_Shift NoSymbol ISO_Level3_Shift
+keysym Control_R = Print Sys_Req Print Sys_Req
+keysym Shift_L = Delete NoSymbol Delete
+keysym Alt_L = Control_L NoSymbol Control_L
+keysym ISO_Level3_Shift = Shift_L NoSymbol Shift_L
+keysym Menu = Alt_L Meta_L Alt_L Meta_L
 
-! unbind Alt_R key in modifier 'mod1'
-remove mod1 = Alt_R
-! turn Alt_R key to backspace key
-keysym Alt_R = BackSpace BackSpace BackSpace BackSpace
+add Control = Control_L
+add Shift = Shift_L
+add Mod1 = Alt_L Meta_L
+add Mod5 = ISO_Level3_Shift
 
-! turn Menu key to backslash key
-keysym Menu = backslash bar backslash bar
-
-! unbind Control_R key in modifier 'Control'
-remove Control = Control_R
-! turn Control_R key to Backspace key
-keysym Control_R = Delete NoSymbol Delete
+keysym b = b B b B Left Left
+keysym f = f F f F Right Right
+keysym p = p P p P Up Up
+keysym n = n N n N Down Down
+keysym a = a A a A Home Home
+keysym e = e E e E End End
+keysym m = m M m M Return Return
+keysym bracketleft = bracketleft bracketleft bracketleft bracketleft Escape Escape
