@@ -18,8 +18,6 @@ export EDITOR=nano
 
 # environment variables
 # ----------------------------------------------------------------------------
-# indicate charact encoding
-export LC_ALL=C.UTF-8
 
 
 # key bindings
@@ -115,10 +113,12 @@ PS1='$(__ps 1)'
 PS2=$(__ps 2)
 
 
-# customized settings across different systems
+# customized settings depending on systems
 # ----------------------------------------------------------------------------
 case $(uname) in
-Linux   )	;;
-OpenBSD )	[[ -d $HOME/.venv ]] && . $HOME/.venv/bin/activate
+Linux   )	export LC_ALL=C.UTF-8
+		;;
+OpenBSD )	# UTF-8 are partially supported
+		export LC_CTYPE=C
 		;;
 esac
