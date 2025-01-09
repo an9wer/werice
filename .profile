@@ -1,13 +1,17 @@
 # interactive shell
 if [[ $- == *i* ]]; then
-	export ENV=$HOME/.kshrc
-
+	# customized settings depending on systems
 	case $(uname) in
-		OpenBSD ) TTY=/dev/ttyC0 ;;
-		Linux   ) TTY=/dev/tty1 ;;
-	esac
+	Linux   )	export ENV=$HOME/.kshrc
 
-	if [[ $(tty) == $TTY && -z $DISPLAY ]]; then
-		exec startx
-	fi
+			# initialize an X session with 'startx'
+			if [[ $(tty) == /dev/tty1 && -z	$DISPLAY ]]; then
+				export XINITRC=.xsession
+				exec startx
+			fi
+			;;
+
+	OpenBSD )	# the X session is started by xenodm(1)
+			;;
+	esac
 fi
