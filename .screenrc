@@ -4,3 +4,5 @@ term st-256color
 shell /bin/ksh
 altscreen on
 startup_message off
+
+defscrollback 2500
