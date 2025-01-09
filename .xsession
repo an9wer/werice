@@ -1,4 +1,10 @@
-#!/bin/sh
+# customized settings depending on systems
+case $(uname) in
+Linux   )	;;
+
+OpenBSD )	export ENV=~/.kshrc
+		;;
+esac
 
 dbus-launch --exit-with-session -- sh -c '
 COMMAND="command -v "
